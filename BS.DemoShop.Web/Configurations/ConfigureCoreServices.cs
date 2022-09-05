@@ -11,7 +11,7 @@ namespace BS.DemoShop.Web.Configurations
         public static IServiceCollection AddCoreServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }

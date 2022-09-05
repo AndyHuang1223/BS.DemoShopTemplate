@@ -12,14 +12,17 @@ namespace BS.DemoShop.Web.Services
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductDetail> _productDetailRepository;
+        private readonly IProductRepository _productRepo;
 
         public ProductService(
             IRepository<Product> productRepository,
-            IRepository<ProductDetail> productDetailRepository
+            IRepository<ProductDetail> productDetailRepository,
+            IProductRepository productRepo
             )
         {
             _productRepository = productRepository;
             _productDetailRepository = productDetailRepository;
+            _productRepo = productRepo;
         }
 
         public ProductViewModel GetById(int id)
@@ -76,6 +79,18 @@ namespace BS.DemoShop.Web.Services
 
         }
 
+        public void CreateProductByRepository(CreateProductViewModel input)
+        {
+            var product = new Product
+            {
+                Name = input.Name,
+                ImgPath = input.ImgPath,
+                CreatedTime = DateTime.UtcNow
+            };
+            var productDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow });
+            _productRepo.CreateProductAndDetails(product, productDetails);
+        }
+
         public void CreateDetail(CreateDetailViewModel input)
         {
             _productDetailRepository.Add(new ProductDetail
@@ -100,7 +115,7 @@ namespace BS.DemoShop.Web.Services
 
             var detailSource = _productDetailRepository.GetAll()
                 .Where(x => x.ProductId == input.Id).ToList();
-            
+
             foreach (var entity in detailSource)
             {
                 var inputDetail = input.ProductDetails.First(x => x.Id == entity.Id);
@@ -109,7 +124,7 @@ namespace BS.DemoShop.Web.Services
                 entity.UpdatedTime = now;
             }
             productSource.ProductDetails = detailSource;
-            
+
             _productRepository.Update(productSource);
             _productRepository.SaveChanges();
 
@@ -117,7 +132,7 @@ namespace BS.DemoShop.Web.Services
 
         public void DeleteProduct(ProductViewModel input)
         {
-            
+
             var productEntity = _productRepository.GetAll().First(x => x.Id == input.Id);
             _productRepository.Delete(productEntity);
             _productRepository.SaveChanges();

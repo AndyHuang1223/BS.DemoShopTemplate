@@ -50,6 +50,19 @@ namespace BS.DemoShop.Web.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult CreateProductByRepo(CreateProductViewModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                //有坑，https://stackoverflow.com/questions/43281345/mvc-net-core-model-validation-the-value-is-invalid-error
+                return View("CreateProduct", input);
+            }
+
+            _productService.CreateProductByRepository(input);
+
+            return RedirectToAction("Index");
+        }
         
         [HttpPost]
         public IActionResult Update(ProductViewModel input)
