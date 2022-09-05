@@ -1,4 +1,5 @@
 using BS.DemoShop.Infrastructure.Data;
+using BS.DemoShop.Web.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,8 @@ namespace BS.DemoShop
         {
             services.AddControllersWithViews();
             services.AddDbContext<BSDemoShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BSDemoShopConnection")));
+            services.AddCoreServices();
+            services.AddWebServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
