@@ -10,7 +10,7 @@ namespace BS.DemoShop.Infrastructure.Data
 {
     public class EfRepository<T> : IRepository<T> where T : class
     {
-        private readonly BSDemoShopContext _dbContext;
+        protected readonly BSDemoShopContext _dbContext;
 
         public EfRepository(BSDemoShopContext dbContext)
         {
