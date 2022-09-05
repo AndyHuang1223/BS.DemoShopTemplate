@@ -12,12 +12,12 @@ namespace BS.DemoShop.Infrastructure.Data
     {
         public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options) : base(options) { }
 
-        public DbSet<Product> Product { get; set; }
-        public DbSet<ProductDetail> ProductDetail { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductDetail> ProductDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<ProductDetail>()
                 .Property(b => b.UnitPrice)
                 .HasPrecision(18, 2);
