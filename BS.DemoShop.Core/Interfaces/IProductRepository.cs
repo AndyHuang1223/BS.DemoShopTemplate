@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Core.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
         void CreateProductAndDetails(Product product, IEnumerable<ProductDetail> productDetails);
     }

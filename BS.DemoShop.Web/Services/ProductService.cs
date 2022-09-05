@@ -54,7 +54,7 @@ namespace BS.DemoShop.Web.Services
 
         public IEnumerable<ProductViewModel> GetAllProduct()
         {
-            return _productRepository.GetAll().Select(p => new ProductViewModel
+            return _productRepo.GetAll().Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -74,8 +74,8 @@ namespace BS.DemoShop.Web.Services
                 ProductDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList()
 
             };
-            _productRepository.Add(product);
-            _productRepository.SaveChanges();
+            _productRepo.Add(product);
+            _productRepo.SaveChanges();
 
         }
 
@@ -106,7 +106,7 @@ namespace BS.DemoShop.Web.Services
         public void UpdateProduct(ProductViewModel input)
         {
             var now = DateTime.UtcNow;
-            var productSource = _productRepository.GetAll().First(x => x.Id == input.Id);
+            var productSource = _productRepo.GetAll().First(x => x.Id == input.Id);
 
             productSource.Name = input.Name;
             productSource.ImgPath = input.ImgPath;
@@ -125,17 +125,17 @@ namespace BS.DemoShop.Web.Services
             }
             productSource.ProductDetails = detailSource;
 
-            _productRepository.Update(productSource);
-            _productRepository.SaveChanges();
+            _productRepo.Update(productSource);
+            _productRepo.SaveChanges();
 
         }
 
         public void DeleteProduct(ProductViewModel input)
         {
 
-            var productEntity = _productRepository.GetAll().First(x => x.Id == input.Id);
-            _productRepository.Delete(productEntity);
-            _productRepository.SaveChanges();
+            var productEntity = _productRepo.GetAll().First(x => x.Id == input.Id);
+            _productRepo.Delete(productEntity);
+            _productRepo.SaveChanges();
         }
     }
 }

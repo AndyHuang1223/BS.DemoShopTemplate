@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Infrastructure.Data
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : EfRepository<Product>, IProductRepository
     {
-        private readonly BSDemoShopContext _dbContext;
 
-        public ProductRepository(BSDemoShopContext dbContext)
+        public ProductRepository(BSDemoShopContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         public void CreateProductAndDetails(Product product, IEnumerable<ProductDetail> productDetails)
