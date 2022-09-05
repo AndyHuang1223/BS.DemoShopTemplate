@@ -1,4 +1,5 @@
-﻿using BS.DemoShop.Core.Interfaces;
+﻿using BS.DemoShop.Core.Entities;
+using BS.DemoShop.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Infrastructure.Data
 {
-    public class EfRepository<T> : IRepository<T> where T : class
+    public class EfRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly BSDemoShopContext _dbContext;
 
