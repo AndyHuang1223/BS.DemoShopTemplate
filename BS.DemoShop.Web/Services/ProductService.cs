@@ -54,14 +54,24 @@ namespace BS.DemoShop.Web.Services
 
         public IEnumerable<ProductViewModel> GetAllProduct()
         {
-            return _productRepo.GetAll().Select(p => new ProductViewModel
+            var products = _productRepo.GetAll().Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
                 ImgPath = p.ImgPath,
-                Price = _productDetailRepository.GetAll().First(x => x.ProductId == p.Id).UnitPrice,
                 CreatedTime = p.CreatedTime.ToTaiwaneseTime()
             }).ToList();
+
+            var productDetails = _productDetailRepository.GetAll().Where(pd => products.Select(p => p.Id).Contains(pd.ProductId)).ToList();
+
+            foreach (var product in products)
+            {
+                if(productDetails.Any(pd=>pd.ProductId == product.Id))
+                {
+                    product.Price = productDetails.FirstOrDefault()?.UnitPrice ?? 0;
+                }
+                yield return product;
+            }
         }
 
         public void CreateProduct(CreateProductViewModel input)
