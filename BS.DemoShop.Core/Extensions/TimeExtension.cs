@@ -16,8 +16,12 @@ namespace BS.DemoShop.Core.Extensions
         /// <returns></returns>
         public static DateTime ToTaiwaneseTime(this DateTime utcDateTime)
         {
-            var timeZoneInfo = TZConvert.GetTimeZoneInfo("Asia/Taipei");
-            var localTime = TimeZoneInfo.ConvertTime(utcDateTime, timeZoneInfo);
+            string displayName = "(GMT+08:00) Taiwan/Taipei Time";
+            string standardName = "Taipei Time";
+            TimeSpan offset = new TimeSpan(08, 00, 00);
+            TimeZoneInfo taipeiTimeZone = TimeZoneInfo.CreateCustomTimeZone(standardName, offset, displayName, standardName);
+           
+            var localTime = TimeZoneInfo.ConvertTime(utcDateTime, TimeZoneInfo.Utc, taipeiTimeZone);
             return localTime;
         }
     }
