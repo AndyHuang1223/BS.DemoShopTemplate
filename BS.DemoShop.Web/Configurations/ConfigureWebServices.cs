@@ -7,7 +7,7 @@ namespace BS.DemoShop.Web.Configurations
     {
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
-            services.AddScoped<ProductService>();
+            services.AddScoped<ProductViewModelService>();
             return services;
         }
     }

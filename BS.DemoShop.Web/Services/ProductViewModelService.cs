@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace BS.DemoShop.Web.Services
 {
-    public class ProductService
+    public class ProductViewModelService
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductDetail> _productDetailRepository;
         private readonly IProductRepository _productRepo;
 
-        public ProductService(
+        public ProductViewModelService(
             IRepository<Product> productRepository,
             IRepository<ProductDetail> productDetailRepository,
             IProductRepository productRepo
