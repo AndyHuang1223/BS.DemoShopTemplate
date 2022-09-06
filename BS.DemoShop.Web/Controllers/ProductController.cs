@@ -1,5 +1,5 @@
 ﻿using BS.DemoShop.Web.Services;
-using BS.DemoShop.Web.ViewModels;
+using BS.DemoShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BS.DemoShop.Web.Controllers

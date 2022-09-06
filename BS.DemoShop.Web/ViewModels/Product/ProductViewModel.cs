@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace BS.DemoShop.Web.ViewModels
+namespace BS.DemoShop.Web.ViewModels.Product
 {
     public class ProductViewModel
     {

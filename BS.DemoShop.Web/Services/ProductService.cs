@@ -1,7 +1,7 @@
 ﻿using BS.DemoShop.Core.Entities;
 using BS.DemoShop.Core.Extensions;
 using BS.DemoShop.Core.Interfaces;
-using BS.DemoShop.Web.ViewModels;
+using BS.DemoShop.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
