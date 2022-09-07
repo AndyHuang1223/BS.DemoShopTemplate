@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BS.DemoShop.Infrastructure.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BS.DemoShop
 {
@@ -13,14 +15,48 @@ namespace BS.DemoShop
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            CreateDbIfNotExist(host);
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+
+        private static void CreateDbIfNotExist(IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                var env = host.Services.GetRequiredService<IHostEnvironment>();
+                if (env.IsDevelopment())
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    try
+                    {
+                        var context = services.GetRequiredService<BSDemoShopContext>();
+                        BSDemoShopContextSeed.SeedDevelopment(context, logger);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "An error occurred seeding the DB.");
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var context = services.GetRequiredService<BSDemoShopContext>();
+                        BSDemoShopContextSeed.SeedForProduction(context, logger);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "An error occurred seeding the DB.");
+                    }
+                }
+                
+            }
+        }
     }
 }
