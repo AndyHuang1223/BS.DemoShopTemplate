@@ -10,31 +10,31 @@ namespace BS.DemoShop.Web.Services
 {
     public class ProductViewModelService
     {
-        private readonly IRepository<Product> _productRepository;
-        private readonly IRepository<ProductDetail> _productDetailRepository;
-        private readonly IProductRepository _productRepo;
+        private readonly IRepository<Product> _productRepo;
+        private readonly IRepository<ProductDetail> _productDetailRepo;
+        private readonly IProductRepository _productRepository;
 
         public ProductViewModelService(
-            IRepository<Product> productRepository,
-            IRepository<ProductDetail> productDetailRepository,
-            IProductRepository productRepo
+            IRepository<Product> productRepo,
+            IRepository<ProductDetail> productDetailRepo,
+            IProductRepository productRepository
             )
         {
-            _productRepository = productRepository;
-            _productDetailRepository = productDetailRepository;
             _productRepo = productRepo;
+            _productDetailRepo = productDetailRepo;
+            _productRepository = productRepository;
         }
 
         public ProductViewModel GetById(int id)
         {
 
-            var product = _productRepository.GetAll().FirstOrDefault(x => x.Id == id);
+            var product = _productRepo.GetAllReadOnly().FirstOrDefault(x => x.Id == id);
             if (product == null)
             {
                 return default;
             }
 
-            var productDetails = _productDetailRepository.GetAll()
+            var productDetails = _productDetailRepo.GetAll()
                 .Where(x => x.ProductId == product.Id)
                 .Select(pd => new ProductDetailViewModel { Id = pd.Id, Name = pd.Name, UnitPrice = pd.UnitPrice })
                 .ToList();
@@ -54,7 +54,7 @@ namespace BS.DemoShop.Web.Services
 
         public IEnumerable<ProductViewModel> GetAllProduct()
         {
-            var products = _productRepo.GetAll().Select(p => new ProductViewModel
+            var products = _productRepository.GetAllReadOnly().Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -62,7 +62,7 @@ namespace BS.DemoShop.Web.Services
                 CreatedTime = p.CreatedTime.ToTaiwaneseTime()
             }).ToList();
 
-            var productDetails = _productDetailRepository.GetAll().Where(pd => products.Select(p => p.Id).Contains(pd.ProductId)).ToList();
+            var productDetails = _productDetailRepo.GetAllReadOnly().Where(pd => products.Select(p => p.Id).Contains(pd.ProductId)).ToList();
 
             foreach (var product in products)
             {
@@ -84,8 +84,7 @@ namespace BS.DemoShop.Web.Services
                 ProductDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList()
 
             };
-            _productRepo.Add(product);
-            _productRepo.SaveChanges();
+            _productRepository.Add(product);
 
         }
 
@@ -98,32 +97,31 @@ namespace BS.DemoShop.Web.Services
                 CreatedTime = DateTime.UtcNow
             };
             var productDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow });
-            _productRepo.CreateProductAndDetails(product, productDetails);
+            _productRepository.CreateProductAndDetails(product, productDetails);
         }
 
         public void CreateDetail(CreateDetailViewModel input)
         {
-            _productDetailRepository.Add(new ProductDetail
+            _productDetailRepo.Add(new ProductDetail
             {
                 Name = input.SpecName,
                 UnitPrice = input.UnitPrice,
                 CreatedTime = DateTime.UtcNow,
                 ProductId = input.ProductId,
             });
-            _productDetailRepository.SaveChanges();
         }
 
         public void UpdateProduct(ProductViewModel input)
         {
             var now = DateTime.UtcNow;
-            var productSource = _productRepo.GetAll().First(x => x.Id == input.Id);
+            var productSource = _productRepository.GetAll().First(x => x.Id == input.Id);
 
             productSource.Name = input.Name;
             productSource.ImgPath = input.ImgPath;
             productSource.UpdatedTime = now;
 
 
-            var detailSource = _productDetailRepository.GetAll()
+            var detailSource = _productDetailRepo.GetAll()
                 .Where(x => x.ProductId == input.Id).ToList();
 
             foreach (var entity in detailSource)
@@ -135,17 +133,15 @@ namespace BS.DemoShop.Web.Services
             }
             productSource.ProductDetails = detailSource;
 
-            _productRepo.Update(productSource);
-            _productRepo.SaveChanges();
+            _productRepository.Update(productSource);
 
         }
 
         public void DeleteProduct(ProductViewModel input)
         {
 
-            var productEntity = _productRepo.GetAll().First(x => x.Id == input.Id);
-            _productRepo.Delete(productEntity);
-            _productRepo.SaveChanges();
+            var productEntity = _productRepository.GetAll().First(x => x.Id == input.Id);
+            _productRepository.Delete(productEntity);
         }
     }
 }

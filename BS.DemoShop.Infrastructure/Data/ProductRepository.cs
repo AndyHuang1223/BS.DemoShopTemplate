@@ -18,19 +18,19 @@ namespace BS.DemoShop.Infrastructure.Data
 
         public void CreateProductAndDetails(Product product, IEnumerable<ProductDetail> productDetails)
         {
-            using (var transaction = _dbContext.Database.BeginTransaction())
+            using (var transaction = DbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    _dbContext.Product.Add(product);
-                    _dbContext.SaveChanges();
+                    DbContext.Product.Add(product);
+                    DbContext.SaveChanges();
                     var detailEntities = productDetails.ToList();
                     foreach(var entity in detailEntities)
                     {
                         entity.ProductId = product.Id;
                     }
-                    _dbContext.ProductDetail.AddRange(detailEntities);
-                    _dbContext.SaveChanges();
+                    DbContext.ProductDetail.AddRange(detailEntities);
+                    DbContext.SaveChanges();
                     transaction.Commit();
                 }
                 catch

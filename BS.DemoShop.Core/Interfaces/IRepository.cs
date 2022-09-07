@@ -9,16 +9,19 @@ namespace BS.DemoShop.Core.Interfaces
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        void Add(T entity);
-        void AddRange(IEnumerable<T> entities);
-        Task AddAsync(T entity);
-        Task AddRangeAsync(IEnumerable<T> entities);
-        void Update(T entity);
-        void UpdateRange(IEnumerable<T> entities);
+        T Add(T entity);
+        IEnumerable<T> AddRange(IEnumerable<T> entities);
+        Task<T> AddAsync(T entity);
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities); 
+        T Update(T entity);
+        IEnumerable<T> UpdateRange(IEnumerable<T> entities);
+        Task<T> UpdateAsync(T entity);
+        Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);
+        Task DeleteAsync(T entity);
+        Task DeleteRangeAsync(IEnumerable<T> entities);
         IQueryable<T> GetAll();
-        void SaveChanges();
-        Task SaveChangesAsync();
+        IQueryable<T> GetAllReadOnly();
     }
 }
