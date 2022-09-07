@@ -1,7 +1,8 @@
 # BS.DemoShop
 ## Get Started
-1. Use EF Core Migration DataBase(Update database).
-2. Run BS.DemoShop.Web.
+1. Make sure your connection string(appsettings.json).
+2. Migration Database : In development environment will drop and create new db then insert seed data, in production environment will migrate all migrations and insert seed data.
+3. Run BS.DemoShop.Web.
 
 
 
