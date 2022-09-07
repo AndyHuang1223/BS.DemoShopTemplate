@@ -82,7 +82,7 @@ namespace BS.DemoShop.Web.Services
                 Name = input.Name,
                 ImgPath = input.ImgPath,
                 CreatedTime = DateTime.UtcNow,
-                ProductDetailses = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList()
+                ProductDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList()
 
             };
             _productRepository.Add(product);
@@ -132,7 +132,7 @@ namespace BS.DemoShop.Web.Services
                 entity.UnitPrice = inputDetail.UnitPrice;
                 entity.UpdatedTime = now;
             }
-            productSource.ProductDetailses = detailSource;
+            productSource.ProductDetails = detailSource;
 
             _productRepository.Update(productSource);
 
@@ -154,11 +154,11 @@ namespace BS.DemoShop.Web.Services
             {
                 Id = productEntity.Id,
                 Name = productEntity.Name,
-                Price = productEntity.ProductDetailses.First().UnitPrice,
+                Price = productEntity.ProductDetails.First().UnitPrice,
                 ImgPath = productEntity.ImgPath,
                 CreatedTime = productEntity.CreatedTime,
                 LastUpdatedTime = productEntity.UpdatedTime,
-                ProductDetails = productEntity.ProductDetailses.Select(x => new ProductDetailViewModel
+                ProductDetails = productEntity.ProductDetails.Select(x => new ProductDetailViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,

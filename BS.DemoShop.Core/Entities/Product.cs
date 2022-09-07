@@ -19,6 +19,6 @@ namespace BS.DemoShop.Core.Entities
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
 
-        public ICollection<ProductDetail> ProductDetailses { get; set; }
+        public ICollection<ProductDetail> ProductDetails { get; set; }
     }
 }

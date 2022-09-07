@@ -15,7 +15,7 @@ namespace BS.DemoShop.Core.Entities
             Name = productName;
             ImgPath = imgPath;
             Description = description;
-            ProductDetailses = details;
+            ProductDetails = details;
             CreatedTime = DateTime.UtcNow;
         }
     }
