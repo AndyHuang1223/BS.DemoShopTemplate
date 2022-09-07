@@ -1,4 +1,5 @@
-﻿using BS.DemoShop.Web.Services;
+﻿using System.Threading.Tasks;
+using BS.DemoShop.Web.Services;
 using BS.DemoShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,5 +77,17 @@ namespace BS.DemoShop.Web.Controllers
             _productService.DeleteProduct(input);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> CreateDefaultProduct()
+        {
+            CreateDefaultProductDTO source = new CreateDefaultProductDTO
+            {
+                Name = "測試預設商品",
+                ImgPath = "https://fakeimg.pl/300x200/200"
+            };
+            var result = await _productService.CreateProductWithDetail(source);
+            return RedirectToAction("Index");
+        }
+        
     }
 }

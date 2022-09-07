@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Core.Entities
 {
-    public class Product : BaseEntity
+    public partial class Product : BaseEntity
     {
         public int Id { get; set; }
         [Required]
@@ -19,6 +19,6 @@ namespace BS.DemoShop.Core.Entities
         public DateTime CreatedTime { get; set; }
         public DateTime? UpdatedTime { get; set; }
 
-        public ICollection<ProductDetail> ProductDetails { get; set; }
+        public ICollection<ProductDetail> ProductDetailses { get; set; }
     }
 }

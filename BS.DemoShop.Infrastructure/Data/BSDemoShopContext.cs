@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Infrastructure.Data
 {
-    public class BSDemoShopContext : DbContext
+    public partial class BSDemoShopContext : DbContext
     {
         public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options) : base(options) { }
 
@@ -28,5 +28,7 @@ namespace BS.DemoShop.Infrastructure.Data
             modelBuilder.Entity<ProductDetail>()
                 .ToTable("ProductDetails");
         }
+        
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

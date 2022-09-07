@@ -3,19 +3,19 @@
 @{
     var products = Model;
 }
-
+<a asp-action="CreateDefaultProduct" class="btn btn-info">新增預設商品</a>
 <div class="row">
-    @foreach(var product in products)
+    @foreach (var product in products)
     {
         <div class="col-3">
             <div class="card">
-              <img src="@product.ImgPath" class="card-img-top" alt="@product.Name">
-              <div class="card-body">
-                <p class="card-title h5">@product.Name</p>
-                <p class="card-text text-danger">@product.Price.ToString("#,#")</p>
-                <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="btn btn-primary">查看明細</a>
-                <p class="h6 text-muted">@product.CreatedTime</p>
-              </div>
+                <img src="@product.ImgPath" class="card-img-top" alt="@product.Name">
+                <div class="card-body">
+                    <p class="card-title h5">@product.Name</p>
+                    <p class="card-text text-danger">@product.Price.ToString("#,#")</p>
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="btn btn-primary">查看明細</a>
+                    <p class="h6 text-muted">@product.CreatedTime</p>
+                </div>
             </div>
         </div>
     }
