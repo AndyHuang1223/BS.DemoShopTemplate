@@ -5,6 +5,7 @@ using BS.DemoShop.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BS.DemoShop.Web.Services
 {
@@ -142,6 +143,29 @@ namespace BS.DemoShop.Web.Services
 
             var productEntity = _productRepository.GetAll().First(x => x.Id == input.Id);
             _productRepository.Delete(productEntity);
+        }
+
+        public async Task<ProductViewModel> CreateProductWithDetail(CreateDefaultProductDTO input)
+        {
+            var defaultProductDetail = new ProductDetail("預設規格", 100);
+            
+            var productEntity = await _productRepository.CreateProductWithDetail(input.Name, input.ImgPath, "預設商品", defaultProductDetail);
+            var result = new ProductViewModel
+            {
+                Id = productEntity.Id,
+                Name = productEntity.Name,
+                Price = productEntity.ProductDetails.First().UnitPrice,
+                ImgPath = productEntity.ImgPath,
+                CreatedTime = productEntity.CreatedTime,
+                LastUpdatedTime = productEntity.UpdatedTime,
+                ProductDetails = productEntity.ProductDetails.Select(x => new ProductDetailViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UnitPrice = x.UnitPrice
+                }).ToList()
+            };
+            return result;
         }
     }
 }

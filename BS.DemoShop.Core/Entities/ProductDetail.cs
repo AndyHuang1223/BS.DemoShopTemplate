@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Core.Entities
 {
-    public class ProductDetail : BaseEntity
+    public partial class ProductDetail : BaseEntity
     {
         public int Id { get; set; }
         [Required]

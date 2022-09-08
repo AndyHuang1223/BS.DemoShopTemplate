@@ -41,5 +41,12 @@ namespace BS.DemoShop.Infrastructure.Data
 
         }
 
+        public async Task<Product> CreateProductWithDetail(string productName, string imgPath, string description, ProductDetail detail)
+        {
+            var details = new List<ProductDetail> { detail };
+            var product = new Product(productName, imgPath, description, details);
+            
+            return await AddAsync(product);
+        }
     }
 }
