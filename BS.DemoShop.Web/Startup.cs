@@ -25,8 +25,9 @@ namespace BS.DemoShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //將DI放到其他組件上
+            Infrastructure.Dependencies.ConfigureServices(Configuration, services);
             services.AddControllersWithViews();
-            services.AddDbContext<BSDemoShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BSDemoShopConnection")));
             services.AddCoreServices();
             services.AddWebServices();
         }
