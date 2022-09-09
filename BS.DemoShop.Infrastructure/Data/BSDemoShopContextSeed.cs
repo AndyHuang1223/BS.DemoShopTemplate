@@ -69,27 +69,22 @@ namespace BS.DemoShop.Infrastructure.Data
             }
 
         }
-        
+
         static IEnumerable<Product> GetPreconfiguredProducts()
         {
-            yield return new Product
-                { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=1", CreatedTime = DateTime.UtcNow, ProductDetails = GetPreconfiguredProductDetails().ToList() };
-            yield return new Product
-                { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=2", CreatedTime = DateTime.UtcNow, ProductDetails = GetPreconfiguredProductDetails().ToList() };
-            yield return new Product
-                { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=3", CreatedTime = DateTime.UtcNow, ProductDetails = GetPreconfiguredProductDetails().ToList() };
-            yield return new Product
-                { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=4", CreatedTime = DateTime.UtcNow, ProductDetails = GetPreconfiguredProductDetails().ToList() };
-            yield return new Product
-                { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=5", CreatedTime = DateTime.UtcNow, ProductDetails = GetPreconfiguredProductDetails().ToList() };
+            yield return new Product { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=1", CreatedTime = DateTime.UtcNow, IsOnTheMarket = true, ProductDetails = GetPreconfiguredProductDetails().ToList() };
+            yield return new Product { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=2", CreatedTime = DateTime.UtcNow, IsOnTheMarket = true, ProductDetails = GetPreconfiguredProductDetails().ToList() };
+            yield return new Product { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=3", CreatedTime = DateTime.UtcNow, IsOnTheMarket = false, ProductDetails = GetPreconfiguredProductDetails().ToList() };
+            yield return new Product { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=4", CreatedTime = DateTime.UtcNow, IsOnTheMarket = true, ProductDetails = GetPreconfiguredProductDetails().ToList() };
+            yield return new Product { Name = "種子商品", ImgPath = "https://picsum.photos/300/200/?random=5", CreatedTime = DateTime.UtcNow, IsOnTheMarket = true, ProductDetails = GetPreconfiguredProductDetails().ToList() };
         }
 
         static IEnumerable<ProductDetail> GetPreconfiguredProductDetails()
         {
-            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, CreatedTime = DateTime.UtcNow };
-            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, CreatedTime = DateTime.UtcNow };
-            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, CreatedTime = DateTime.UtcNow };
-            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, CreatedTime = DateTime.UtcNow };
+            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, Inventory = 100, CreatedTime = DateTime.UtcNow };
+            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, Inventory = 100, CreatedTime = DateTime.UtcNow };
+            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, Inventory = 100, CreatedTime = DateTime.UtcNow };
+            yield return new ProductDetail { Name = "種子規格", UnitPrice = 100, Inventory = 100, CreatedTime = DateTime.UtcNow };
         }
     }
 }
