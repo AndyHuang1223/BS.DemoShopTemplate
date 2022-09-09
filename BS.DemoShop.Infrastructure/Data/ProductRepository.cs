@@ -9,9 +9,15 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Infrastructure.Data
 {
+    /// <summary>
+    /// 專用型Repository
+    /// </summary>
     public class ProductRepository : EfRepository<Product>, IProductRepository
     {
-
+        /// <summary>
+        /// 給泛型Repository使用的建構式
+        /// </summary>
+        /// <param name="dbContext">容器注入的DbContext</param>
         public ProductRepository(BSDemoShopContext dbContext) : base(dbContext)
         {
         }
