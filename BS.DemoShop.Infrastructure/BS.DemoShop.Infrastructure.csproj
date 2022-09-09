@@ -21,8 +21,4 @@
     <ProjectReference Include="..\BS.DemoShop.Core\BS.DemoShop.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Queries\" />
-  </ItemGroup>
-
 </Project>

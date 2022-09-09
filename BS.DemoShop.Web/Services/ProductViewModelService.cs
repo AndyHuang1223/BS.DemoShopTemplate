@@ -14,16 +14,18 @@ namespace BS.DemoShop.Web.Services
         private readonly IRepository<Product> _productRepo;
         private readonly IRepository<ProductDetail> _productDetailRepo;
         private readonly IProductRepository _productRepository;
+        private readonly IProductQueryService _productQueryService;
 
         public ProductViewModelService(
             IRepository<Product> productRepo,
             IRepository<ProductDetail> productDetailRepo,
-            IProductRepository productRepository
-            )
+            IProductRepository productRepository,
+            IProductQueryService productQueryService)
         {
             _productRepo = productRepo;
             _productDetailRepo = productDetailRepo;
             _productRepository = productRepository;
+            _productQueryService = productQueryService;
         }
 
         public ProductViewModel GetById(int id)
@@ -166,6 +168,11 @@ namespace BS.DemoShop.Web.Services
                 }).ToList()
             };
             return result;
+        }
+
+        public async Task<int> GetProductInventory(int productId)
+        {
+            return await _productQueryService.GetProductTotalInventoryById(productId);
         }
     }
 }

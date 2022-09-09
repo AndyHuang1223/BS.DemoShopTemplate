@@ -88,6 +88,12 @@ namespace BS.DemoShop.Web.Controllers
             var result = await _productService.CreateProductWithDetail(source);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> GetAllInventory(int id)
+        {
+            var result = await _productService.GetProductInventory(id);
+            return Content(result.ToString());
+        }
         
     }
 }
