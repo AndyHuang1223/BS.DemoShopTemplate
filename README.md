@@ -9,13 +9,15 @@
 ## EF Core CLI
 
 ### EF Core Update-Database
-```=powershall
-update-database -Project BS.DemoShop.Infrastructure -StartupProject BS.DemoShop.Web
+
+```
+dotnet ef database update -p BS.DemoShop.Infrastructure -s BS.DemoShop.Web
 ```
 
 ### EF Core Add-Migration
-```=powershall
-add-migration init -Project BS.DemoShop.Infrastructure -StartupProject BS.DemoShop.Web -OutputDir Data/Migrations
+
+```
+dotnet ef migrations add <your migration name> -p BS.DemoShop.Infrastructure -s BS.DemoShop.Web -o Data/Migrations
 ```
 
 ### More
