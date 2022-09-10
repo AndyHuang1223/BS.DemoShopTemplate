@@ -4,14 +4,16 @@ using BS.DemoShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BS.DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    partial class BSDemoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220910065354_CategoryAndSeed")]
+    partial class CategoryAndSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,21 +45,21 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 9, 24, 18, 881, DateTimeKind.Unspecified).AddTicks(4521), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 269, DateTimeKind.Unspecified).AddTicks(2486), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類1",
                             Sort = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 9, 24, 18, 882, DateTimeKind.Unspecified).AddTicks(2348), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Unspecified).AddTicks(317), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類2",
                             Sort = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 9, 24, 18, 882, DateTimeKind.Unspecified).AddTicks(2417), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Unspecified).AddTicks(382), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類3",
                             Sort = 2
                         });
@@ -96,7 +98,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
 
                     b.ToTable("Products");
 
@@ -105,7 +108,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 887, DateTimeKind.Utc).AddTicks(5176),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1604),
                             ImgPath = "https://picsum.photos/300/200/?random=1",
                             IsOnTheMarket = true,
                             Name = "種子商品1"
@@ -114,7 +117,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 887, DateTimeKind.Utc).AddTicks(5514),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1928),
                             ImgPath = "https://picsum.photos/300/200/?random=2",
                             IsOnTheMarket = false,
                             Name = "種子商品2"
@@ -123,7 +126,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 3,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 887, DateTimeKind.Utc).AddTicks(5533),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1947),
                             ImgPath = "https://picsum.photos/300/200/?random=3",
                             IsOnTheMarket = true,
                             Name = "種子商品3"
@@ -167,7 +170,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(4747),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(471),
                             Inventory = 100,
                             Name = "種子規格1",
                             ProductId = 1,
@@ -176,7 +179,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5052),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(781),
                             Inventory = 10,
                             Name = "種子規格2",
                             ProductId = 1,
@@ -185,7 +188,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5104),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(800),
                             Inventory = 8,
                             Name = "種子規格3",
                             ProductId = 1,
@@ -194,7 +197,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5121),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(816),
                             Inventory = 18,
                             Name = "種子規格4",
                             ProductId = 2,
@@ -203,7 +206,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5137),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(832),
                             Inventory = 0,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -212,7 +215,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5156),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(850),
                             Inventory = 120,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -221,7 +224,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedTime = new DateTime(2022, 9, 10, 9, 24, 18, 888, DateTimeKind.Utc).AddTicks(5172),
+                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(865),
                             Inventory = 20,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -232,8 +235,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Product", b =>
                 {
                     b.HasOne("BS.DemoShop.Core.Entities.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                        .WithOne("Product")
+                        .HasForeignKey("BS.DemoShop.Core.Entities.Product", "CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -253,7 +256,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Product", b =>

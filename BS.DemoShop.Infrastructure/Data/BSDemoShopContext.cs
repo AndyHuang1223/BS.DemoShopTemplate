@@ -14,15 +14,34 @@ namespace BS.DemoShop.Infrastructure.Data
 
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductDetail> ProductDetail { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Category>()
+                .ToTable("Categories");
+
+            #region CategorySeed
+
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 1, Name = "預設分類1", Sort = 0, CreatedTime = DateTimeOffset.UtcNow });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 2, Name = "預設分類2", Sort = 1, CreatedTime = DateTimeOffset.UtcNow });
+            modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "預設分類3", Sort = 2, CreatedTime = DateTimeOffset.UtcNow });
+
+            #endregion
+            
+            modelBuilder.Entity<Product>()
+               .ToTable("Products");
+
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
 
             #region ProductSeed
 
-            modelBuilder.Entity<Product>().HasData(new Product { Id = 1, Name = "種子商品1", ImgPath = "https://picsum.photos/300/200/?random=1", IsOnTheMarket = true, CreatedTime = DateTime.UtcNow });
-            modelBuilder.Entity<Product>().HasData(new Product { Id = 2, Name = "種子商品2", ImgPath = "https://picsum.photos/300/200/?random=2", IsOnTheMarket = false, CreatedTime = DateTime.UtcNow });
-            modelBuilder.Entity<Product>().HasData(new Product { Id = 3, Name = "種子商品3", ImgPath = "https://picsum.photos/300/200/?random=3", IsOnTheMarket = true, CreatedTime = DateTime.UtcNow });
+            modelBuilder.Entity<Product>().HasData(new Product { Id = 1, CategoryId = 1, Name = "種子商品1", ImgPath = "https://picsum.photos/300/200/?random=1", IsOnTheMarket = true, CreatedTime = DateTime.UtcNow });
+            modelBuilder.Entity<Product>().HasData(new Product { Id = 2, CategoryId = 2, Name = "種子商品2", ImgPath = "https://picsum.photos/300/200/?random=2", IsOnTheMarket = false, CreatedTime = DateTime.UtcNow });
+            modelBuilder.Entity<Product>().HasData(new Product { Id = 3, CategoryId = 3, Name = "種子商品3", ImgPath = "https://picsum.photos/300/200/?random=3", IsOnTheMarket = true, CreatedTime = DateTime.UtcNow });
 
             #endregion
 
@@ -30,6 +49,8 @@ namespace BS.DemoShop.Infrastructure.Data
                .Property(b => b.UnitPrice)
                .HasPrecision(18, 2);
 
+            modelBuilder.Entity<ProductDetail>()
+               .ToTable("ProductDetails");
             #region ProductDetailSeed
 
             modelBuilder.Entity<ProductDetail>().HasData(new ProductDetail { Id = 1, ProductId = 1, Name = "種子規格1", UnitPrice = 100, Inventory = 100, CreatedTime = DateTime.UtcNow });
@@ -42,11 +63,11 @@ namespace BS.DemoShop.Infrastructure.Data
 
             #endregion
 
-            modelBuilder.Entity<Product>()
-                .ToTable("Products");
+            
 
-            modelBuilder.Entity<ProductDetail>()
-                .ToTable("ProductDetails");
+           
+
+           
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
