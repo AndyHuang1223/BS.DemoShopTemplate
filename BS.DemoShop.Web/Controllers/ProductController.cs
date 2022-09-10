@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using BS.DemoShop.Core.Entities;
+using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.Services;
+using BS.DemoShop.Web.ViewModels.Catalog;
 using BS.DemoShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,33 +12,45 @@ namespace BS.DemoShop.Web.Controllers
     public class ProductController : Controller
     {
         private readonly ProductViewModelService _productService;
+        private readonly ICatalogViewModelService _catalogViewModelService;
 
-        public ProductController(ProductViewModelService productService)
+        public ProductController(ProductViewModelService productService, ICatalogViewModelService catalogViewModelService)
         {
             _productService = productService;
+            _catalogViewModelService = catalogViewModelService;
         }
-
+        public async Task<IActionResult> CatalogIndex(CatalogIndexViewModel input)
+        {
+            var result = await _catalogViewModelService.GetCatelogItems(input.CategoryId);
+            return View("CatalogIndex", result);
+        }
         public IActionResult Index()
         {
             var products = _productService.GetAllProduct();
             return View(products);
         }
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            var product = _productService.GetById(id);
+            var product = await _productService.GetById(id);
             if (product is null)
             {
                 return RedirectToAction("Index");
             }
             return View(product);
         }
-        public IActionResult CreateProduct()
+        public async Task<IActionResult> CreateProduct()
         {
-            return View(new CreateProductViewModel());
+            var result = new CreateProductViewModel()
+            {
+                CategoryItems = (await _catalogViewModelService.GetCategories()).ToList()
+            };
+            return View(result);
         }
         [HttpPost]
-        public IActionResult CreateProductDetail(CreateProductViewModel input)
+        public async Task<IActionResult> CreateProductDetail(CreateProductViewModel input)
         {
+            var items = (await _catalogViewModelService.GetCategories(input.CategoryId)).ToList();
+            input.CategoryItems = items;
             input.ProductDetail.Add(new CreateDetailViewModel());
             return View("CreateProduct", input);
         }

@@ -17,6 +17,7 @@ namespace BS.DemoShop.Infrastructure.Data.Queries
             _demoShopContext = demoShopContext;
         }
 
+        
         public async Task<int> GetProductTotalInventoryById(int productId)
         {
             //積極載入 https://docs.microsoft.com/zh-tw/ef/core/querying/related-data/eager
@@ -33,6 +34,16 @@ namespace BS.DemoShop.Infrastructure.Data.Queries
             //    .SumAsync(pd => pd.Inventory);
 
             return totalInventory;
+        }
+
+        public async Task<decimal> GetProductMaxPriceById(int productId)
+        {
+            var product = _demoShopContext.Product.
+                Include(p => p.ProductDetails.Where(pd => pd.ProductId == productId))
+                .AsNoTracking();
+
+            var maxPrice = await product.SelectMany(p => p.ProductDetails).MaxAsync(pd => pd.UnitPrice);
+            return maxPrice;
         }
     }
 }

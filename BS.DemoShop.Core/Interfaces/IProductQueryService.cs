@@ -10,5 +10,7 @@ namespace BS.DemoShop.Core.Interfaces
     public interface IProductQueryService
     {
         Task<int> GetProductTotalInventoryById(int productId);
+
+        Task<decimal> GetProductMaxPriceById(int productId);
     }
 }

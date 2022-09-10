@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BS.DemoShop.Web.ViewModels.Product
@@ -12,5 +13,7 @@ namespace BS.DemoShop.Web.ViewModels.Product
         [Display(Name = "圖片路徑")]
         public string ImgPath { get; set; }
         public List<CreateDetailViewModel> ProductDetail { get; set; } = new List<CreateDetailViewModel>();
+        public List<SelectListItem> CategoryItems { get; set; }
+        public int CategoryId { get; set; }
     }
 }
