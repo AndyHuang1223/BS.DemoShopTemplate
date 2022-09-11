@@ -37,7 +37,7 @@ namespace BS.DemoShop.Web.Services
 
         public bool CanUserSignIn(string email, string password)
         {
-            return _userRepo.GetAllReadOnly().Any(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
+            return _userRepo.Any(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
         }
 
         public bool IsAuthenticated()
@@ -47,7 +47,7 @@ namespace BS.DemoShop.Web.Services
 
         public bool IsExistUser(string email)
         {
-            return _userRepo.GetAllReadOnly().Any(user => user.Email == email);
+            return _userRepo.Any(user => user.Email == email);
         }
 
         public async Task SignInAsync(ClaimsIdentity claimsIdentity, bool isPersistent = true)
@@ -70,7 +70,7 @@ namespace BS.DemoShop.Web.Services
 
         public async Task SignUpAsync(SignUpViewModel input)
         {
-            var normalRole = _roleRepo.GetAll().First(x => x.RoleType == RoleType.NormalUser);
+            var normalRole = _roleRepo.FirstOrDefault(x => x.RoleType == RoleType.NormalUser);
             var user = new User
             {
                 Email = input.Email,
@@ -87,7 +87,7 @@ namespace BS.DemoShop.Web.Services
         
         public async Task<ClaimsIdentity> GetUserClaimsIdentity(string email, string password)
         {
-            var user = _userRepo.GetAllReadOnly().SingleOrDefault(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
+            var user = await _userRepo.SingleOrDefaultAsync(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
             if (user == null)
             {
                 //TODO User Notfount Exception
@@ -116,8 +116,8 @@ namespace BS.DemoShop.Web.Services
 
         private ClaimsIdentity BuildClaimsIdentity(User user)
         {
-            var userRoles = _userRoleRepo.GetAllReadOnly().Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
-            var roles = _roleRepo.GetAllReadOnly().Where(r => userRoles.Contains(r.Id)).ToList();
+            var userRoles = _userRoleRepo.Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
+            var roles = _roleRepo.Where(r => userRoles.Contains(r.Id)).ToList();
             var userIdentity = SetClaimsIdentity(user.Name ?? user.Email, roles);
             return userIdentity;
         }
