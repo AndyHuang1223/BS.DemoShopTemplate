@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using BS.DemoShop.Core.Extensions;
 
 namespace BS.DemoShop.Infrastructure.Services
 {
@@ -12,13 +13,7 @@ namespace BS.DemoShop.Infrastructure.Services
     {
         public string HashPassword(string password)
         {
-            byte[] source = Encoding.Default.GetBytes(password);
-            using (var mySHA256 = SHA256.Create())
-            {
-                byte[] hashValue = mySHA256.ComputeHash(source);
-                string result = hashValue.Aggregate(string.Empty, (current, t) => current + t.ToString("X2"));
-                return result.ToUpper();
-            }
+            return password.ToSHA256();
         }
     }
 }
