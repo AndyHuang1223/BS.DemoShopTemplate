@@ -70,6 +70,7 @@ namespace BS.DemoShop.Web.Services
 
         public async Task SignUpAsync(SignUpViewModel input)
         {
+            var normalRole = _roleRepo.GetAll().First(x => x.RoleType == RoleType.NormalUser);
             var user = new User
             {
                 Email = input.Email,
@@ -78,8 +79,8 @@ namespace BS.DemoShop.Web.Services
                 CreatedTime = DateTimeOffset.UtcNow,
                 Password = _appPasswordHasher.HashPassword(input.Password)
             };
-            var result = _userRepo.Add(user);
-            var userIdentity = BuildClaimsIdentity(result);
+            var userRole = _userRoleRepo.Add(new UserRole { Role = normalRole, User = user });
+            var userIdentity = BuildClaimsIdentity(user);
             await SignInAsync(userIdentity);
         }
 
