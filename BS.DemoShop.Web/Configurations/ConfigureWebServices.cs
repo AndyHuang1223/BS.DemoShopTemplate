@@ -12,7 +12,7 @@ namespace BS.DemoShop.Web.Configurations
             services.AddScoped<ProductViewModelService>();
             services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
             services.AddScoped<IAccountViewModelService, AccountViewModelService>();
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ISingInManager, CustomSingInManager>();
             services.AddHttpContextAccessor();
             return services;
         }

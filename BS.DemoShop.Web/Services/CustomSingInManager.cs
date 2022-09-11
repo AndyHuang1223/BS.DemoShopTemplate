@@ -15,14 +15,14 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Web.Services
 {
-    public class AccountService : IAccountService
+    public class CustomSingInManager : ISingInManager
     {
         private readonly IRepository<User> _userRepo;
         private readonly IRepository<Role> _roleRepo;
         private readonly IRepository<UserRole> _userRoleRepo;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAppPasswordHasher _appPasswordHasher;
-        public AccountService(IRepository<User> userRepo,
+        public CustomSingInManager(IRepository<User> userRepo,
             IHttpContextAccessor httpContextAccessor,
             IRepository<Role> roleRepo,
             IRepository<UserRole> userRoleRepo,
@@ -37,7 +37,7 @@ namespace BS.DemoShop.Web.Services
 
         public bool CanUserSignIn(string email, string password)
         {
-            return _userRepo.GetAll().Any(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
+            return _userRepo.GetAllReadOnly().Any(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
         }
 
         public bool IsAuthenticated()
@@ -47,7 +47,7 @@ namespace BS.DemoShop.Web.Services
 
         public bool IsExistUser(string email)
         {
-            return _userRepo.GetAll().Any(user => user.Email == email);
+            return _userRepo.GetAllReadOnly().Any(user => user.Email == email);
         }
 
         public async Task SignInAsync(ClaimsIdentity claimsIdentity, bool isPersistent = true)
@@ -76,7 +76,7 @@ namespace BS.DemoShop.Web.Services
                 Name = input.Name,
                 Gender = input.Gender.Value,
                 CreatedTime = DateTimeOffset.UtcNow,
-                Password = input.Password.ToSHA256()
+                Password = _appPasswordHasher.HashPassword(input.Password)
             };
             var result = _userRepo.Add(user);
             var userIdentity = BuildClaimsIdentity(result);
@@ -86,7 +86,7 @@ namespace BS.DemoShop.Web.Services
         
         public async Task<ClaimsIdentity> GetUserClaimsIdentity(string email, string password)
         {
-            var user = _userRepo.GetAll().SingleOrDefault(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
+            var user = _userRepo.GetAllReadOnly().SingleOrDefault(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
             if (user == null)
             {
                 //TODO User Notfount Exception
@@ -115,8 +115,8 @@ namespace BS.DemoShop.Web.Services
 
         private ClaimsIdentity BuildClaimsIdentity(User user)
         {
-            var userRoles = _userRoleRepo.GetAll().Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
-            var roles = _roleRepo.GetAll().Where(r => userRoles.Contains(r.Id)).ToList();
+            var userRoles = _userRoleRepo.GetAllReadOnly().Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
+            var roles = _roleRepo.GetAllReadOnly().Where(r => userRoles.Contains(r.Id)).ToList();
             var userIdentity = SetClaimsIdentity(user.Name ?? user.Email, roles);
             return userIdentity;
         }

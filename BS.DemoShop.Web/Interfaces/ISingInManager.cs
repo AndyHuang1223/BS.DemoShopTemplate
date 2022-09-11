@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Web.Interfaces
 {
-    public interface IAccountService
+    public interface ISingInManager
     {
         bool IsExistUser(string email);
 

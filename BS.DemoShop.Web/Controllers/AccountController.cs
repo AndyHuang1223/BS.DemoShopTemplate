@@ -10,10 +10,10 @@ namespace BS.DemoShop.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountService _accountService;
+        private readonly ISingInManager _accountService;
         private readonly IAccountViewModelService _accountViewModelService;
 
-        public AccountController(IAccountService accountService, IAccountViewModelService accountViewModelService)
+        public AccountController(ISingInManager accountService, IAccountViewModelService accountViewModelService)
         {
             _accountService = accountService;
             _accountViewModelService = accountViewModelService;
