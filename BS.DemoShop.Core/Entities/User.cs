@@ -14,7 +14,7 @@ namespace BS.DemoShop.Core.Entities
         public string Password { get; set; }
         public UserGender Gender { get; set; }
         public DateTimeOffset CreatedTime { get; set; }
-        public DateTimeOffset UpdatedTime { get; set; }
+        public DateTimeOffset? UpdatedTime { get; set; }
         public ICollection<UserRole> Roles { get; set; }
     }
 
