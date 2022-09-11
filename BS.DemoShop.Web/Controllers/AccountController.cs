@@ -104,5 +104,10 @@ namespace BS.DemoShop.Web.Controllers
             return Redirect(returnUrl);
 
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
