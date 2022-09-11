@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,5 +24,14 @@ namespace BS.DemoShop.Core.Interfaces
         Task DeleteRangeAsync(IEnumerable<T> entities);
         IQueryable<T> GetAll();
         IQueryable<T> GetAllReadOnly();
+        T GetById<TId>(TId id);
+        Task<T> GetByIdAsync<TId>(TId id);
+        T FirstOrDefault(Expression<Func<T, bool>> expression);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
+        T SingleOrDefault(Expression<Func<T, bool>> expression);
+        Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression);
+        bool Any(Expression<Func<T, bool>> expression);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
+        IEnumerable<T> Where(Expression<Func<T, bool>> expression);
     }
 }

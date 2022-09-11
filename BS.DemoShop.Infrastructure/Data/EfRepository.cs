@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -107,6 +108,51 @@ namespace BS.DemoShop.Infrastructure.Data
         public IQueryable<T> GetAllReadOnly()
         {
             return DbContext.Set<T>().AsNoTracking();
+        }
+
+        public T GetById<TId>(TId id)
+        {
+            return DbContext.Set<T>().Find(new object[] { id });
+        }
+
+        public async Task<T> GetByIdAsync<TId>(TId id)
+        {
+            return await DbContext.Set<T>().FindAsync(new object[] { id });
+        }
+
+        public T FirstOrDefault(Expression<Func<T, bool>> expression)
+        {
+            return DbContext.Set<T>().FirstOrDefault(expression);
+        }
+
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
+        {
+            return await DbContext.Set<T>().FirstOrDefaultAsync(expression);
+        }
+
+        public T SingleOrDefault(Expression<Func<T, bool>> expression)
+        {
+            return DbContext.Set<T>().SingleOrDefault(expression);
+        }
+
+        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression)
+        {
+            return await DbContext.Set<T>().SingleOrDefaultAsync(expression);
+        }
+
+        public bool Any(Expression<Func<T, bool>> expression)
+        {
+            return DbContext.Set<T>().Any(expression);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
+        {
+            return await DbContext.Set<T>().AnyAsync(expression);
+        }
+
+        public IEnumerable<T> Where(Expression<Func<T, bool>> expression)
+        {
+            return DbContext.Set<T>().Where(expression).AsEnumerable();
         }
     }
 }
