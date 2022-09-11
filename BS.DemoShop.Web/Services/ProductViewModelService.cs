@@ -1,6 +1,7 @@
 ﻿using BS.DemoShop.Core.Entities;
 using BS.DemoShop.Core.Extensions;
 using BS.DemoShop.Core.Interfaces;
+using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -15,20 +16,23 @@ namespace BS.DemoShop.Web.Services
         private readonly IRepository<ProductDetail> _productDetailRepo;
         private readonly IProductRepository _productRepository;
         private readonly IProductQueryService _productQueryService;
+        private readonly ICatalogViewModelService _catalogViewModelService;
 
         public ProductViewModelService(
             IRepository<Product> productRepo,
             IRepository<ProductDetail> productDetailRepo,
             IProductRepository productRepository,
-            IProductQueryService productQueryService)
+            IProductQueryService productQueryService,
+            ICatalogViewModelService catalogViewModelService)
         {
             _productRepo = productRepo;
             _productDetailRepo = productDetailRepo;
             _productRepository = productRepository;
             _productQueryService = productQueryService;
+            _catalogViewModelService = catalogViewModelService;
         }
 
-        public ProductViewModel GetById(int id)
+        public async Task<ProductViewModel> GetById(int id)
         {
 
             var product = _productRepo.GetAllReadOnly().FirstOrDefault(x => x.Id == id);
@@ -49,7 +53,9 @@ namespace BS.DemoShop.Web.Services
                 ImgPath = product.ImgPath,
                 ProductDetails = productDetails,
                 CreatedTime = product.CreatedTime.ToTaiwaneseTime(),
-                LastUpdatedTime = product.UpdatedTime?.ToTaiwaneseTime()
+                LastUpdatedTime = product.UpdatedTime?.ToTaiwaneseTime(),
+                CategoryId = product.CategoryId,
+                CategoryItems = (await _catalogViewModelService.GetCategories(product.CategoryId)).ToList()
             };
 
             return result;
@@ -69,7 +75,7 @@ namespace BS.DemoShop.Web.Services
 
             foreach (var product in products)
             {
-                if(productDetails.Any(pd=>pd.ProductId == product.Id))
+                if (productDetails.Any(pd => pd.ProductId == product.Id))
                 {
                     product.Price = productDetails.FirstOrDefault()?.UnitPrice ?? 0;
                 }
@@ -84,7 +90,8 @@ namespace BS.DemoShop.Web.Services
                 Name = input.Name,
                 ImgPath = input.ImgPath,
                 CreatedTime = DateTime.UtcNow,
-                ProductDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList()
+                ProductDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow }).ToList(),
+                CategoryId = input.CategoryId,
 
             };
             _productRepository.Add(product);
@@ -97,7 +104,8 @@ namespace BS.DemoShop.Web.Services
             {
                 Name = input.Name,
                 ImgPath = input.ImgPath,
-                CreatedTime = DateTime.UtcNow
+                CreatedTime = DateTime.UtcNow,
+                CategoryId = input.CategoryId
             };
             var productDetails = input.ProductDetail.Select(x => new ProductDetail { Name = x.SpecName, UnitPrice = x.UnitPrice, CreatedTime = DateTime.UtcNow });
             _productRepository.CreateProductAndDetails(product, productDetails);
@@ -122,6 +130,7 @@ namespace BS.DemoShop.Web.Services
             productSource.Name = input.Name;
             productSource.ImgPath = input.ImgPath;
             productSource.UpdatedTime = now;
+            productSource.CategoryId = input.CategoryId;
 
 
             var detailSource = _productDetailRepo.GetAll()
@@ -150,7 +159,7 @@ namespace BS.DemoShop.Web.Services
         public async Task<ProductViewModel> CreateProductWithDetail(CreateDefaultProductDTO input)
         {
             var defaultProductDetail = new ProductDetail("預設規格", 100);
-            
+
             var productEntity = await _productRepository.CreateProductWithDetail(input.Name, input.ImgPath, "預設商品", defaultProductDetail);
             var result = new ProductViewModel
             {
