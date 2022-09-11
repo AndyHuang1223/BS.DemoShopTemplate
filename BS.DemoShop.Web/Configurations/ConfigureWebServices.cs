@@ -1,5 +1,6 @@
 ﻿using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BS.DemoShop.Web.Configurations
@@ -10,6 +11,9 @@ namespace BS.DemoShop.Web.Configurations
         {
             services.AddScoped<ProductViewModelService>();
             services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
+            services.AddScoped<IAccountViewModelService, AccountViewModelService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddHttpContextAccessor();
             return services;
         }
     }
