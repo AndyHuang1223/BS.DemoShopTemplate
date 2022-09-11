@@ -75,23 +75,25 @@ namespace BS.DemoShop.Infrastructure.Data
             modelBuilder.Entity<User>()
                 .ToTable("Users");
             #region UserSeed
-            modelBuilder.Entity<User>()
-                //TODO Password need to change
-                .HasData(new User { Id = 1, Name = "DefaultUser", Email = "DefaultUser@gmail.com", Password = _passwordHasher.HashPassword("P@ssword"), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
+            modelBuilder.Entity<User>().HasData(new User { Id = 1, Name = "AdminUser", Email = "AdminUser@gmail.com", Password = _passwordHasher.HashPassword("AdminUser"), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
+            modelBuilder.Entity<User>().HasData(new User { Id = 2, Name = "Developer", Email = "Developer@gmail.com", Password = _passwordHasher.HashPassword("Developer"), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
             #endregion
 
             modelBuilder.Entity<Role>()
                 .ToTable("Roles");
             #region RoleSeed
-            modelBuilder.Entity<Role>()
-                .HasData(new Role { Id = 1, Name = "Normal" });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = Core.Constants.AuthorizationConstants.NormalUser, RoleType = RoleType.NormalUser });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = Core.Constants.AuthorizationConstants.Administrator, RoleType = RoleType.Administrator });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = Core.Constants.AuthorizationConstants.Developer, RoleType = RoleType.Developer });
             #endregion
 
             modelBuilder.Entity<UserRole>()
                 .ToTable("UserRoles");
             #region UserRoleSeed
-            modelBuilder.Entity<UserRole>()
-                .HasData(new UserRole { Id = 1, RoleId = 1, UserId = 1 });
+            modelBuilder.Entity<UserRole>().HasData(new UserRole { Id = 1, RoleId = 1, UserId = 1 });
+            modelBuilder.Entity<UserRole>().HasData(new UserRole { Id = 2, RoleId = 1, UserId = 2 });
+            modelBuilder.Entity<UserRole>().HasData(new UserRole { Id = 3, RoleId = 2, UserId = 1 });
+            modelBuilder.Entity<UserRole>().HasData(new UserRole { Id = 4, RoleId = 3, UserId = 2 });
             #endregion
 
 
