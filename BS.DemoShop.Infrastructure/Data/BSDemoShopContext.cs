@@ -1,4 +1,5 @@
 ﻿using BS.DemoShop.Core.Entities;
+using BS.DemoShop.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,18 @@ namespace BS.DemoShop.Infrastructure.Data
 {
     public partial class BSDemoShopContext : DbContext
     {
-        public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options) : base(options) { }
+        private readonly IAppPasswordHasher _passwordHasher;
+        public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options, IAppPasswordHasher passwordHasher) : base(options)
+        {
+            _passwordHasher = passwordHasher;
+        }
 
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductDetail> ProductDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +36,7 @@ namespace BS.DemoShop.Infrastructure.Data
             modelBuilder.Entity<Category>().HasData(new Category { Id = 3, Name = "預設分類3", Sort = 2, CreatedTime = DateTimeOffset.UtcNow });
 
             #endregion
-            
+
             modelBuilder.Entity<Product>()
                .ToTable("Products");
 
@@ -63,11 +71,30 @@ namespace BS.DemoShop.Infrastructure.Data
 
             #endregion
 
-            
 
-           
+            modelBuilder.Entity<User>()
+                .ToTable("Users");
+            #region UserSeed
+            modelBuilder.Entity<User>()
+                //TODO Password need to change
+                .HasData(new User { Id = 1, Name = "DefaultUser", Email = "DefaultUser@gmail.com", Password = _passwordHasher.HashPassword("P@ssword"), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
+            #endregion
 
-           
+            modelBuilder.Entity<Role>()
+                .ToTable("Roles");
+            #region RoleSeed
+            modelBuilder.Entity<Role>()
+                .HasData(new Role { Id = 1, Name = "Normal" });
+            #endregion
+
+            modelBuilder.Entity<UserRole>()
+                .ToTable("UserRoles");
+            #region UserRoleSeed
+            modelBuilder.Entity<UserRole>()
+                .HasData(new UserRole { Id = 1, RoleId = 1, UserId = 1 });
+            #endregion
+
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

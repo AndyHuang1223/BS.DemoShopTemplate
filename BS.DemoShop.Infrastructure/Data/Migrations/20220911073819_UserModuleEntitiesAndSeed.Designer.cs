@@ -4,14 +4,16 @@ using BS.DemoShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BS.DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    partial class BSDemoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20220911073819_UserModuleEntitiesAndSeed")]
+    partial class UserModuleEntitiesAndSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
