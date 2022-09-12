@@ -20,8 +20,9 @@ namespace BS.DemoShop.Web.Services
         private readonly IRepository<User> _userRepo;
         private readonly IRepository<Role> _roleRepo;
         private readonly IRepository<UserRole> _userRoleRepo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HttpContext _httpContext;
         private readonly IAppPasswordHasher _appPasswordHasher;
+
         public CustomSingInManager(IRepository<User> userRepo,
             IHttpContextAccessor httpContextAccessor,
             IRepository<Role> roleRepo,
@@ -29,7 +30,7 @@ namespace BS.DemoShop.Web.Services
             IAppPasswordHasher appPasswordHasher)
         {
             _userRepo = userRepo;
-            _httpContextAccessor = httpContextAccessor;
+            _httpContext = httpContextAccessor.HttpContext;
             _roleRepo = roleRepo;
             _userRoleRepo = userRoleRepo;
             _appPasswordHasher = appPasswordHasher;
@@ -42,7 +43,7 @@ namespace BS.DemoShop.Web.Services
 
         public bool IsAuthenticated()
         {
-            return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+            return _httpContext.User.Identity != null && _httpContext.User.Identity.IsAuthenticated;
         }
 
         public bool IsExistUser(string email)
@@ -52,45 +53,46 @@ namespace BS.DemoShop.Web.Services
 
         public async Task SignInAsync(ClaimsIdentity claimsIdentity, bool isPersistent = true)
         {
-
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
+            await _httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
             {
                 //TODO 調整為合適的過期時間
                 ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1),
                 IsPersistent = isPersistent
             });
-
         }
 
         public async Task SignOutAsync()
         {
-            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public async Task SignUpAsync(SignUpViewModel input)
         {
-            var normalRole = _roleRepo.FirstOrDefault(x => x.RoleType == RoleType.NormalUser);
             var user = new User
             {
                 Email = input.Email,
                 Name = input.Name,
-                Gender = input.Gender.Value,
+                Gender = input.Gender ?? UserGender.None,
                 CreatedTime = DateTimeOffset.UtcNow,
                 Password = _appPasswordHasher.HashPassword(input.Password)
             };
-            var userRole = _userRoleRepo.Add(new UserRole { Role = normalRole, User = user });
+            
+            var normalRole = await _roleRepo.FirstOrDefaultAsync(x => x.RoleType == RoleType.NormalUser);
+            await _userRoleRepo.AddAsync(new UserRole { Role = normalRole, User = user });
+            
             var userIdentity = BuildClaimsIdentity(user);
+            
             await SignInAsync(userIdentity);
         }
 
-        
+
         public async Task<ClaimsIdentity> GetUserClaimsIdentity(string email, string password)
         {
             var user = await _userRepo.SingleOrDefaultAsync(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
             if (user == null)
             {
-                //TODO User Notfount Exception
+                //TODO User not found Exception
                 await SignOutAsync();
                 return default;
             }
@@ -121,6 +123,5 @@ namespace BS.DemoShop.Web.Services
             var userIdentity = SetClaimsIdentity(user.Name ?? user.Email, roles);
             return userIdentity;
         }
-
     }
 }
