@@ -1,0 +1,31 @@
+﻿@using BS.DemoShop.Web.ViewModels.Catalog
+@model CatalogIndexViewModel
+@{
+    var productsCards = Model.ProductCards;
+    var categoryList = Model.CategoryItemList;
+}
+<form method="get" asp-action="CatalogIndex">
+    <div class="row">
+        <div class="form-group col-11">
+            <select asp-for="@Model.CategoryId" asp-items="@categoryList" class="form-control"></select>
+        </div>
+        <div class="col-1">
+            <button type="submit" class="btn btn-primary">搜尋</button>
+        </div>
+    </div>
+</form>
+<div class="row">
+    @foreach (var product in productsCards)
+    {
+        <div class="col-3">
+            <div class="card">
+                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                <div class="card-body">
+                    <p class="card-title h5">@product.Name</p>
+                    <p class="card-text text-danger">@product.Price.ToString("#,#")</p>
+                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="btn btn-primary">查看明細</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

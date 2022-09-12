@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,6 +19,8 @@ namespace BS.DemoShop.Web.ViewModels.Product
         public string ImgPath { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime? LastUpdatedTime { get; set; }
+        public List<SelectListItem> CategoryItems { get; set; }
+        public int CategoryId { get; set; }
         public List<ProductDetailViewModel> ProductDetails { get; set; } = new List<ProductDetailViewModel>();
     }
 }

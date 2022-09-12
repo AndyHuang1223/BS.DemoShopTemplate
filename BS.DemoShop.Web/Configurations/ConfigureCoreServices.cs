@@ -1,6 +1,8 @@
 ﻿
 using BS.DemoShop.Core.Interfaces;
 using BS.DemoShop.Infrastructure.Data;
+using BS.DemoShop.Infrastructure.Data.Queries;
+using BS.DemoShop.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +14,8 @@ namespace BS.DemoShop.Web.Configurations
         {
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductQueryService, ProductQueryService>();
+            services.AddScoped<IAppPasswordHasher, SHA256Hasher>();
 
             return services;
         }

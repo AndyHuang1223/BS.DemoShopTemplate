@@ -30,6 +30,7 @@ namespace BS.DemoShop
             services.AddControllersWithViews();
             services.AddCoreServices();
             services.AddWebServices();
+            services.AddCookieSettings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,10 +48,12 @@ namespace BS.DemoShop
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "Index", pattern: "/", new { Controller = "Product", Action = "CatalogIndex" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
