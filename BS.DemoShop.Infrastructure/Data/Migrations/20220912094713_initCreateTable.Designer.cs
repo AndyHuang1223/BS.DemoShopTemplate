@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BS.DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    [Migration("20220910065354_CategoryAndSeed")]
-    partial class CategoryAndSeed
+    [Migration("20220912094713_initCreateTable")]
+    partial class initCreateTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,21 +45,21 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 269, DateTimeKind.Unspecified).AddTicks(2486), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 966, DateTimeKind.Unspecified).AddTicks(5580), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類1",
                             Sort = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Unspecified).AddTicks(317), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5400), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類2",
                             Sort = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Unspecified).AddTicks(382), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5470), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類3",
                             Sort = 2
                         });
@@ -98,8 +98,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId")
-                        .IsUnique();
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
 
@@ -108,7 +107,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1604),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8140),
                             ImgPath = "https://picsum.photos/300/200/?random=1",
                             IsOnTheMarket = true,
                             Name = "種子商品1"
@@ -117,7 +116,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1928),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8600),
                             ImgPath = "https://picsum.photos/300/200/?random=2",
                             IsOnTheMarket = false,
                             Name = "種子商品2"
@@ -126,7 +125,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 3,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 270, DateTimeKind.Utc).AddTicks(1947),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8610),
                             ImgPath = "https://picsum.photos/300/200/?random=3",
                             IsOnTheMarket = true,
                             Name = "種子商品3"
@@ -170,7 +169,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(471),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(8680),
                             Inventory = 100,
                             Name = "種子規格1",
                             ProductId = 1,
@@ -179,7 +178,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(781),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140),
                             Inventory = 10,
                             Name = "種子規格2",
                             ProductId = 1,
@@ -188,7 +187,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(800),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140),
                             Inventory = 8,
                             Name = "種子規格3",
                             ProductId = 1,
@@ -197,7 +196,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(816),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150),
                             Inventory = 18,
                             Name = "種子規格4",
                             ProductId = 2,
@@ -206,7 +205,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(832),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150),
                             Inventory = 0,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -215,7 +214,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(850),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160),
                             Inventory = 120,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -224,7 +223,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedTime = new DateTime(2022, 9, 10, 6, 53, 54, 271, DateTimeKind.Utc).AddTicks(865),
+                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160),
                             Inventory = 20,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -232,11 +231,147 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "NormalUser",
+                            RoleType = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Administrator",
+                            RoleType = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Developer",
+                            RoleType = 2
+                        });
+                });
+
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedTime")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(2040), new TimeSpan(0, 0, 0, 0, 0)),
+                            Email = "AdminUser@gmail.com",
+                            Gender = 0,
+                            Name = "AdminUser",
+                            Password = "8095B76E4B6D46F529D65C8E75936C8D3BD689189B68CCA59826783031B64F79"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(3190), new TimeSpan(0, 0, 0, 0, 0)),
+                            Email = "Developer@gmail.com",
+                            Gender = 0,
+                            Name = "Developer",
+                            Password = "3FB7B39416F1D067268747FC214494D759D2609F863ACE1A8A76705618D5C80B"
+                        });
+                });
+
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleId = 2,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            RoleId = 3,
+                            UserId = 2
+                        });
+                });
+
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Product", b =>
                 {
                     b.HasOne("BS.DemoShop.Core.Entities.Category", "Category")
-                        .WithOne("Product")
-                        .HasForeignKey("BS.DemoShop.Core.Entities.Product", "CategoryId")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -254,14 +389,43 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.UserRole", b =>
+                {
+                    b.HasOne("BS.DemoShop.Core.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BS.DemoShop.Core.Entities.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BS.DemoShop.Core.Entities.Product", b =>
                 {
                     b.Navigation("ProductDetails");
+                });
+
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("BS.DemoShop.Core.Entities.User", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }
