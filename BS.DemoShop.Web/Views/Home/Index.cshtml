@@ -1,6 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<h2>User Name : @Context.User.Identity.Name</h2>
+<h3>Your Claims</h3>
+<ul>
+    @foreach (var claim in Context.User.Claims)
+    {
+        <li>@claim.Type.Split('/').Last()  : @claim.Value</li>
+    }
+</ul>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>

@@ -5,6 +5,7 @@ using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.Services;
 using BS.DemoShop.Web.ViewModels.Catalog;
 using BS.DemoShop.Web.ViewModels.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BS.DemoShop.Web.Controllers
@@ -29,6 +30,7 @@ namespace BS.DemoShop.Web.Controllers
             var products = _productService.GetAllProduct();
             return View(products);
         }
+        [Authorize]
         public async Task<IActionResult> Detail(int id)
         {
             var product = await _productService.GetById(id);
