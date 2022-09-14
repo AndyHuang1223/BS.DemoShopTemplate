@@ -11,7 +11,6 @@ namespace BS.DemoShop.Web.Services
         {
             var items = new List<SelectListItem>()
             {
-                new SelectListItem() { Text = "請填寫性別", Selected = true},
                 new SelectListItem() { Text = "不透漏", Value = UserGender.None.ToString("D") },
                 new SelectListItem() { Text = "男性", Value = UserGender.Male.ToString("D") },
                 new SelectListItem() { Text = "女性", Value = UserGender.Male.ToString("D") }
