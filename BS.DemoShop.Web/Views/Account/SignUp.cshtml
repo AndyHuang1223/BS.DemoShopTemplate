@@ -11,12 +11,12 @@
         <form method="post">
             <div class="form-group">
                 <label asp-for="@Model.Name"></label>
-                <input asp-for="@Model.Name" class="form-control" />
+                <input asp-for="@Model.Name" class="form-control"/>
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.Email"></label>
-                <input asp-for="@Model.Email" class="form-control" />
+                <input asp-for="@Model.Email" class="form-control"/>
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -26,15 +26,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="@Model.ConfirmPassword"></label>
-                <input asp-for="@Model.ConfirmPassword" class="form-control" type="password" />
+                <input asp-for="@Model.ConfirmPassword" class="form-control" type="password"/>
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="@Model.Gender"></label>
                 <select class="form-control" asp-for="@Model.Gender" asp-items="@Model.GenderList"></select>
+                <span asp-validation-for="@Model.Gender" class="text-danger"></span>
             </div>
 
             <div class="form-group d-none">
-                <input asp-for="@Model.ReturnUrl" class="form-control" />
+                <input asp-for="@Model.ReturnUrl" class="form-control"/>
             </div>
             <p class="text-danger">@TempData["Error"]</p>
             <button type="submit" class="btn btn-primary" asp-controller="Account" asp-action="SignUp">註冊</button>

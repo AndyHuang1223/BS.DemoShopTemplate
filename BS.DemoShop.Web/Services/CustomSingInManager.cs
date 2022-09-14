@@ -35,24 +35,20 @@ namespace BS.DemoShop.Web.Services
             _userRoleRepo = userRoleRepo;
             _appPasswordHasher = appPasswordHasher;
         }
-
-        public bool CanUserSignIn(string email, string password)
+        public bool IsExistUser(User user)
         {
-            return _userRepo.Any(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
+            return _userRepo.Any(u => u.Email == user.Email);
         }
 
-        public bool IsAuthenticated()
+        public bool CanUserSignIn(User user)
         {
-            return _httpContext.User.Identity != null && _httpContext.User.Identity.IsAuthenticated;
+            return _userRepo.Any(u => u.Email == user.Email && u.Password == _appPasswordHasher.HashPassword(user.Password));
         }
 
-        public bool IsExistUser(string email)
+        public async Task SignInAsync(User user, bool isPersistent = true)
         {
-            return _userRepo.Any(user => user.Email == email);
-        }
-
-        public async Task SignInAsync(ClaimsIdentity claimsIdentity, bool isPersistent = true)
-        {
+            
+            var claimsIdentity = BuildClaimsIdentity(user);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await _httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
             {
@@ -62,6 +58,10 @@ namespace BS.DemoShop.Web.Services
             });
         }
 
+        public bool IsAuthenticated()
+        {
+            return _httpContext.User.Identity != null && _httpContext.User.Identity.IsAuthenticated;
+        }
         public async Task SignOutAsync()
         {
             await _httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -73,7 +73,7 @@ namespace BS.DemoShop.Web.Services
             {
                 Email = input.Email,
                 Name = input.Name,
-                Gender = input.Gender ?? UserGender.None,
+                Gender = input.Gender,
                 CreatedTime = DateTimeOffset.UtcNow,
                 Password = _appPasswordHasher.HashPassword(input.Password)
             };
@@ -81,25 +81,12 @@ namespace BS.DemoShop.Web.Services
             var normalRole = await _roleRepo.FirstOrDefaultAsync(x => x.RoleType == RoleType.NormalUser);
             await _userRoleRepo.AddAsync(new UserRole { Role = normalRole, User = user });
             
-            var userIdentity = BuildClaimsIdentity(user);
-            
-            await SignInAsync(userIdentity);
+            await SignInAsync(user);
         }
 
-
-        public async Task<ClaimsIdentity> GetUserClaimsIdentity(string email, string password)
+        public async Task<User> GetUser(User user)
         {
-            var user = await _userRepo.SingleOrDefaultAsync(user => user.Email == email && user.Password == _appPasswordHasher.HashPassword(password));
-            if (user == null)
-            {
-                //TODO User not found Exception
-                await SignOutAsync();
-                return default;
-            }
-
-            var claimsIdentity = BuildClaimsIdentity(user);
-
-            return claimsIdentity;
+            return await _userRepo.SingleOrDefaultAsync(u => u.Email == user.Email && u.Password == _appPasswordHasher.HashPassword(user.Password));
         }
 
         private static ClaimsIdentity SetClaimsIdentity(string userName, IEnumerable<Role> roles)

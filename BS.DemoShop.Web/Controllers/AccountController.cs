@@ -10,12 +10,12 @@ namespace BS.DemoShop.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ISingInManager _accountService;
+        private readonly ISingInManager _signInManager;
         private readonly IAccountViewModelService _accountViewModelService;
 
-        public AccountController(ISingInManager accountService, IAccountViewModelService accountViewModelService)
+        public AccountController(ISingInManager signInManager, IAccountViewModelService accountViewModelService)
         {
-            _accountService = accountService;
+            _signInManager = signInManager;
             _accountViewModelService = accountViewModelService;
         }
 
@@ -36,22 +36,30 @@ namespace BS.DemoShop.Web.Controllers
                 return View(input);
             }
 
+            var user = new User
+            {
+                Email = input.Email,
+                Password = input.Password,
+            };
 
-            if (!_accountService.CanUserSignIn(input.Email, input.Password))
+            if (!_signInManager.CanUserSignIn(user))
             {
                 TempData["Error"] = "帳號或密碼錯誤";
                 return View(input);
             }
 
-            var userClaims = await _accountService.GetUserClaimsIdentity(input.Email, input.Password);
-            if(userClaims == null)
-            {
-                TempData["Error"] = "系統異常，請重新再試一遍，若持續發生請洽客服人員！";
-                return View(input);
-            }
-            await _accountService.SignInAsync(userClaims);
+            var sourceUser = await _signInManager.GetUser(user);
 
-            string returnUrl = string.IsNullOrEmpty(input.ReturnUrl) ? "/" : input.ReturnUrl;
+            if (sourceUser is null)
+            {
+                //TODO 查無會員資料處理
+                TempData["Error"] = "系統錯誤，請稍後再試！";
+                return View(input);   
+            }
+            
+            await _signInManager.SignInAsync(sourceUser, input.IsRemember);
+
+            var returnUrl = string.IsNullOrEmpty(input.ReturnUrl) ? "/" : input.ReturnUrl;
 
             return Redirect(returnUrl);
         }
@@ -60,7 +68,7 @@ namespace BS.DemoShop.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout(string returnUrl)
         {
-            await _accountService.SignOutAsync();
+            await _signInManager.SignOutAsync();
 
             returnUrl = string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl;
 
@@ -90,14 +98,21 @@ namespace BS.DemoShop.Web.Controllers
                 return View(input);
             }
 
-            if (_accountService.IsExistUser(input.Email))
+            var user = new User
+            {
+                Name = input.Name,
+                Email = input.Email,
+                Password = input.Password
+            };
+
+            if (_signInManager.IsExistUser(user))
             {
                 TempData["Error"] = "此帳號已被使用。";
                 input.GenderList = _accountViewModelService.GetUserGenderItems(input.Gender).ToList();
                 return View(input);
             }
 
-            await _accountService.SignUpAsync(input);
+            await _signInManager.SignUpAsync(input);
 
             var returnUrl = string.IsNullOrEmpty(input.ReturnUrl) ? "/" : input.ReturnUrl;
 
