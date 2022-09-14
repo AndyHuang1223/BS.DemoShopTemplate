@@ -26,7 +26,7 @@ namespace BS.DemoShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<BSDemoShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BSDemoShopConnection")).EnableSensitiveDataLogging());
+            services.AddDbContext<BSDemoShopContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BSDemoShopConnection")));
             services.AddCoreServices();
             services.AddWebServices();
             services.AddCookieSettings();
