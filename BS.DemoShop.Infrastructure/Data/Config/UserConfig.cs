@@ -16,11 +16,14 @@ namespace BS.DemoShop.Infrastructure.Data.Config
 
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            #region UserSeed
-            builder.HasData(new User { Id = 1, Name = "AdminUser", Email = "AdminUser@gmail.com", Password = "AdminUser".ToSHA256(), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
-            builder.HasData(new User { Id = 2, Name = "Developer", Email = "Developer@gmail.com", Password = "Developer".ToSHA256(), CreatedTime = DateTimeOffset.UtcNow, Gender = UserGender.None });
-            #endregion
-            builder.ToTable("Users");
+            builder
+                .Property(u => u.Email)
+                .HasMaxLength(500);
+            builder
+                .Property(u => u.Password)
+                .HasMaxLength(4000);
+            builder
+                .ToTable("Users");
         }
     }
 }

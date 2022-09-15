@@ -12,10 +12,8 @@ namespace BS.DemoShop.Infrastructure.Data
 {
     public partial class BSDemoShopContext : DbContext
     {
-        private readonly IAppPasswordHasher _passwordHasher;
-        public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options, IAppPasswordHasher passwordHasher) : base(options)
+        public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options): base(options)
         {
-            _passwordHasher = passwordHasher;
         }
 
         public virtual DbSet<Product> Product { get; set; }
@@ -27,15 +25,8 @@ namespace BS.DemoShop.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-
-           
-
-            
-
-
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            OnModelCreatingPartial(modelBuilder);
         }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

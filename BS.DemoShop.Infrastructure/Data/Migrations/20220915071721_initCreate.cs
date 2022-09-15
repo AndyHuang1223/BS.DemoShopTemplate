@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BS.DemoShop.Infrastructure.Data.Migrations
 {
-    public partial class initCreateTable : Migration
+    public partial class initCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoleType = table.Column<int>(type: "int", nullable: false)
+                    RoleType = table.Column<int>(type: "int", nullable: false, comment: " 0:NormalUser, 1:Administrator, 2:Developer")
                 },
                 constraints: table =>
                 {
@@ -43,8 +43,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     CreatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
@@ -64,8 +64,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsOnTheMarket = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -114,8 +114,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Inventory = table.Column<int>(type: "int", nullable: false),
-                    CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -134,9 +134,9 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CreatedTime", "Name", "Sort" },
                 values: new object[,]
                 {
-                    { 1, new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 966, DateTimeKind.Unspecified).AddTicks(5580), new TimeSpan(0, 0, 0, 0, 0)), "預設分類1", 0 },
-                    { 2, new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5400), new TimeSpan(0, 0, 0, 0, 0)), "預設分類2", 1 },
-                    { 3, new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5470), new TimeSpan(0, 0, 0, 0, 0)), "預設分類3", 2 }
+                    { 1, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3000), new TimeSpan(0, 0, 0, 0, 0)), "預設分類1", 0 },
+                    { 2, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3410), new TimeSpan(0, 0, 0, 0, 0)), "預設分類2", 1 },
+                    { 3, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3420), new TimeSpan(0, 0, 0, 0, 0)), "預設分類3", 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -154,8 +154,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CreatedTime", "Email", "Gender", "Name", "Password", "UpdatedTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(2040), new TimeSpan(0, 0, 0, 0, 0)), "AdminUser@gmail.com", 0, "AdminUser", "8095B76E4B6D46F529D65C8E75936C8D3BD689189B68CCA59826783031B64F79", null },
-                    { 2, new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(3190), new TimeSpan(0, 0, 0, 0, 0)), "Developer@gmail.com", 0, "Developer", "3FB7B39416F1D067268747FC214494D759D2609F863ACE1A8A76705618D5C80B", null }
+                    { 1, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 630, DateTimeKind.Unspecified).AddTicks(4690), new TimeSpan(0, 0, 0, 0, 0)), "AdminUser@gmail.com", 0, "AdminUser", "8095B76E4B6D46F529D65C8E75936C8D3BD689189B68CCA59826783031B64F79", null },
+                    { 2, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 630, DateTimeKind.Unspecified).AddTicks(5830), new TimeSpan(0, 0, 0, 0, 0)), "Developer@gmail.com", 0, "Developer", "3FB7B39416F1D067268747FC214494D759D2609F863ACE1A8A76705618D5C80B", null }
                 });
 
             migrationBuilder.InsertData(
@@ -163,9 +163,9 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CategoryId", "CreatedTime", "Description", "ImgPath", "IsOnTheMarket", "Name", "UpdatedTime" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8140), null, "https://picsum.photos/300/200/?random=1", true, "種子商品1", null },
-                    { 2, 2, new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8600), null, "https://picsum.photos/300/200/?random=2", false, "種子商品2", null },
-                    { 3, 3, new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8610), null, "https://picsum.photos/300/200/?random=3", true, "種子商品3", null }
+                    { 1, 1, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(7060), new TimeSpan(0, 0, 0, 0, 0)), null, "https://picsum.photos/300/200/?random=1", true, "種子商品1", null },
+                    { 2, 2, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(8050), new TimeSpan(0, 0, 0, 0, 0)), null, "https://picsum.photos/300/200/?random=2", false, "種子商品2", null },
+                    { 3, 3, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(8050), new TimeSpan(0, 0, 0, 0, 0)), null, "https://picsum.photos/300/200/?random=3", true, "種子商品3", null }
                 });
 
             migrationBuilder.InsertData(
@@ -184,13 +184,13 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                 columns: new[] { "Id", "CreatedTime", "Inventory", "Name", "ProductId", "UnitPrice", "UpdatedTime" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(8680), 100, "種子規格1", 1, 100m, null },
-                    { 2, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140), 10, "種子規格2", 1, 100m, null },
-                    { 3, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140), 8, "種子規格3", 1, 100m, null },
-                    { 4, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150), 18, "種子規格4", 2, 100m, null },
-                    { 5, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150), 0, "種子規格4", 3, 100m, null },
-                    { 6, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160), 120, "種子規格4", 3, 100m, null },
-                    { 7, new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160), 20, "種子規格4", 3, 100m, null }
+                    { 1, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(5460), new TimeSpan(0, 0, 0, 0, 0)), 100, "種子規格1", 1, 100m, null },
+                    { 2, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6270), new TimeSpan(0, 0, 0, 0, 0)), 10, "種子規格2", 1, 100m, null },
+                    { 3, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)), 8, "種子規格3", 1, 100m, null },
+                    { 4, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)), 18, "種子規格4", 2, 100m, null },
+                    { 5, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)), 0, "種子規格4", 3, 100m, null },
+                    { 6, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)), 120, "種子規格4", 3, 100m, null },
+                    { 7, new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)), 20, "種子規格4", 3, 100m, null }
                 });
 
             migrationBuilder.CreateIndex(
