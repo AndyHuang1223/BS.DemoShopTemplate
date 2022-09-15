@@ -14,8 +14,8 @@ namespace BS.DemoShop.Core.Entities
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
         public int Inventory { get; set; }
-        public DateTime CreatedTime { get; set; }
-        public DateTime? UpdatedTime { get; set; }
+        public DateTimeOffset CreatedTime { get; set; }
+        public DateTimeOffset? UpdatedTime { get; set; }
 
         public int ProductId { get; set; }
         public Product Product { get; set; }

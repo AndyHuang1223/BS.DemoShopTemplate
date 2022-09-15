@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BS.DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    [Migration("20220912094713_initCreateTable")]
-    partial class initCreateTable
+    [Migration("20220915071721_initCreate")]
+    partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,21 +45,21 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 966, DateTimeKind.Unspecified).AddTicks(5580), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3000), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類1",
                             Sort = 0
                         },
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5400), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3410), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類2",
                             Sort = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 967, DateTimeKind.Unspecified).AddTicks(5470), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 622, DateTimeKind.Unspecified).AddTicks(3420), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "預設分類3",
                             Sort = 2
                         });
@@ -75,8 +75,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -93,8 +93,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -107,7 +107,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8140),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(7060), new TimeSpan(0, 0, 0, 0, 0)),
                             ImgPath = "https://picsum.photos/300/200/?random=1",
                             IsOnTheMarket = true,
                             Name = "種子商品1"
@@ -116,7 +116,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8600),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(8050), new TimeSpan(0, 0, 0, 0, 0)),
                             ImgPath = "https://picsum.photos/300/200/?random=2",
                             IsOnTheMarket = false,
                             Name = "種子商品2"
@@ -125,7 +125,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 3,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 974, DateTimeKind.Utc).AddTicks(8610),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 623, DateTimeKind.Unspecified).AddTicks(8050), new TimeSpan(0, 0, 0, 0, 0)),
                             ImgPath = "https://picsum.photos/300/200/?random=3",
                             IsOnTheMarket = true,
                             Name = "種子商品3"
@@ -139,8 +139,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset>("CreatedTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("Inventory")
                         .HasColumnType("int");
@@ -156,8 +156,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("UpdatedTime")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTimeOffset?>("UpdatedTime")
+                        .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
 
@@ -169,7 +169,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(8680),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(5460), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 100,
                             Name = "種子規格1",
                             ProductId = 1,
@@ -178,7 +178,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6270), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 10,
                             Name = "種子規格2",
                             ProductId = 1,
@@ -187,7 +187,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9140),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 8,
                             Name = "種子規格3",
                             ProductId = 1,
@@ -196,7 +196,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 18,
                             Name = "種子規格4",
                             ProductId = 2,
@@ -205,7 +205,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9150),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 0,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -214,7 +214,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 120,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -223,7 +223,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedTime = new DateTime(2022, 9, 12, 9, 47, 12, 976, DateTimeKind.Utc).AddTicks(9160),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 624, DateTimeKind.Unspecified).AddTicks(6280), new TimeSpan(0, 0, 0, 0, 0)),
                             Inventory = 20,
                             Name = "種子規格4",
                             ProductId = 3,
@@ -242,7 +242,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleType")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasComment(" 0:NormalUser, 1:Administrator, 2:Developer");
 
                     b.HasKey("Id");
 
@@ -280,7 +281,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -289,7 +291,8 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<DateTimeOffset?>("UpdatedTime")
                         .HasColumnType("datetimeoffset");
@@ -302,7 +305,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(2040), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 630, DateTimeKind.Unspecified).AddTicks(4690), new TimeSpan(0, 0, 0, 0, 0)),
                             Email = "AdminUser@gmail.com",
                             Gender = 0,
                             Name = "AdminUser",
@@ -311,7 +314,7 @@ namespace BS.DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 12, 9, 47, 12, 981, DateTimeKind.Unspecified).AddTicks(3190), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedTime = new DateTimeOffset(new DateTime(2022, 9, 15, 7, 17, 20, 630, DateTimeKind.Unspecified).AddTicks(5830), new TimeSpan(0, 0, 0, 0, 0)),
                             Email = "Developer@gmail.com",
                             Gender = 0,
                             Name = "Developer",

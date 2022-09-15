@@ -9,12 +9,12 @@ namespace BS.DemoShop.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder
+                .Property(r => r.RoleType)
+                .HasComment(" 0:NormalUser, 1:Administrator, 2:Developer");
+            
+            builder
                 .ToTable("Roles");
-            #region RoleSeed
-            builder.HasData(new Role { Id = 1, Name = Core.Constants.AuthorizationConstants.NormalUser, RoleType = RoleType.NormalUser });
-            builder.HasData(new Role { Id = 2, Name = Core.Constants.AuthorizationConstants.Administrator, RoleType = RoleType.Administrator });
-            builder.HasData(new Role { Id = 3, Name = Core.Constants.AuthorizationConstants.Developer, RoleType = RoleType.Developer });
-            #endregion
+            
         }
     }
 }

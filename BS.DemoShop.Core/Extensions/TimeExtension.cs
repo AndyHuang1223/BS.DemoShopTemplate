@@ -12,8 +12,8 @@ namespace BS.DemoShop.Core.Extensions
         /// UTC 時間轉為台灣時區擴充方法
         /// </summary>
         /// <param name="utcDateTime">UTC +0 DateTime</param>
-        /// <returns></returns>
-        public static DateTime ToTaiwaneseTime(this DateTime utcDateTime)
+        /// <returns>Taiwanese DateTime</returns>
+        public static DateTime ToTaiwaneseDateTime(this DateTime utcDateTime)
         {
             string displayName = "(GMT+08:00) Taiwan/Taipei Time";
             string standardName = "Taipei Time";
@@ -22,6 +22,16 @@ namespace BS.DemoShop.Core.Extensions
            
             var localTime = TimeZoneInfo.ConvertTime(utcDateTime, TimeZoneInfo.Utc, taipeiTimeZone);
             return localTime;
+        }
+
+        /// <summary>
+        /// DateTimeOffSet To TaiwaneseTime
+        /// </summary>
+        /// <param name="timeOffset">UTC + 0 DateTimeOffset</param>
+        /// <returns>Taiwanese DateTime</returns>
+        public static DateTime ToTaiwaneseDateTime(this DateTimeOffset timeOffset)
+        {
+            return timeOffset.DateTime.ToTaiwaneseDateTime();
         }
     }
 }

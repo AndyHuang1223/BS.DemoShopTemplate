@@ -52,8 +52,8 @@ namespace BS.DemoShop.Web.Services
                 Name = product.Name,
                 ImgPath = product.ImgPath,
                 ProductDetails = productDetails,
-                CreatedTime = product.CreatedTime.ToTaiwaneseTime(),
-                LastUpdatedTime = product.UpdatedTime?.ToTaiwaneseTime(),
+                CreatedTime = product.CreatedTime.ToTaiwaneseDateTime(),
+                LastUpdatedTime = product.UpdatedTime?.ToTaiwaneseDateTime(),
                 CategoryId = product.CategoryId,
                 CategoryItems = (await _catalogViewModelService.GetCategories(product.CategoryId)).ToList()
             };
@@ -68,7 +68,7 @@ namespace BS.DemoShop.Web.Services
                 Id = p.Id,
                 Name = p.Name,
                 ImgPath = p.ImgPath,
-                CreatedTime = p.CreatedTime.ToTaiwaneseTime()
+                CreatedTime = p.CreatedTime.ToTaiwaneseDateTime()
             }).ToList();
 
             var productDetails = _productDetailRepo.GetAllReadOnly().Where(pd => products.Select(p => p.Id).Contains(pd.ProductId)).ToList();
@@ -167,8 +167,8 @@ namespace BS.DemoShop.Web.Services
                 Name = productEntity.Name,
                 Price = productEntity.ProductDetails.First().UnitPrice,
                 ImgPath = productEntity.ImgPath,
-                CreatedTime = productEntity.CreatedTime,
-                LastUpdatedTime = productEntity.UpdatedTime,
+                CreatedTime = productEntity.CreatedTime.DateTime,
+                LastUpdatedTime = productEntity.UpdatedTime?.DateTime ?? default,
                 ProductDetails = productEntity.ProductDetails.Select(x => new ProductDetailViewModel
                 {
                     Id = x.Id,

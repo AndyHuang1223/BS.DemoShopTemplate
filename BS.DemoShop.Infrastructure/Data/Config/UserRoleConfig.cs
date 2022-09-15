@@ -9,13 +9,14 @@ namespace BS.DemoShop.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             builder
+                .Property(ur => ur.RoleId)
+                .IsRequired();
+            builder
+                .Property(ur => ur.RoleId)
+                .IsRequired();
+            
+            builder
                 .ToTable("UserRoles");
-            #region UserRoleSeed
-            builder.HasData(new UserRole { Id = 1, RoleId = 1, UserId = 1 });
-            builder.HasData(new UserRole { Id = 2, RoleId = 1, UserId = 2 });
-            builder.HasData(new UserRole { Id = 3, RoleId = 2, UserId = 1 });
-            builder.HasData(new UserRole { Id = 4, RoleId = 3, UserId = 2 });
-            #endregion
         }
     }
 }
