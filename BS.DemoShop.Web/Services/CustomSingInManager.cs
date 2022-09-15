@@ -79,9 +79,9 @@ namespace BS.DemoShop.Web.Services
             };
             
             var normalRole = await _roleRepo.FirstOrDefaultAsync(x => x.RoleType == RoleType.NormalUser);
-            await _userRoleRepo.AddAsync(new UserRole { Role = normalRole, User = user });
+            var userRole = await _userRoleRepo.AddAsync(new UserRole { Role = normalRole, User = user });
             
-            await SignInAsync(user);
+            await SignInAsync(userRole.User);
         }
 
         public async Task<User> GetUser(User user)
