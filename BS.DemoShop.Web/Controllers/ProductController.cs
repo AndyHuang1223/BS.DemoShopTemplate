@@ -31,27 +31,27 @@ namespace BS.DemoShop.Web.Controllers
             return View(products);
         }
         [Authorize]
-        public async Task<IActionResult> Detail(int id)
+        public IActionResult Detail(int id)
         {
-            var product = await _productService.GetById(id);
+            var product = _productService.GetById(id);
             if (product is null)
             {
                 return RedirectToAction("Index");
             }
             return View(product);
         }
-        public async Task<IActionResult> CreateProduct()
+        public IActionResult CreateProduct()
         {
             var result = new CreateProductViewModel()
             {
-                CategoryItems = (await _catalogViewModelService.GetCategories()).ToList()
+                CategoryItems = _catalogViewModelService.GetCategories().ToList()
             };
             return View(result);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProductDetail(CreateProductViewModel input)
+        public IActionResult CreateProductDetail(CreateProductViewModel input)
         {
-            var items = (await _catalogViewModelService.GetCategories(input.CategoryId)).ToList();
+            var items = _catalogViewModelService.GetCategories(input.CategoryId).ToList();
             input.CategoryItems = items;
             input.ProductDetail.Add(new CreateDetailViewModel());
             return View("CreateProduct", input);

@@ -32,7 +32,7 @@ namespace BS.DemoShop.Web.Services
             _catalogViewModelService = catalogViewModelService;
         }
 
-        public async Task<ProductViewModel> GetById(int id)
+        public ProductViewModel GetById(int id)
         {
 
             var product = _productRepo.GetAllReadOnly().FirstOrDefault(x => x.Id == id);
@@ -55,7 +55,7 @@ namespace BS.DemoShop.Web.Services
                 CreatedTime = product.CreatedTime.ToTaiwaneseDateTime(),
                 LastUpdatedTime = product.UpdatedTime?.ToTaiwaneseDateTime(),
                 CategoryId = product.CategoryId,
-                CategoryItems = (await _catalogViewModelService.GetCategories(product.CategoryId)).ToList()
+                CategoryItems = _catalogViewModelService.GetCategories(product.CategoryId).ToList()
             };
 
             return result;

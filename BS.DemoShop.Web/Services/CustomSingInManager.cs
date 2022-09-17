@@ -1,12 +1,10 @@
 ﻿using BS.DemoShop.Core.Entities;
-using BS.DemoShop.Core.Extensions;
 using BS.DemoShop.Core.Interfaces;
 using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.ViewModels.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;

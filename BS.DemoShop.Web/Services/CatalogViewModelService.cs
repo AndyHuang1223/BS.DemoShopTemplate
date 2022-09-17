@@ -3,7 +3,6 @@ using BS.DemoShop.Core.Interfaces;
 using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.ViewModels.Catalog;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,13 +25,13 @@ namespace BS.DemoShop.Web.Services
             _productQueryService = productQueryService;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetCategories()
+        public IEnumerable<SelectListItem> GetCategories()
         {
-            var categoryItems = await _categoryRepo.GetAllReadOnly()
+            var categoryItems = _categoryRepo.GetAllReadOnly()
                  .OrderBy(c => c.Sort)
                  .ThenBy(c => c.CreatedTime)
                  .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-                 .ToListAsync();
+                 .ToList();
 
             var allItem = new SelectListItem { Value = null, Text = "全部分類", Selected = true };
             categoryItems.Insert(0, allItem);
@@ -40,9 +39,9 @@ namespace BS.DemoShop.Web.Services
             return categoryItems;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetCategories(int categoryId)
+        public IEnumerable<SelectListItem> GetCategories(int categoryId)
         {
-            var items = (await GetCategories()).ToList();
+            var items = GetCategories().ToList();
             foreach (var item in items)
             {
                 if (item.Value == categoryId.ToString())
@@ -53,9 +52,8 @@ namespace BS.DemoShop.Web.Services
                 {
                     item.Selected = false;
                 }
+                yield return item;
             }
-
-            return items;
         }
 
         public async Task<CatalogIndexViewModel> GetCatelogItems(int? categoryId)
@@ -66,9 +64,9 @@ namespace BS.DemoShop.Web.Services
                 productEntities = productEntities.Where(p => p.CategoryId == categoryId);
 
             }
-            var products = await productEntities
+            var products = productEntities
                 .Select(p => new { p.Id, p.Name, p.ImgPath })
-                .ToListAsync();
+                .ToList();
 
             var productCards = new List<ProductCardViewModel>();
             foreach (var item in products)
@@ -78,7 +76,7 @@ namespace BS.DemoShop.Web.Services
                 productCards.Add(temp);
             }
 
-            var categoryItems = (await GetCategories()).ToList();
+            var categoryItems = GetCategories().ToList();
             var result = new CatalogIndexViewModel { ProductCards = productCards, CategoryItemList = categoryItems };
             
             return result;

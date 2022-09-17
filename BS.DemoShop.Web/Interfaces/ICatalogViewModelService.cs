@@ -9,7 +9,7 @@ namespace BS.DemoShop.Web.Interfaces
     {
         Task<CatalogIndexViewModel> GetCatelogItems(int? categoryId);
 
-        Task<IEnumerable<SelectListItem>> GetCategories();
-        Task<IEnumerable<SelectListItem>> GetCategories(int categoryId);
+        IEnumerable<SelectListItem> GetCategories();
+        IEnumerable<SelectListItem> GetCategories(int categoryId);
     }
 }
