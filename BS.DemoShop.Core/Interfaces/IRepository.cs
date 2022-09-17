@@ -33,5 +33,7 @@ namespace BS.DemoShop.Core.Interfaces
         bool Any(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
+        Task<List<T>> ListAsync();
+        Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
     }
 }

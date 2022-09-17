@@ -154,5 +154,15 @@ namespace BS.DemoShop.Infrastructure.Data
         {
             return DbContext.Set<T>().Where(expression);
         }
+
+        public async Task<List<T>> ListAsync()
+        {
+            return await DbContext.Set<T>().ToListAsync();
+        }
+
+        public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
+        {
+            return await DbContext.Set<T>().Where(expression).ToListAsync();
+        }
     }
 }
