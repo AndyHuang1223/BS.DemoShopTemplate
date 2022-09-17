@@ -150,9 +150,9 @@ namespace BS.DemoShop.Infrastructure.Data
             return await DbContext.Set<T>().AnyAsync(expression);
         }
 
-        public IEnumerable<T> Where(Expression<Func<T, bool>> expression)
+        public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-            return DbContext.Set<T>().Where(expression).AsEnumerable();
+            return DbContext.Set<T>().Where(expression);
         }
     }
 }

@@ -32,6 +32,6 @@ namespace BS.DemoShop.Core.Interfaces
         Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression);
         bool Any(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
-        IEnumerable<T> Where(Expression<Func<T, bool>> expression);
+        IQueryable<T> Where(Expression<Func<T, bool>> expression);
     }
 }
