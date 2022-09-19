@@ -22,6 +22,7 @@ namespace BS.DemoShop.Infrastructure.Data
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<Todo> Todo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
