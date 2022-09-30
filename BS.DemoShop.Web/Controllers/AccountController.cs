@@ -19,14 +19,12 @@ namespace BS.DemoShop.Web.Controllers
             _accountViewModelService = accountViewModelService;
         }
 
-        [Route("/signin")]
         public IActionResult SignIn(string returnUrl)
         {
             var model = new SignInViewModel() { ReturnUrl = returnUrl };
             return View(model);
         }
 
-        [Route("/signin")]
         [HttpPost]
         [ValidateAntiForgeryToken] //跨站防偽 https://docs.microsoft.com/zh-tw/aspnet/core/security/anti-request-forgery?view=aspnetcore-5.0
         public async Task<IActionResult> SignIn(SignInViewModel input)
