@@ -39,7 +39,18 @@ namespace BS.DemoShop
             services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options => {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "BS.DemoShopTemplate API",
+                    Description = "描述...",
+                });
+                
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
+            
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyCorsPolicy,
@@ -64,7 +75,7 @@ namespace BS.DemoShop
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ToDo API v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BS.DemoShopTemplate API v1"));
             app.UseStaticFiles();
 
             app.UseRouting();
