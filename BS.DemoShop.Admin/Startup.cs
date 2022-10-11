@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BS.DemoShop.Admin.Configurations;
+using BS.DemoShop.Admin.Filters;
 
 namespace BS.DemoShop.Admin
 {
@@ -30,7 +31,10 @@ namespace BS.DemoShop.Admin
                 .AddSwaggerServices()
                 .AddJwtServices(Configuration);
             
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<DemoShopAdminAuthorize>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
