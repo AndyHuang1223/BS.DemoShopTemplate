@@ -39,20 +39,17 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" id="authLogin">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" v-on:submit.prevent>
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                   id="exampleInputEmail" aria-describedby="emailHelp"
-                                                   placeholder="Enter Email Address...">
+                                            <input v-model="login.userName" type="input" class="form-control form-control-user" id="exampleInputUserName">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password">
+                                            <input v-model="login.password" type="password" class="form-control form-control-user">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -63,9 +60,9 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button v-on:click="loginBtn" href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -79,13 +76,16 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/lib/sb/jquery/jquery.min.js"></script>
-    <script src="~/lib/sb/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="~/lib/sb/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="~/js/sb-admin-2.min.js"></script>
-</body>
+    <!-- vue -->
+    <script src="~/lib/vue@2.7.10/vue.js"></script>
+    <!-- axios -->
+    <script src="~/lib/axios/axios.min.js"></script>
+    <!-- cookie.js -->
+    <script src="~/lib/js-cookie/js.cookie.min.js"></script>
+    <!-- 封裝的axios -->
+    <script src="~/js/request.js"></script>
 
+    <script src="~/js/auth/login.js"></script>
+</body>
 </html>
+

@@ -22,7 +22,7 @@ namespace BS.DemoShop.Admin.WebApi
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult LoginIn(LoginInDTO request)
+        public IActionResult Login(LoginInDTO request)
         {
             if (IsUserValid(request)) {
                 return Ok(new BaseApiResponse(_jwt.GenerateToken(request.UserName)));

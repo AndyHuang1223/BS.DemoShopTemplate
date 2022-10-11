@@ -427,6 +427,16 @@
     <script src="~/js/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
     <script src="~/lib/sb/chart.js/chart.min.js"></script>
-</body>
 
+    <!-- vue -->
+    <script src="~/lib/vue@2.7.10/vue.js"></script>
+    <!-- axios -->
+    <script src="~/lib/axios/axios.min.js"></script>
+    <!-- cookie.js -->
+    <script src="~/lib/js-cookie/js.cookie.min.js"></script>
+    <!-- 封裝的axios -->
+    <script src="~/js/request.js"></script>
+    <!-- Page's JS -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>
