@@ -31,10 +31,7 @@ namespace BS.DemoShop.Admin
                 .AddSwaggerServices()
                 .AddJwtServices(Configuration);
             
-            services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add<DemoShopAdminAuthorize>();
-            });
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
