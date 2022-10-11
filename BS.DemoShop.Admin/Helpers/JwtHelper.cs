@@ -29,8 +29,8 @@ namespace BS.DemoShop.Admin.Helpers
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
 
             // 自行擴充
-            claims.Add(new Claim("roles", "Admin"));
-            claims.Add(new Claim("roles", "Users"));
+            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            claims.Add(new Claim(ClaimTypes.Role, "Users"));
 
             // 宣告集合所描述的身分識別
             var userClaimsIdentity = new ClaimsIdentity(claims);

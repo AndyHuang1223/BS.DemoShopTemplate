@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using BS.DemoShop.Admin.Helpers;
 using BS.DemoShop.Core.Interfaces;
@@ -18,17 +19,17 @@ namespace BS.DemoShop.Admin.Configurations
         public static IServiceCollection AddJwtServices(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddTransient<JwtHelper>()
+                .AddSingleton<JwtHelper>()
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         // 透過這項宣告，就可以從 "sub" 取值並設定給 User.Identity.Name
-                        NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                        NameClaimType = ClaimTypes.NameIdentifier,
 
-                        // 透過這項宣告，就可以從 "roles" 取值，並可讓 [Authorize] 判斷角色
-                        RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                        // 透過這項宣告，就可以從 "ClaimTypes.Role" 取值，並可讓 [Authorize] 判斷角色
+                        RoleClaimType = ClaimTypes.Role,
 
                         // 一般我們都會驗證 Issuer
                         ValidateIssuer = true,
@@ -43,6 +44,7 @@ namespace BS.DemoShop.Admin.Configurations
                         // 如果 Token 中包含 key 才需要驗證，一般都只有簽章而已
                         ValidateIssuerSigningKey = false,
 
+                        //如果IssuerSigningKey有設定時，ValidateIssuerSigningKey的值一定會是true，也就是會檢查SignKey的真偽
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("JwtSettings:SignKey")))
                     };
                 });
