@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BS.DemoShop.Admin.Configurations;
 
 namespace BS.DemoShop.Admin
 {
@@ -23,6 +24,10 @@ namespace BS.DemoShop.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddCoreServices()
+                .AddWebServices();
+            
             services.AddControllersWithViews();
         }
 
