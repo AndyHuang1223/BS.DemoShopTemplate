@@ -58,6 +58,7 @@ namespace BS.DemoShop.Admin
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "Login", pattern: "Login", new { Controller = "Auth", Action = "Login" });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
