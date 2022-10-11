@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BS.DemoShop.Admin.WebApi
 {
-    [Authorize]
     public class AuthController : BaseApiController
     {
         private readonly JwtHelper _jwt;
