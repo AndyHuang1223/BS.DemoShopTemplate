@@ -26,7 +26,9 @@ namespace BS.DemoShop.Admin
         {
             services
                 .AddCoreServices()
-                .AddWebServices();
+                .AddWebServices()
+                .AddSwaggerServices()
+                .AddJwtServices(Configuration);
             
             services.AddControllersWithViews();
         }
@@ -37,6 +39,8 @@ namespace BS.DemoShop.Admin
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BS.DemoShopTemplate Admin API v1"));
             }
             else
             {
@@ -49,6 +53,7 @@ namespace BS.DemoShop.Admin
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
