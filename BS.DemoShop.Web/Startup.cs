@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using BS.DemoShop.Extensions;
 
 namespace BS.DemoShop
 {
@@ -84,6 +85,9 @@ namespace BS.DemoShop
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            //不給Google爬蟲爬到的Response處理，https://developers.google.com/search/docs/advanced/crawling/block-indexing?hl=zh-tw#http-response-header
+            app.UseNoIndexResponse();
 
             app.UseEndpoints(endpoints =>
             {
