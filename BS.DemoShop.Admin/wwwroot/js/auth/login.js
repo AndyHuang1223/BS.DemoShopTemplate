@@ -35,5 +35,5 @@ function setToken(token, expire) {
 }
 
 function redirectToHome() {
-  window.location = HOME_PAGE
+  window.location.href = HOME_PAGE
 }

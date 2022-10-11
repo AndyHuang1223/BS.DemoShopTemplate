@@ -1,3 +1,9 @@
+const LOGIN_PAGE = '/login'
+
+const handle401Unauthorized = (response) => {
+	window.location.href = LOGIN_PAGE
+}
+
 const useRequest = function () {
 	// NOTE: 請根據後端API位置調整
 	const BASE_URL = '/api'
@@ -36,17 +42,8 @@ const useRequest = function () {
 		// NOTE: 統一處理失敗行為
 		switch (status) {
 			case 401:
-				toastr.warning('未登入')
 				// TODO: handle 401 ex. redirect
-				break
-
-			case 403:
-				toastr.warning('未授權')
-				// TODO: handle 403
-				break
-
-			case 404:
-				// TODO: handle 404
+				handle401Unauthorized(response)
 				break
 		}
 

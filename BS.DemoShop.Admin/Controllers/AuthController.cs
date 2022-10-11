@@ -12,7 +12,12 @@ namespace BS.DemoShop.Admin.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
+            return View();
+        }
 
+        [AllowAnonymous]
+        public IActionResult UserName()
+        {
             return View();
         }
     }
