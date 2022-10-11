@@ -11,7 +11,7 @@ namespace BS.DemoShop.Admin.WebApi
     [Route("api/[controller]/[action]")]
     [ApiController]
     [ServiceFilter(typeof(CustomApiExceptionServiceFilter))]
-    public class BaseApiController : ControllerBase
+    public abstract class BaseApiController : ControllerBase
     {
     }
 }
