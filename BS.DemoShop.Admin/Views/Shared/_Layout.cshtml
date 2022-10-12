@@ -13,12 +13,13 @@
 
     <!-- Custom fonts for this template-->
     <link href="~/lib/sb/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
 
+    <!-- bootstrap-vue -->
+    <link href="~/lib/bootstrap-vue/bootstrap.min.css"></link>
 </head>
 
 <body id="page-top">
@@ -412,7 +413,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button v-on:click="logoutBtn" class="btn btn-primary">Logout</button>
                 </div>
             </div>
         </div>
@@ -430,13 +431,19 @@
 
     <!-- vue -->
     <script src="~/lib/vue@2.7.10/vue.js"></script>
+    <!-- bootstrap-vue -->
+    <script src="~/lib/bootstrap-vue/bootstrap-vue.min.js"></script>
+    <script src="~/lib/bootstrap-vue/bootstrap-vue-icons.min.js"></script>
+
     <!-- axios -->
     <script src="~/lib/axios/axios.min.js"></script>
     <!-- cookie.js -->
     <script src="~/lib/js-cookie/js.cookie.min.js"></script>
     <!-- 封裝的axios -->
     <script src="~/js/request.js"></script>
-    <!-- Page's JS -->
+    <!-- layout's JS -->
+    <script src="~/js/shared/layout.js"></script>
+    <!-- page's JS -->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
