@@ -6,8 +6,8 @@ const apiCaller = {
   getUserName: () => httpGet(api.getUserName)
 }
 
-const authUserNameVue = new Vue({
-  el: '#auth-username',
+const homeIndexVue = new Vue({
+  el: '#home-index',
   data: {},
   methods: {
     clickMe() {
