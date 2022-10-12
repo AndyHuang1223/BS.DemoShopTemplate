@@ -8,6 +8,7 @@ namespace BS.DemoShop.Admin.Configurations
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
             services.AddScoped<CustomApiExceptionServiceFilter>();
+            services.AddScoped<DemoShopAdminAuthorize>();
             return services;
         }
     }

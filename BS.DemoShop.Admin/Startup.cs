@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using BS.DemoShop.Admin.Configurations;
 using BS.DemoShop.Admin.Filters;
+using BS.DemoShop.Admin.Scheduler;
+using Coravel;
 
 namespace BS.DemoShop.Admin
 {
@@ -25,11 +27,14 @@ namespace BS.DemoShop.Admin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //將DI放到其他組件上
+            Infrastructure.Dependencies.ConfigureServices(Configuration, services);
             services
                 .AddCoreServices()
                 .AddWebServices()
                 .AddSwaggerServices()
-                .AddJwtServices(Configuration);
+                .AddJwtServices(Configuration)
+                .AddSchedulerServices();
             
             services.AddControllersWithViews();
         }
@@ -57,6 +62,11 @@ namespace BS.DemoShop.Admin
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.ApplicationServices.UseScheduler(scheduler =>
+            {
+                scheduler.Schedule<BlockTokenScheduler>().EveryFiveMinutes();
+            });
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "Login", pattern: "Login", new { Controller = "Auth", Action = "Login" });

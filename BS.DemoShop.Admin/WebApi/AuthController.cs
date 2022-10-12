@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using BS.DemoShop.Admin.BaseModels;
 using BS.DemoShop.Admin.Helpers;
 using BS.DemoShop.Admin.WebApi;
+using BS.DemoShop.Core.Entities;
+using BS.DemoShop.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +15,12 @@ namespace BS.DemoShop.Admin.WebApi
     public class AuthController : BaseApiController
     {
         private readonly JwtHelper _jwt;
+        private readonly IRepository<BlockToken> _blockTokenRepo;
 
-        public AuthController(JwtHelper jwt)
+        public AuthController(JwtHelper jwt, IRepository<BlockToken> blockTokenRepo)
         {
             _jwt = jwt;
+            _blockTokenRepo = blockTokenRepo;
         }
 
         [HttpPost]
@@ -48,11 +52,27 @@ namespace BS.DemoShop.Admin.WebApi
         {
             return true;
         }
+
+        [HttpPost]
+        public IActionResult Logout([FromBody]LogoutDTO request)
+        {
+            _blockTokenRepo.Add(new BlockToken
+            {
+                Token = request.Token,
+                ExpireTime = DateTimeOffset.UtcNow.ToUniversalTime()
+            });
+            return Ok();
+        }
     }
 
     public class LoginInDTO
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+    }
+
+    public class LogoutDTO
+    {
+        public string Token { get; set; }
     }
 }
