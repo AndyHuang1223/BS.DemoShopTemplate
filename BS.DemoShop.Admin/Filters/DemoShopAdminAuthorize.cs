@@ -38,7 +38,7 @@ namespace BS.DemoShop.Admin.Filters
                 }
             }
 
-            context.Result = new ForbidResult();
+            context.Result = new UnauthorizedResult();
         }
     }
 }
