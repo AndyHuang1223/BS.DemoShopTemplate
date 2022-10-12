@@ -4,15 +4,34 @@
   }
   
   const apiCaller = {
-    logout: () => httpGet()
+    logout: (query) => httpPost(api.logout, query)
   }
   
   let logoutModalVue = new Vue({
     el: '#logoutModal',
     methods: {
       logoutBtn() {
-        // TODO: 敲 logout API
+        const query = { token: getToken() }
+        
+        apiCaller.logout(query)
+          .then((res) => {
+            removeToken()
+            redirectToLogin()
+          })
       }
     }
   })
+
+  function getToken() {
+    return Cookies.get('token')
+  }
+
+  function removeToken() {
+    Cookies.remove('token')
+  }
+
+  function redirectToLogin() {
+    const LOGIN_PAGE = '/login'
+    window.location.href = LOGIN_PAGE
+  }
 })()

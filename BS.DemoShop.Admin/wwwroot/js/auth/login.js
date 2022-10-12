@@ -1,4 +1,5 @@
-const HOME_PAGE = '/'
+(function IIFE() {
+  const HOME_PAGE = '/'
 const api = { login: '/Auth/Login' }
 const apiCaller = { login: (loginQuery) => httpPost(api.login, loginQuery) }
 
@@ -37,3 +38,4 @@ function setToken(token, expire) {
 function redirectToHome() {
   window.location.href = HOME_PAGE
 }
+})()
