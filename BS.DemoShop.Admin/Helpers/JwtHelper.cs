@@ -46,7 +46,7 @@ namespace BS.DemoShop.Admin.Helpers
             {
                 Issuer = issuer,
                 Subject = userClaimsIdentity,
-                Expires = DateTime.UtcNow.AddHours(4),
+                Expires = DateTime.UtcNow.AddMinutes(expireMinute),
                 SigningCredentials = signingCredentials
             };
 
