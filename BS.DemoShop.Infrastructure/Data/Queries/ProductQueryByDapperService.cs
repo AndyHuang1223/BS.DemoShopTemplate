@@ -40,15 +40,27 @@ namespace BS.DemoShop.Infrastructure.Data.Queries
         {
             await using var conn = new SqlConnection(_connectionString);
             var parameters = new { Id = productId };
-            var sqlQuery = @"
-                        SELECT MAX(pd.UnitPrice) AS MaxPrice
-                        FROM ProductDetails pd
-                        INNER JOIN Products p ON p.Id = pd.ProductId
-                        GROUP BY p.Id
-                        HAVING p.Id = @Id
-                        ";
-            var result = await conn.QueryFirstOrDefaultAsync<ProductMaxPrice>(sqlQuery, parameters);
-            return result?.MaxPrice ?? 0;
+            // var sqlQuery = @"
+            //             SELECT MAX(pd.UnitPrice) AS MaxPrice
+            //             FROM ProductDetails pd
+            //             INNER JOIN Products p ON p.Id = pd.ProductId
+            //             GROUP BY p.Id
+            //             HAVING p.Id = @Id
+            //             ";
+            // var result = await conn.QueryFirstOrDefaultAsync<ProductMaxPrice>(sqlQuery, parameters);
+            // return result?.MaxPrice ?? 0;
+
+            var sqlQuery2 = @"
+                    SELECT MAX(pd.UnitPrice)
+                    FROM ProductDetails pd
+                    INNER JOIN Products p ON p.Id = pd.ProductId
+                    GROUP BY p.Id
+                    HAVING p.Id = @Id
+                    ";
+
+            var result = await conn.ExecuteScalarAsync<decimal>(sqlQuery2, parameters);
+
+            return result;
         }
         
         private class ProductMaxPrice
