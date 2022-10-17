@@ -7,7 +7,7 @@ using BS.DemoShop.Web.ViewModels.Catalog;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace BS.DemoShop.Web.Services.CacheService
+namespace BS.DemoShop.Web.Services.CacheServices
 {
     public class DistributedCacheCatalogViewModelService : ICatalogViewModelService
     {

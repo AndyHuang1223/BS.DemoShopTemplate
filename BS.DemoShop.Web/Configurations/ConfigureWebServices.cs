@@ -1,6 +1,6 @@
 ﻿using BS.DemoShop.Web.Interfaces;
 using BS.DemoShop.Web.Services;
-using BS.DemoShop.Web.Services.CacheService;
+using BS.DemoShop.Web.Services.CacheServices;
 using BS.DemoShop.Web.Services.TodoService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
