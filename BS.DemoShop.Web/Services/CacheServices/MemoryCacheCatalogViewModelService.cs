@@ -26,6 +26,7 @@ namespace BS.DemoShop.Web.Services.CacheServices
             var cacheKey = $"items-{categoryId}";
             return await _cache.GetOrCreateAsync(cacheKey, async entry =>
             {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
                 entry.SlidingExpiration = _defaultCacheDuration;
                 return await _catalogViewModelService.GetCatelogItems(categoryId);
             });
@@ -35,6 +36,7 @@ namespace BS.DemoShop.Web.Services.CacheServices
         {
             return _cache.GetOrCreate(_categoryKey, entry =>
             {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
                 entry.SlidingExpiration = _defaultCacheDuration;
                 return _catalogViewModelService.GetCategories();
             });
@@ -45,6 +47,7 @@ namespace BS.DemoShop.Web.Services.CacheServices
             var cacheKey = $"category-{categoryId}";
             return _cache.GetOrCreate(cacheKey, entry =>
             {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1);
                 entry.SlidingExpiration = _defaultCacheDuration;
                 return _catalogViewModelService.GetCategories(categoryId);
             });
