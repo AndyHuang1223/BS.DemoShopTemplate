@@ -14,7 +14,7 @@ namespace BS.DemoShop.Web.Configurations
             services.AddScoped<ProductViewModelService>();
             // services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
             // services.AddScoped<ICatalogViewModelService, MemoryCacheCatalogViewModelService>();
-            services.AddScoped<ICatalogViewModelService, DistributedCacheCatalogViewModelService>();
+            services.AddScoped<ICatalogViewModelService, RedisCacheCatalogViewModelService>();
             services.AddScoped<CatalogViewModelService>();
             
             services.AddScoped<IAccountViewModelService, AccountViewModelService>();

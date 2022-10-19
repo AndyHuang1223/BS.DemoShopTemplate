@@ -9,14 +9,14 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace BS.DemoShop.Web.Services.CacheServices
 {
-    public class DistributedCacheCatalogViewModelService : ICatalogViewModelService
+    public class RedisCacheCatalogViewModelService : ICatalogViewModelService
     {
         private readonly IDistributedCache _cache;
         private readonly CatalogViewModelService _catalogViewModelService;
         private static readonly string _categoryKey = "category";
         private static readonly TimeSpan _defaultCacheDuration = TimeSpan.FromSeconds(30);
 
-        public DistributedCacheCatalogViewModelService(IDistributedCache cache, CatalogViewModelService catalogViewModelService)
+        public RedisCacheCatalogViewModelService(IDistributedCache cache, CatalogViewModelService catalogViewModelService)
         {
             _cache = cache;
             _catalogViewModelService = catalogViewModelService;
@@ -32,7 +32,8 @@ namespace BS.DemoShop.Web.Services.CacheServices
                 var byteArrResult = ObjectToByteArray(realItems);
                 await _cache.SetAsync(cacheKey, byteArrResult, new DistributedCacheEntryOptions
                 {
-                    SlidingExpiration = _defaultCacheDuration
+                    SlidingExpiration = _defaultCacheDuration,
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
                 });
                 return realItems;
             }
@@ -49,7 +50,8 @@ namespace BS.DemoShop.Web.Services.CacheServices
                 var byteArrResult = ObjectToByteArray(realItems);
                 _cache.Set(_categoryKey, byteArrResult, new DistributedCacheEntryOptions
                 {
-                    SlidingExpiration = _defaultCacheDuration
+                    SlidingExpiration = _defaultCacheDuration,
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
                 });
                 return realItems;
             }
@@ -67,7 +69,8 @@ namespace BS.DemoShop.Web.Services.CacheServices
                 var byteArrResult = ObjectToByteArray(realItems);
                 _cache.Set(cacheKey, byteArrResult, new DistributedCacheEntryOptions
                 {
-                    SlidingExpiration = _defaultCacheDuration
+                    SlidingExpiration = _defaultCacheDuration,
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
                 });
                 return realItems;
             }
