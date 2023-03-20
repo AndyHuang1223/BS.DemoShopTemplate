@@ -62,6 +62,15 @@ namespace BS.DemoShop
                          .AllowAnyMethod();
                     });
             });
+
+            services.AddMemoryCache();
+            
+            //分散式快取，Redis
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetConnectionString("RedisConnectionString");
+                options.InstanceName = "MyRedisCache";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
