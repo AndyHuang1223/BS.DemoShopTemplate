@@ -6,7 +6,7 @@ public class Specification : BaseEntity
 {
     [Required]
     public string SpecificationValue { get; set; }
-    
+    [Required]
     public string SKU { get; set; }
     public int Inventory { get; set; }
 
