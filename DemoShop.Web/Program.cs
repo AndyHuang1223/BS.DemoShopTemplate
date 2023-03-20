@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
