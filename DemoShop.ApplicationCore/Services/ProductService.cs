@@ -29,7 +29,8 @@ namespace DemoShop.ApplicationCore.Services
 
         public async Task<List<Product>> GetHotSellProductListAsync(int count)
         {
-            throw new NotImplementedException();
+            var porductList = await _porductRepository.ListAsync();
+            return GetHotSellProductList (porductList, count);
         }
 
         public async Task<Product> GetShelveProductByIdAsync(int productId)
