@@ -6,6 +6,7 @@ namespace DemoShop.ApplicationCore.Interfaces.ProductService;
 public interface IProductService
 {
     Task<Product> GetShelveProductByIdAsync(int productId);
+    List<Product> GetHotSellProductList(List<Product> productList, int count);
     Task<List<Product>> GetHotSellProductListAsync(int count);
     Task ShelveProductAsync(int productId);
     Task OffShelveProductAsync(int productId);
