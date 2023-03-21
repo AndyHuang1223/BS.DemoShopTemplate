@@ -2,6 +2,7 @@ using DemoShop.ApplicationCore.Entities;
 using DemoShop.ApplicationCore.Interfaces;
 using DemoShop.ApplicationCore.Services;
 using Moq;
+using NUnit.Framework;
 
 namespace UnitTests;
 
@@ -20,7 +21,7 @@ public class OrderServiceTests
     }
 
     [Test]
-    public async Task CalculateOrderAmountWithoutDiscount()
+    public async Task CalculateOrderAmount_Without_Discount()
     {
         // Arrange
         var order = new Order
@@ -73,7 +74,7 @@ public class OrderServiceTests
     }
 
     [Test]
-    public async Task CalculateOrderAmountWithDiscount()
+    public async Task CalculateOrderAmount_With_Discount()
     {
         // Arrange
         var order = new Order
@@ -126,7 +127,7 @@ public class OrderServiceTests
     }
 
     [Test]
-    public async Task CalculateOrderAmountWithCoupon()
+    public async Task CalculateOrderAmount_With_Coupon()
     {
         // Arrange
         var coupon = new Coupon
@@ -185,7 +186,7 @@ public class OrderServiceTests
     }
 
     [Test]
-    public async Task CalculateOrderAmountWithDiscountAndCoupon()
+    public async Task CalculateOrderAmount_With_DiscountAndCoupon()
     {
         // Arrange
         var coupon = new Coupon
@@ -234,7 +235,7 @@ public class OrderServiceTests
             CouponId = coupon.Id
         };
 
-        _mockCouponRepository.Setup(repo => repo.GetByIdAsync(coupon.Id)).ReturnsAsync(coupon);
+        _mockCouponRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(coupon);
 
         decimal expected = (1 * 100 - 10 + 2 * 50 + 3 * 33 - 9) * (100 - coupon.DiscountPercentage) / 100;
         // Act
