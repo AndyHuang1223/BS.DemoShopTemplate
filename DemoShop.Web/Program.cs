@@ -3,6 +3,7 @@ using DemoShop.ApplicationCore.Interfaces.OrderService;
 using DemoShop.ApplicationCore.Interfaces.ProductService;
 using DemoShop.ApplicationCore.Services;
 using DemoShop.Infrastructure.Data;
+using DemoShop.Web.Services.Cms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, bu
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>(); 
+builder.Services.AddScoped<FakeCmsViewModelService, FakeCmsViewModelService>();
 
 builder.Services.AddControllersWithViews();
 

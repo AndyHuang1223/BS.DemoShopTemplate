@@ -1,0 +1,13 @@
+﻿@using DemoShop.Web.ViewModels.Partial;
+@model WidgetPartialViewModel
+@{
+}
+<h2>@Model.Title</h2>
+<div class="row row-cols-3 mb-3">
+    @foreach (var item in Model.ProductCards)
+    {
+        <div class="col">
+            <partial name="_ProductCardPartial" model="item" />
+        </div>
+    }
+</div>
