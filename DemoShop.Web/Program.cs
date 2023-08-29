@@ -1,7 +1,18 @@
+using DemoShop.ApplicationCore.Interfaces;
+using DemoShop.ApplicationCore.Interfaces.OrderService;
+using DemoShop.ApplicationCore.Interfaces.ProductService;
+using DemoShop.ApplicationCore.Services;
+using DemoShop.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+
+//TODO 抽換成Configurations(為服務群組註冊擴充方法)
+builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>(); 
 
 builder.Services.AddControllersWithViews();
 
