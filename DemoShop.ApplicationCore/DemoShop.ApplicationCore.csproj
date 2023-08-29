@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Interfaces\UserService\Dto" />
+      <Compile Remove="Interfaces\UserService\Dto\**" />
+      <EmbeddedResource Remove="Interfaces\UserService\Dto\**" />
+      <None Remove="Interfaces\UserService\Dto\**" />
     </ItemGroup>
 
 </Project>
