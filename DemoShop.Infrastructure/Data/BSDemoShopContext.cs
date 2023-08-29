@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DemoShop.Infrastructure.Data;
 
-public class BSDemoShopContext : DbContext
+public partial class BSDemoShopContext : DbContext
 {
     public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options) : base(options)
     {
@@ -56,5 +56,10 @@ public class BSDemoShopContext : DbContext
         
         modelBuilder.Entity<SpecificationReference>()
             .ToTable("SpecificationReferences");
+
+        OnModelCreatingPartial(modelBuilder);
+
     }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
