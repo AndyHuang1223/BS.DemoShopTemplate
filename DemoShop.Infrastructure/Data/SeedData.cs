@@ -23,11 +23,11 @@ namespace DemoShop.Infrastructure.Data
         {
             return new List<Specification>()
             {
-                new Specification{Id = 1, SKU="Product1-XL", SpecificationValue="XL", Inventory = 10, SpecificationReferenceId = 1, CreateAt = new DateTime(2023,08,29)},
-                new Specification{Id = 2, SKU="Product1-S", SpecificationValue="S", Inventory = 10, SpecificationReferenceId = 1, CreateAt = new DateTime(2023,08,29)},
-                new Specification{Id = 3, SKU="Product222-Black", SpecificationValue="黑色", Inventory = 10, SpecificationReferenceId = 3, CreateAt = new DateTime(2023,08,29)},
-                new Specification{Id = 4, SKU="Product222-White", SpecificationValue="白色", Inventory = 15, SpecificationReferenceId = 3, CreateAt = new DateTime(2023,08,29)},
-                new Specification{Id = 5, SKU="Product000", SpecificationValue="單一規格", Inventory = 100, SpecificationReferenceId = 2, CreateAt = new DateTime(2023,08,29)},
+                new Specification{Id = 1, SKU="Product1-XL", SpecificationValue="XL", Inventory = 10, UnitPrice = 10, SpecificationReferenceId = 1, CreateAt = new DateTime(2023,08,29)},
+                new Specification{Id = 2, SKU="Product1-S", SpecificationValue="S", Inventory = 10, UnitPrice = 11, SpecificationReferenceId = 1, CreateAt = new DateTime(2023,08,29)},
+                new Specification{Id = 3, SKU="Product222-Black", SpecificationValue="黑色", Inventory = 10, UnitPrice = 15, SpecificationReferenceId = 3, CreateAt = new DateTime(2023,08,29)},
+                new Specification{Id = 4, SKU="Product222-White", SpecificationValue="白色", Inventory = 15, UnitPrice = 13, SpecificationReferenceId = 3, CreateAt = new DateTime(2023,08,29)},
+                new Specification{Id = 5, SKU="Product000", SpecificationValue="單一規格", Inventory = 100, UnitPrice = 1.5m, SpecificationReferenceId = 2, CreateAt = new DateTime(2023,08,29)},
             };
         }
 

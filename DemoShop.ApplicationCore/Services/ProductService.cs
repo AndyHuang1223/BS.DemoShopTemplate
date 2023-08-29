@@ -12,10 +12,14 @@ namespace DemoShop.ApplicationCore.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _porductRepository;
+        private readonly IRepository<Specification> _specRepo;
+        private readonly IRepository<ProductSpecification> _prodSpecRepo;
 
-        public ProductService(IRepository<Product> porductRepository)
+        public ProductService(IRepository<Product> porductRepository, IRepository<Specification> specRepo, IRepository<ProductSpecification> prodSpecRepo)
         {
             _porductRepository = porductRepository;
+            _specRepo = specRepo;
+            _prodSpecRepo = prodSpecRepo;
         }
 
         public List<Product> GetHotSellProductList(List<Product> productList, int count)
@@ -29,7 +33,16 @@ namespace DemoShop.ApplicationCore.Services
 
         public async Task<List<Product>> GetHotSellProductListAsync(int count)
         {
-            var porductList = await _porductRepository.ListAsync();
+            var specs = await _specRepo.ListAsync();//你不應該直接全部拉出來, 這是範例而已。
+            var prodSpecs = await _prodSpecRepo.ListAsync(ps => specs.Select(s => s.Id).Contains(ps.SpecificationId));
+            var porductList = await _porductRepository.ListAsync(p => prodSpecs.Select(ps => ps.ProductId).Contains(p.Id));
+            foreach(var prod in porductList)
+            {
+                var thisProdSpecs = prodSpecs.Where(ps => ps.ProductId == prod.Id).ToList();
+                var thisSpecs = specs.Where(s => thisProdSpecs.Select(_ => _.SpecificationId).Contains(s.Id));
+                thisProdSpecs.ForEach(ps => ps.Specification = thisSpecs.FirstOrDefault(s => s.Id == ps.SpecificationId));
+                prod.ProductSpecifications = thisProdSpecs;
+            }
             return GetHotSellProductList (porductList, count);
         }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    [Migration("20230829085801_initDb")]
+    [Migration("20230829173630_initDb")]
     partial class initDb
     {
         /// <inheritdoc />
@@ -267,6 +267,10 @@ namespace DemoShop.Infrastructure.Data.Migrations
                     b.Property<string>("SpecificationValue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(14, 2)
+                        .HasColumnType("decimal(14,2)");
 
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");

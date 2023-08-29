@@ -50,13 +50,17 @@ public partial class BSDemoShopContext : DbContext
         
         modelBuilder.Entity<ProductSpecification>()
             .ToTable("ProductSpecifications");
-        
+
+        modelBuilder.Entity<Specification>()
+            .Property(s => s.UnitPrice)
+            .HasPrecision(14, 2);
         modelBuilder.Entity<Specification>()
             .ToTable("Specifications");
         
         modelBuilder.Entity<SpecificationReference>()
             .ToTable("SpecificationReferences");
 
+        
         OnModelCreatingPartial(modelBuilder);
 
     }
