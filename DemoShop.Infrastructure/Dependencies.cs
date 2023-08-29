@@ -10,7 +10,7 @@ public static class Dependencies
     public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
     {
         services.AddDbContext<BSDemoShopContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString(BSDemoShopContext.ConnectionString)));
+            options.UseSqlServer(configuration.GetConnectionString("BSDemoShopConnection")));
         
     }
 }

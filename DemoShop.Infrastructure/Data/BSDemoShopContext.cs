@@ -5,7 +5,6 @@ namespace DemoShop.Infrastructure.Data;
 
 public class BSDemoShopContext : DbContext
 {
-    public const string ConnectionString = "BSDemoShopConnection";
     public BSDemoShopContext(DbContextOptions<BSDemoShopContext> options) : base(options)
     {
     }
