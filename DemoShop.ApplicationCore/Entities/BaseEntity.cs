@@ -8,6 +8,6 @@ public class BaseEntity
     public int Id { get; set; }
 
     public bool IsDelete { get; set; }
-    public DateTimeOffset CreateAt { get; set; }
-    public DateTimeOffset? UpdateAt { get; set; }
+    public DateTime CreateAt { get; set; }
+    public DateTime? UpdateAt { get; set; }
 }
