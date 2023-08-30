@@ -60,7 +60,7 @@ public partial class BSDemoShopContext : DbContext
         modelBuilder.Entity<SpecificationReference>()
             .ToTable("SpecificationReferences");
 
-        
+       
         OnModelCreatingPartial(modelBuilder);
 
     }

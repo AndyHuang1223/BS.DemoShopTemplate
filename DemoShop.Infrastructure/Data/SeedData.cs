@@ -9,7 +9,7 @@ namespace DemoShop.Infrastructure.Data
 {
     public class SeedData
     {
-        public static List<SpecificationReference> ProductSpecificationReference()
+        public static List<SpecificationReference> ProduceSpecificationReference()
         {
             return new List<SpecificationReference>()
             {
