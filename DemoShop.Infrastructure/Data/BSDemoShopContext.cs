@@ -38,7 +38,7 @@ public partial class BSDemoShopContext : DbContext
 
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.Discount)
-            .HasPrecision(5, 0); //TODO 修改 .HasPrecision(5, 2) 後，新增異動。
+            .HasPrecision(5, 2); //TODO 修改 .HasPrecision(5, 2) 後，新增異動。
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.UnitPrice)
             .HasPrecision(14, 2);
