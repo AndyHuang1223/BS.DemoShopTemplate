@@ -8,9 +8,9 @@ namespace DemoShop.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly FakeCmsViewModelService _cmsViewModelService;
+    private readonly ICmsViewModelService _cmsViewModelService;
 
-    public HomeController(ILogger<HomeController> logger, FakeCmsViewModelService cmsViewModelService)
+    public HomeController(ILogger<HomeController> logger, ICmsViewModelService cmsViewModelService)
     {
         _logger = logger;
         _cmsViewModelService = cmsViewModelService;

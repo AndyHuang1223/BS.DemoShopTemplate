@@ -3,7 +3,7 @@ using DemoShop.Web.ViewModels.Partial;
 
 namespace DemoShop.Web.Services.Cms
 {
-    public class FakeCmsViewModelService
+    public class FakeCmsViewModelService : ICmsViewModelService
     {
         public async Task<IndexViewModel> GetHomepageViewModel()
         {

@@ -14,7 +14,8 @@ DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, bu
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>(); 
-builder.Services.AddScoped<FakeCmsViewModelService, FakeCmsViewModelService>();
+//builder.Services.AddScoped<ICmsViewModelService, FakeCmsViewModelService>();
+builder.Services.AddScoped<ICmsViewModelService, CmsService>();
 
 builder.Services.AddControllersWithViews();
 
