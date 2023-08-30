@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
 builder.Services
-    //.AddApplicationCoreServices()
+    .AddApplicationCoreServices()
     .AddWebServices();
 
 
