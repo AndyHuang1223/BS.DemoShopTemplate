@@ -1,7 +1,6 @@
 ﻿using DemoShop.ApplicationCore.Entities;
 using DemoShop.ApplicationCore.Interfaces;
 using DemoShop.ApplicationCore.Interfaces.ProductService;
-using DemoShop.Web.Controllers;
 using DemoShop.Web.ViewModels.Cms;
 using DemoShop.Web.ViewModels.Partial;
 

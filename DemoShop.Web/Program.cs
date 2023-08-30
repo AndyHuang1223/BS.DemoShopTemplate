@@ -4,6 +4,7 @@ using DemoShop.ApplicationCore.Interfaces.ProductService;
 using DemoShop.ApplicationCore.Services;
 using DemoShop.Infrastructure.Data;
 using DemoShop.Web.Services.Cms;
+using DemoShop.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>(); 
 //builder.Services.AddScoped<ICmsViewModelService, FakeCmsViewModelService>();
 builder.Services.AddScoped<ICmsViewModelService, CmsService>();
+
+builder.Services.AddScoped<ProductViewModelService>();
 
 builder.Services.AddControllersWithViews();
 

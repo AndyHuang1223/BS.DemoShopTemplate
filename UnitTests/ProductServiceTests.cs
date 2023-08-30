@@ -13,6 +13,7 @@ namespace UnitTests
         private Mock<IRepository<Product>> _mockProductRepository;
         private Mock<IRepository<Specification>> _mockSpecificationRepository;
         private Mock<IRepository<ProductSpecification>> _mockProductSpecificationRepository;
+        private Mock<IRepository<SpecificationReference>> _mockSpecificationRefRepository;
 
         [SetUp]
         public void Setup()
@@ -20,6 +21,7 @@ namespace UnitTests
             _mockProductRepository = new();
             _mockSpecificationRepository = new();
             _mockProductSpecificationRepository = new();
+            _mockSpecificationRefRepository = new();
         }
 
         [Test]
@@ -34,7 +36,7 @@ namespace UnitTests
             var productRepo = _mockProductRepository.Object;
 
             //Act
-            var productService = new ProductService(productRepo, _mockSpecificationRepository.Object, _mockProductSpecificationRepository.Object);
+            var productService = new ProductService(productRepo, _mockSpecificationRepository.Object, _mockProductSpecificationRepository.Object, _mockSpecificationRefRepository.Object);
             var expected = new Product { Id = 1, ProductName = "TestProduct", IsOnTheMarket = true };
 
             //Assert
@@ -128,7 +130,7 @@ namespace UnitTests
             };
 
             //Act
-            var productService = new ProductService(_mockProductRepository.Object, _mockSpecificationRepository.Object, _mockProductSpecificationRepository.Object);
+            var productService = new ProductService(_mockProductRepository.Object, _mockSpecificationRepository.Object, _mockProductSpecificationRepository.Object, _mockSpecificationRefRepository.Object);
             var actual = productService.GetHotSellProductList(productList, expected.Count);
             
             //Assert

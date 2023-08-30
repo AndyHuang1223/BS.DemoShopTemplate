@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DemoShop.ApplicationCore.Interfaces.ProductService.Dto;
 
-namespace DemoShop.ApplicationCore.Interfaces.ProductService.Dto
+namespace DemoShop.Web.ViewModels.Product
 {
-    public class GetProductInfoOutput
+    public class ProductInfoViewModel
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
@@ -14,10 +10,9 @@ namespace DemoShop.ApplicationCore.Interfaces.ProductService.Dto
         public string Desc { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }
-        public ProductInfoSpec[] Spec { get; set; }
+        public SpecVM[] Spec { get; set; }
     }
-
-    public class ProductInfoSpec
+    public class SpecVM
     {
         public int SpecId { get; set; }
         public string Title { get; set; }
@@ -26,6 +21,4 @@ namespace DemoShop.ApplicationCore.Interfaces.ProductService.Dto
         public decimal UnitPrice { get; set; }
         public int Inventory { get; set; }
     }
-
-
 }

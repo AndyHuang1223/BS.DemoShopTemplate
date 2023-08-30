@@ -11,5 +11,5 @@ public interface IProductService
     Task ShelveProductAsync(int productId);
     Task OffShelveProductAsync(int productId);
     //TODO 新增一個取得商品資訊的Product
-    //Task<GetProductInfoOutput> GetProductInfo(int productId);
+    Task<GetProductInfoOutput> GetProductInfoAsync(int productId);
 }
