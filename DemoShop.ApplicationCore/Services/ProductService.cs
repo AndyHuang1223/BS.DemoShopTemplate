@@ -14,18 +14,18 @@ namespace DemoShop.ApplicationCore.Services
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Specification> _specRepo;
-        private readonly IRepository<ProductSpecification> _prodSpecRepo;
+        private readonly IRepository<ProductDetail> _prodDetailRepo;
         private readonly IRepository<SpecificationReference> _specRefRepo;
 
         public ProductService(
             IRepository<Product> porductRepository,
             IRepository<Specification> specRepo,
-            IRepository<ProductSpecification> prodSpecRepo,
+            IRepository<ProductDetail> prodSpecRepo,
             IRepository<SpecificationReference> specRefRepo)
         {
             _productRepository = porductRepository;
             _specRepo = specRepo;
-            _prodSpecRepo = prodSpecRepo;
+            _prodDetailRepo = prodSpecRepo;
             _specRefRepo = specRefRepo;
         }
 
@@ -33,23 +33,16 @@ namespace DemoShop.ApplicationCore.Services
         {
             //庫存少的排在前面，取前count筆。
             return productList
-                .OrderBy(prod => prod.ProductSpecifications.Sum(prodSpec => prodSpec.Specification.Inventory))
+                .OrderBy(prod => prod.Seq)
                 .Take(count)
                 .ToList();
         }
 
         public async Task<List<Product>> GetHotSellProductListAsync(int count)
         {
-            var specs = await _specRepo.ListAsync();//你不應該直接全部拉出來, 這是範例而已。
-            var prodSpecs = await _prodSpecRepo.ListAsync(ps => specs.Select(s => s.Id).Contains(ps.SpecificationId));
-            var porductList = await _productRepository.ListAsync(p => prodSpecs.Select(ps => ps.ProductId).Contains(p.Id));
-            foreach (var prod in porductList)
-            {
-                var thisProdSpecs = prodSpecs.Where(ps => ps.ProductId == prod.Id).ToList();
-                var thisSpecs = specs.Where(s => thisProdSpecs.Select(_ => _.SpecificationId).Contains(s.Id));
-                thisProdSpecs.ForEach(ps => ps.Specification = thisSpecs.FirstOrDefault(s => s.Id == ps.SpecificationId));
-                prod.ProductSpecifications = thisProdSpecs;
-            }
+            //你不應該直接全部拉出來, 這是範例而已。
+            var porductList = await _productRepository.ListAsync();
+
             return GetHotSellProductList(porductList, count);
         }
 
@@ -58,14 +51,14 @@ namespace DemoShop.ApplicationCore.Services
             //var product = await _productRepository.GetByIdAsync(productId);
             var product = await _productRepository.FirstOrDefaultAsync(p => p.Id == productId);
 
-            if(product is null || product.IsOnTheMarket == false)
+            if (product is null || product.IsOnTheMarket == false)
             {
                 return null;
             }
 
-            var prodSpecs = await _prodSpecRepo.ListAsync(ps => ps.ProductId == productId);
-            var specs = await _specRepo.ListAsync(s => prodSpecs.Select(ps => ps.SpecificationId).Contains(s.Id));
-            var specRefs = await _specRefRepo.ListAsync(sr => specs.Select(s => s.SpecificationReferenceId).Contains(sr.Id));
+            var productDetails = await _prodDetailRepo.ListAsync(_ => _.ProductId == productId);
+            var specs = (await _specRepo.ListAsync(_ => productDetails.Select(pd => pd.Id).Contains(_.ProductDetailId))).OrderBy(s => s.Seq);
+            var specRefs = (await _specRefRepo.ListAsync(_ => specs.Select(s => s.SpecificationReferenceId).Contains(_.Id))).OrderBy(s => s.Seq);
 
             var result = new GetProductInfoOutput()
             {
@@ -73,16 +66,16 @@ namespace DemoShop.ApplicationCore.Services
                 Desc = product.Description,
                 MainPicture = product.ImagePath,
                 ProductId = product.Id,
-                MaxPrice = specs.Max(s => s.UnitPrice),
-                MinPrice = specs.Min(s => s.UnitPrice),
-                Spec = specs.Select(s => new ProductInfoSpec
+                MaxPrice = productDetails.Max(s => s.UnitPrice),
+                MinPrice = productDetails.Min(s => s.UnitPrice),
+                Spec = productDetails.Select(s => new ProductInfoSpec
                 {
                     SpecId = s.Id,
                     Inventory = s.Inventory,
                     SKU = s.SKU,
                     UnitPrice = s.UnitPrice,
-                    Value = s.SpecificationValue,
-                    Title = specRefs.FirstOrDefault(sr => sr.Id == s.SpecificationReferenceId)?.SpecificationName ?? "預設規格"
+                    Value = string.Join(",", specs.Select(s => $"{s.Seq}:{s.SpecificationValue}")),
+                    Title = string.Join(",", specRefs.Select(s => $"{s.Seq}:{s.SpecificationName}"))
                 }).ToArray()
             };
 

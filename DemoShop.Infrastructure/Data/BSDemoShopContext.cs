@@ -14,7 +14,7 @@ public partial class BSDemoShopContext : DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<ProductSpecification> ProductSpecifications { get; set; }
+    public DbSet<ProductDetail> ProductSpecifications { get; set; }
     public DbSet<Specification> Specifications { get; set; }
     public DbSet<SpecificationReference> SpecificationReferences { get; set; }
 
@@ -38,7 +38,7 @@ public partial class BSDemoShopContext : DbContext
 
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.Discount)
-            .HasPrecision(5, 2); //TODO 修改 .HasPrecision(5, 2) 後，新增異動。
+            .HasPrecision(5, 2); 
         modelBuilder.Entity<OrderItem>()
             .Property(oi => oi.UnitPrice)
             .HasPrecision(14, 2);
@@ -48,12 +48,13 @@ public partial class BSDemoShopContext : DbContext
         modelBuilder.Entity<Product>()
             .ToTable("Products");
         
-        modelBuilder.Entity<ProductSpecification>()
-            .ToTable("ProductSpecifications");
+        modelBuilder.Entity<ProductDetail>()
+            .ToTable("ProductDetails");
 
-        modelBuilder.Entity<Specification>()
+        modelBuilder.Entity<ProductDetail>()
             .Property(s => s.UnitPrice)
             .HasPrecision(14, 2);
+
         modelBuilder.Entity<Specification>()
             .ToTable("Specifications");
         

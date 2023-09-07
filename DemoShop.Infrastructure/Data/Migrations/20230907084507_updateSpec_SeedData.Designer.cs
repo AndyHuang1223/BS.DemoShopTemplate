@@ -4,6 +4,7 @@ using DemoShop.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoShop.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BSDemoShopContext))]
-    partial class BSDemoShopContextModelSnapshot : ModelSnapshot
+    [Migration("20230907084507_updateSpec_SeedData")]
+    partial class updateSpec_SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,7 +226,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8914),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3396),
                             Description = "米奇潮T",
                             ImagePath = "https://picsum.photos/300/200/?random=1",
                             IsDelete = false,
@@ -234,7 +237,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8917),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3400),
                             Description = "圍巾 DESC.",
                             ImagePath = "https://picsum.photos/300/200/?random=2",
                             IsDelete = false,
@@ -245,7 +248,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8919),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3402),
                             Description = "蛋糕 DESC.",
                             ImagePath = "https://picsum.photos/300/200/?random=3",
                             IsDelete = false,
@@ -299,7 +302,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8938),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3422),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -310,7 +313,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8941),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3425),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -321,7 +324,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 3,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8943),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3428),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -332,7 +335,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8945),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3430),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -343,7 +346,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 5,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8966),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3432),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -354,7 +357,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 6,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8969),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3435),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -365,7 +368,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 7,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8971),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3438),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
@@ -376,46 +379,13 @@ namespace DemoShop.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 8,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8973),
+                            CreateAt = new DateTime(2023, 9, 7, 8, 45, 7, 178, DateTimeKind.Utc).AddTicks(3439),
                             Inventory = 10,
                             IsDelete = false,
                             ProductId = 1,
                             SKU = "Micky-Gray-S",
                             Seq = 1,
                             UnitPrice = 100m
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8975),
-                            Inventory = 5,
-                            IsDelete = false,
-                            ProductId = 2,
-                            SKU = "Scarf",
-                            Seq = 0,
-                            UnitPrice = 50m
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8978),
-                            Inventory = 15,
-                            IsDelete = false,
-                            ProductId = 3,
-                            SKU = "Cake-Banana",
-                            Seq = 0,
-                            UnitPrice = 599m
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CreateAt = new DateTime(2023, 9, 7, 9, 19, 30, 676, DateTimeKind.Utc).AddTicks(8979),
-                            Inventory = 20,
-                            IsDelete = false,
-                            ProductId = 3,
-                            SKU = "Cake-Chocolate",
-                            Seq = 1,
-                            UnitPrice = 599m
                         });
                 });
 
@@ -617,36 +587,6 @@ namespace DemoShop.Infrastructure.Data.Migrations
                             Seq = 0,
                             SpecificationReferenceId = 1,
                             SpecificationValue = "S"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CreateAt = new DateTime(2023, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDelete = false,
-                            ProductDetailId = 9,
-                            Seq = 0,
-                            SpecificationReferenceId = 2,
-                            SpecificationValue = "單一規格"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CreateAt = new DateTime(2023, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDelete = false,
-                            ProductDetailId = 10,
-                            Seq = 1,
-                            SpecificationReferenceId = 4,
-                            SpecificationValue = "香蕉"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CreateAt = new DateTime(2023, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDelete = false,
-                            ProductDetailId = 11,
-                            Seq = 0,
-                            SpecificationReferenceId = 4,
-                            SpecificationValue = "巧克力"
                         });
                 });
 
@@ -684,7 +624,7 @@ namespace DemoShop.Infrastructure.Data.Migrations
                             Id = 1,
                             CreateAt = new DateTime(2023, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDelete = false,
-                            Seq = 1,
+                            Seq = 0,
                             SpecificationName = "尺寸"
                         },
                         new
@@ -702,14 +642,6 @@ namespace DemoShop.Infrastructure.Data.Migrations
                             IsDelete = false,
                             Seq = 0,
                             SpecificationName = "顏色"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreateAt = new DateTime(2023, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsDelete = false,
-                            Seq = 0,
-                            SpecificationName = "口味"
                         });
                 });
 

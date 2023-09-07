@@ -21,8 +21,8 @@ namespace DemoShop.Infrastructure.Data
             modelBuilder.Entity<Product>()
                 .HasData(SeedData.ProduceProduct());
 
-            modelBuilder.Entity<ProductSpecification>()
-                .HasData(SeedData.ProduceProductSpecification());
+            modelBuilder.Entity<ProductDetail>()
+                .HasData(SeedData.ProduceProductDetail());
 
         }
     }

@@ -10,24 +10,23 @@ namespace DemoShop.Web.Services.Cms
     {
         private readonly IProductService _productService;
         private readonly IRepository<Product> _productRepo;
-        private readonly IRepository<ProductSpecification> _prodSpecRepo;
+        private readonly IRepository<ProductDetail> _prodDetailRepo;
         private readonly IRepository<Specification> _specRepo;
 
-        public CmsService(IProductService productService, IRepository<Product> productRepo, IRepository<ProductSpecification> prodSpecRepo, IRepository<Specification> specRepo)
+        public CmsService(IProductService productService, IRepository<Product> productRepo, IRepository<ProductDetail> prodSpecRepo, IRepository<Specification> specRepo)
         {
             _productService = productService;
             _productRepo = productRepo;
-            _prodSpecRepo = prodSpecRepo;
+            _prodDetailRepo = prodSpecRepo;
             _specRepo = specRepo;
         }
 
-        
+
 
         public async Task<IndexViewModel> GetHomepageViewModel()
         {
             var hotsellProds = await _productService.GetHotSellProductListAsync(5);
-            var prodSpecs = await _prodSpecRepo.ListAsync(ps => hotsellProds.Select(p => p.Id).Contains(ps.ProductId));
-            var specs = await _specRepo.ListAsync(s => prodSpecs.Select(ps => ps.SpecificationId).Contains(s.Id));
+            var prodDeatils = await _prodDetailRepo.ListAsync(ps => hotsellProds.Select(p => p.Id).Contains(ps.ProductId));
 
             var prodCards = hotsellProds.Select(p => new ProductCardViewModel
             {
@@ -35,7 +34,7 @@ namespace DemoShop.Web.Services.Cms
                 Name = p.ProductName,
                 ImgUrl = p.ImagePath,
                 Link = $"/product/{p.Id}",
-                ShowPrice = specs.Where(s => s.Id == prodSpecs.Where(ps=> ps.ProductId == p.Id).First().SpecificationId).First().UnitPrice.ToString("#,#.00")
+                ShowPrice = prodDeatils.FirstOrDefault(pd => pd.ProductId == p.Id)?.UnitPrice.ToString("#,#.00") ?? "隱藏價格"
             }).ToList();
             IndexViewModel vm = new IndexViewModel()
             {

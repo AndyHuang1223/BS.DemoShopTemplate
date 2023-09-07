@@ -10,5 +10,5 @@ public class Product : BaseEntity
     public bool IsOnTheMarket { get; set; }
     public string ImagePath { get; set; }
     
-    public ICollection<ProductSpecification> ProductSpecifications { get; set; }
+    public ICollection<ProductDetail> ProductDeatils { get; set; }
 }
