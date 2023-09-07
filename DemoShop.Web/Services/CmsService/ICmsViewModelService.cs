@@ -1,6 +1,6 @@
 ﻿using DemoShop.Web.ViewModels.Cms;
 
-namespace DemoShop.Web.Services.Cms
+namespace DemoShop.Web.Services.CmsService
 {
     public interface ICmsViewModelService
     {

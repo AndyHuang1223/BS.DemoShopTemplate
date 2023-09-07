@@ -1,10 +1,4 @@
-using DemoShop.ApplicationCore.Interfaces;
-using DemoShop.ApplicationCore.Interfaces.OrderService;
-using DemoShop.ApplicationCore.Interfaces.ProductService;
-using DemoShop.ApplicationCore.Services;
-using DemoShop.Infrastructure.Data;
-using DemoShop.Web.Services.Cms;
-using DemoShop.Web.Services;
+
 using DemoShop.Web.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);

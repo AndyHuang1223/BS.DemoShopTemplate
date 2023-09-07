@@ -1,7 +1,7 @@
 ﻿using DemoShop.ApplicationCore.Interfaces.ProductService;
 using DemoShop.Web.ViewModels.Product;
 
-namespace DemoShop.Web.Services
+namespace DemoShop.Web.Services.ProductService
 {
     public class ProductViewModelService
     {

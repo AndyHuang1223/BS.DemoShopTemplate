@@ -1,5 +1,5 @@
-﻿using DemoShop.Web.Services.Cms;
-using DemoShop.Web.Services;
+﻿using DemoShop.Web.Services.CmsService;
+using DemoShop.Web.Services.ProductService;
 
 namespace DemoShop.Web.Configurations
 {

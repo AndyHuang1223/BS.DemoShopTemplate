@@ -1,6 +1,4 @@
-﻿using DemoShop.Web.Services.Cms;
-using DemoShop.Web.Services;
-using DemoShop.ApplicationCore.Interfaces.OrderService;
+﻿using DemoShop.ApplicationCore.Interfaces.OrderService;
 using DemoShop.ApplicationCore.Interfaces.ProductService;
 using DemoShop.ApplicationCore.Interfaces;
 using DemoShop.ApplicationCore.Services;

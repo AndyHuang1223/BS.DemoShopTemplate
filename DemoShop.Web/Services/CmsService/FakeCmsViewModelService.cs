@@ -1,7 +1,7 @@
 ﻿using DemoShop.Web.ViewModels.Cms;
 using DemoShop.Web.ViewModels.Partial;
 
-namespace DemoShop.Web.Services.Cms
+namespace DemoShop.Web.Services.CmsService
 {
     public class FakeCmsViewModelService : ICmsViewModelService
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using DemoShop.Web.Models;
-using DemoShop.Web.Services.Cms;
+using DemoShop.Web.Services.CmsService;
 
 namespace DemoShop.Web.Controllers;
 
