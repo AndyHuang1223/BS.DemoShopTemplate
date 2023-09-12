@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BS.DemoShop.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BS.DemoShop.Web", "BS.DemoShop.Web\BS.DemoShop.Web.csproj", "{3F235557-B44D-4C67-B46D-4C06A053D63C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BS.DemoShop.Admin", "BS.DemoShop.Admin\BS.DemoShop.Admin.csproj", "{972B362F-6374-48A6-8BE4-23AF43176CD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BS.DemoShop.Admin", "BS.DemoShop.Admin\BS.DemoShop.Admin.csproj", "{972B362F-6374-48A6-8BE4-23AF43176CD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{2CEEAF81-76AF-410B-8357-0D74FDB69531}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
