@@ -12,9 +12,9 @@ namespace BS.DemoShop.Web.Configurations
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
             services.AddScoped<ProductViewModelService>();
-            // services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
+            services.AddScoped<ICatalogViewModelService, CatalogViewModelService>();
             // services.AddScoped<ICatalogViewModelService, MemoryCacheCatalogViewModelService>();
-            services.AddScoped<ICatalogViewModelService, RedisCacheCatalogViewModelService>();
+            //services.AddScoped<ICatalogViewModelService, RedisCacheCatalogViewModelService>();
             services.AddScoped<CatalogViewModelService>();
             
             services.AddScoped<IAccountViewModelService, AccountViewModelService>();
