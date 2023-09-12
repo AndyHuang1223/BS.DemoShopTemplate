@@ -6,10 +6,4 @@
         <Nullable>disable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Compile Remove="Interfaces\UserService\Dto\**" />
-      <EmbeddedResource Remove="Interfaces\UserService\Dto\**" />
-      <None Remove="Interfaces\UserService\Dto\**" />
-    </ItemGroup>
-
 </Project>
