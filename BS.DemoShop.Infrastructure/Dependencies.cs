@@ -17,17 +17,7 @@ namespace BS.DemoShop.Infrastructure
         {
             services.AddDbContext<BSDemoShopContext>(options => options.UseSqlServer(configuration.GetConnectionString("BSDemoShopConnection")));
 
-            #region CloudinarySettings
-            var cloudName = configuration.GetSection("CloudinarySettings:CloudName").Value;
-            var apiKey = configuration.GetSection("CloudinarySettings:ApiKey").Value;
-            var apiSecret = configuration.GetSection("CloudinarySettings:ApiSecret").Value;
-
-            if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
-            {
-                throw new ArgumentException("Please specify Cloudinary account details!");
-            }
-            services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
-            #endregion
+            
         }
 
 

@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using BS.DemoShop.Extensions;
+using CloudinaryDotNet;
 
 namespace BS.DemoShop
 {
@@ -71,6 +72,20 @@ namespace BS.DemoShop
                 options.Configuration = Configuration.GetConnectionString("RedisConnectionString");
                 options.InstanceName = "MyRedisCache";
             });
+
+            #region CloudinarySettings
+            var cloudName = Configuration.GetSection("CloudinarySettings:CloudName").Value;
+            var apiKey = Configuration.GetSection("CloudinarySettings:ApiKey").Value;
+            var apiSecret = Configuration.GetSection("CloudinarySettings:ApiSecret").Value;
+
+            if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException("Please specify Cloudinary account details!");
+            }
+            services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+            #endregion
+
+            return services;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

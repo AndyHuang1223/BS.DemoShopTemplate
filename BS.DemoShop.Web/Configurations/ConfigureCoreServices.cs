@@ -3,8 +3,11 @@ using BS.DemoShop.Core.Interfaces;
 using BS.DemoShop.Infrastructure.Data;
 using BS.DemoShop.Infrastructure.Data.Queries;
 using BS.DemoShop.Infrastructure.Services;
+using CloudinaryDotNet;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using System;
 
 namespace BS.DemoShop.Web.Configurations
 {
@@ -21,7 +24,8 @@ namespace BS.DemoShop.Web.Configurations
             services.AddScoped<IEmailSender, MailKitEmailSender>();
             services.AddScoped<IPhotoUploader, CloudinaryPhotoUploader>();
 
-            return services;
+
+            
         }
     }
 }
