@@ -24,7 +24,7 @@ namespace BS.DemoShop.Web.Configurations
             services.AddScoped<IEmailSender, MailKitEmailSender>();
             services.AddScoped<IPhotoUploader, CloudinaryPhotoUploader>();
 
-
+            return services;
             
         }
     }

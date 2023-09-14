@@ -85,7 +85,6 @@ namespace BS.DemoShop
             services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
             #endregion
 
-            return services;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
