@@ -17,6 +17,9 @@ namespace BS.DemoShop.Web.Configurations
             services.AddScoped<IProductQueryService, ProductQueryService>();
             services.AddScoped<IAppPasswordHasher, SHA256Hasher>();
 
+            //services.AddScoped<IEmailSender, SendGridEmailSender>();
+            services.AddScoped<IEmailSender, MailKitEmailSender>();
+
             return services;
         }
     }
