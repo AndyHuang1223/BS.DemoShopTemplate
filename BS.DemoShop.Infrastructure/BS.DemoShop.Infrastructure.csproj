@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.22.0" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="MailKit" Version="4.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
