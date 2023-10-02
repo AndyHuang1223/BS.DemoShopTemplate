@@ -13,9 +13,9 @@ namespace BS.DemoShop.Web.Controllers
     public class ProductController : Controller
     {
         private readonly ProductViewModelService _productService;
-        private readonly ICatalogViewModelService _catalogViewModelService;
+        private readonly CatalogViewModelService _catalogViewModelService;
 
-        public ProductController(ProductViewModelService productService, ICatalogViewModelService catalogViewModelService)
+        public ProductController(ProductViewModelService productService, CatalogViewModelService catalogViewModelService)
         {
             _productService = productService;
             _catalogViewModelService = catalogViewModelService;

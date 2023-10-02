@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BS.DemoShop.Web.Services
 {
-    public class CatalogViewModelService : ICatalogViewModelService
+    public class CatalogViewModelService
     {
         private readonly IRepository<Category> _categoryRepo;
         private readonly IRepository<Product> _productRepo;
@@ -28,14 +28,14 @@ namespace BS.DemoShop.Web.Services
         public IEnumerable<SelectListItem> GetCategories()
         {
             var categoryItems = _categoryRepo.GetAllReadOnly()
-                 .OrderBy(c => c.Sort)
-                 .ThenBy(c => c.CreatedTime)
-                 .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-                 .ToList();
+                .OrderBy(c => c.Sort)
+                .ThenBy(c => c.CreatedTime)
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList();
 
             var allItem = new SelectListItem { Value = null, Text = "全部分類", Selected = true };
             categoryItems.Insert(0, allItem);
-            
+
             return categoryItems;
         }
 
@@ -52,6 +52,7 @@ namespace BS.DemoShop.Web.Services
                 {
                     item.Selected = false;
                 }
+
                 yield return item;
             }
         }
@@ -62,8 +63,8 @@ namespace BS.DemoShop.Web.Services
             if (categoryId.HasValue)
             {
                 productEntities = productEntities.Where(p => p.CategoryId == categoryId);
-
             }
+
             var products = productEntities
                 .Select(p => new { p.Id, p.Name, p.ImgPath })
                 .ToList();
@@ -72,15 +73,15 @@ namespace BS.DemoShop.Web.Services
             foreach (var item in products)
             {
                 var maxPrice = await _productQueryService.GetProductMaxPriceById(item.Id);
-                var temp = new ProductCardViewModel { Id = item.Id, ImageUrl = item.ImgPath, Name = item.Name, Price = maxPrice };
+                var temp = new ProductCardViewModel
+                    { Id = item.Id, ImageUrl = item.ImgPath, Name = item.Name, Price = maxPrice };
                 productCards.Add(temp);
             }
 
             var categoryItems = GetCategories().ToList();
             var result = new CatalogIndexViewModel { ProductCards = productCards, CategoryItemList = categoryItems };
-            
-            return result;
 
+            return result;
         }
     }
 }

@@ -16,14 +16,14 @@ namespace BS.DemoShop.Web.Services
         private readonly IRepository<ProductDetail> _productDetailRepo;
         private readonly IProductRepository _productRepository;
         private readonly IProductQueryService _productQueryService;
-        private readonly ICatalogViewModelService _catalogViewModelService;
+        private readonly CatalogViewModelService _catalogViewModelService;
 
         public ProductViewModelService(
             IRepository<Product> productRepo,
             IRepository<ProductDetail> productDetailRepo,
             IProductRepository productRepository,
             IProductQueryService productQueryService,
-            ICatalogViewModelService catalogViewModelService)
+            CatalogViewModelService catalogViewModelService)
         {
             _productRepo = productRepo;
             _productDetailRepo = productDetailRepo;
