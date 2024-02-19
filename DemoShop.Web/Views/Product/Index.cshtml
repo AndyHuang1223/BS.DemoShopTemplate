@@ -1,0 +1,19 @@
+﻿@using DemoShop.Web.ViewModels.Product;
+@model ProductInfoViewModel
+
+<h1>@Model.Name</h1>
+<img src="@Model.MainPicture" />
+<ul>
+    <li>@Model.ProductId</li>
+    <li>@Model.Desc</li>
+    <li>@Model.MaxPrice</li>
+    <li>@Model.MinPrice</li>
+    <li>
+        <ul>
+            @foreach(var specStr in Model.Spec.Select(s => $"{s.Title}:{s.Value} ==> ${s.UnitPrice}"))
+            {
+                <li>@string.Join(",",specStr)</li>
+            }
+        </ul>
+    </li>
+</ul>

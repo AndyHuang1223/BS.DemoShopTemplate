@@ -1,0 +1,10 @@
+﻿@using DemoShop.Web.ViewModels.Partial;
+@model ProductCardViewModel
+<div class="card">
+    <img src="@Model.ImgUrl" class="card-img-top" alt="@Model.Name">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">$@Model.ShowPrice</p>
+        <a href="@Model.Link" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
