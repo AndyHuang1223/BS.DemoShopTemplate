@@ -1,4 +1,5 @@
 using DemoShop.ApplicationCore.Interfaces.TodoService;
+using DemoShop.ApplicationCore.Interfaces.TodoService.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoShop.Admin.WebApi;
@@ -18,14 +19,21 @@ public class TodosController : ControllerBase
     public async Task<IActionResult> GetTodos()
     {
         var todos = await _todoService.GetTodosAsync();
-        if (todos.Count > 0)
-        {
-            return Ok(todos);
-        }
-        else
+
+        if (todos.Count <= 0)
         {
             return NotFound();
         }
+
+        var output = todos.Select(todo => new GetTodoOutput
+        {
+            Id = todo.Id,
+            Description = todo.Description,
+            IsDone = todo.IsDone,
+            CreatedAt = todo.CreateAt,
+            UpdatedAt = todo.UpdateAt
+        });
+        return Ok(output);
     }
 
     [HttpGet("{id}")]
@@ -34,23 +42,33 @@ public class TodosController : ControllerBase
         var todo = await _todoService.GetTodoAsync(id);
         if (todo is null)
         {
-            return NotFound();
+            return NotFound(id);
         }
 
         return Ok(todo);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTodoAsync(string description)
+    public async Task<IActionResult> CreateTodoAsync([FromBody] CreateTodoInput input)
     {
-        var todo = await _todoService.CreateTodoAsync(description);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var todo = await _todoService.CreateTodoAsync(input.Description);
         return CreatedAtAction(nameof(GetTodoById), new { id = todo.Id }, todo);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateTodoAsync(int id, string description)
+    public async Task<IActionResult> UpdateTodoAsync([FromBody] UpdateTodoInput input)
     {
-        var todo = await _todoService.UpdateTodoAsync(id, description);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var todo = await _todoService.UpdateTodoAsync(input.Id, input.Description);
         if (todo is null)
         {
             return NotFound();
