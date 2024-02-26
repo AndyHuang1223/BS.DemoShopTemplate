@@ -8,141 +8,137 @@ namespace DemoShop.Infrastructure.Data;
 public class EfRepository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly BSDemoShopContext DbContext;
-
+    protected readonly DbSet<T> DbSet;
     public EfRepository(BSDemoShopContext dbContext)
     {
         DbContext = dbContext;
+        DbSet = dbContext.Set<T>();
     }
 
 
     public T Add(T entity)
     {
-        DbContext.Set<T>().Add(entity);
+        DbSet.Add(entity);
         DbContext.SaveChanges();
         return entity;
     }
 
     public IEnumerable<T> AddRange(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().AddRange(entities);
+        DbSet.AddRange(entities);
         DbContext.SaveChanges();
         return entities;
     }
 
     public async Task<T> AddAsync(T entity)
     {
-        DbContext.Set<T>().Add(entity);
+        DbSet.Add(entity);
         await DbContext.SaveChangesAsync();
         return entity;
     }
 
     public async Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().AddRange(entities);
+        DbSet.AddRange(entities);
         await DbContext.SaveChangesAsync();
         return entities;
     }
 
     public T Update(T entity)
     {
-        DbContext.Set<T>().Update(entity);
+        DbSet.Update(entity);
         DbContext.SaveChanges();
         return entity;
     }
 
     public IEnumerable<T> UpdateRange(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().UpdateRange(entities);
+        DbSet.UpdateRange(entities);
         DbContext.SaveChanges();
         return entities;
     }
 
     public async Task<T> UpdateAsync(T entity)
     {
-        DbContext.Set<T>().Update(entity);
+        DbSet.Update(entity);
         await DbContext.SaveChangesAsync();
         return entity;
     }
 
     public async Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().UpdateRange(entities);
+        DbSet.UpdateRange(entities);
         await DbContext.SaveChangesAsync();
         return entities;
     }
 
     public void Delete(T entity)
     {
-        DbContext.Set<T>().Remove(entity);
+        DbSet.Remove(entity);
         DbContext.SaveChanges();
     }
 
     public void DeleteRange(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().RemoveRange(entities);
+        DbSet.RemoveRange(entities);
         DbContext.SaveChanges();
     }
 
     public async Task DeleteAsync(T entity)
     {
-        DbContext.Set<T>().Remove(entity);
+        DbSet.Remove(entity);
         await DbContext.SaveChangesAsync();
     }
 
     public async Task DeleteRangeAsync(IEnumerable<T> entities)
     {
-        DbContext.Set<T>().RemoveRange(entities);
+        DbSet.RemoveRange(entities);
         await DbContext.SaveChangesAsync();
     }
     
 
     public T GetById<TId>(TId id)
     {
-        return DbContext.Set<T>().Find(new object[] { id });
+        return DbSet.Find(new object[] { id });
     }
 
     public async Task<T> GetByIdAsync<TId>(TId id)
     {
-        return await DbContext.Set<T>().FindAsync(new object[] { id });
+        return await DbSet.FindAsync(new object[] { id });
     }
 
     public T FirstOrDefault(Expression<Func<T, bool>> expression)
     {
-        return DbContext.Set<T>().FirstOrDefault(expression);
+        return DbSet.FirstOrDefault(expression);
     }
 
     public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
     {
-        return await DbContext.Set<T>().FirstOrDefaultAsync(expression);
+        return await DbSet.FirstOrDefaultAsync(expression);
     }
 
     public T SingleOrDefault(Expression<Func<T, bool>> expression)
     {
-        return DbContext.Set<T>().SingleOrDefault(expression);
+        return DbSet.SingleOrDefault(expression);
     }
 
     public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression)
     {
-        return await DbContext.Set<T>().SingleOrDefaultAsync(expression);
+        return await DbSet.SingleOrDefaultAsync(expression);
     }
 
     public bool Any(Expression<Func<T, bool>> expression)
     {
-        return DbContext.Set<T>().Any(expression);
+        return DbSet.Any(expression);
     }
 
     public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
     {
-        return await DbContext.Set<T>().AnyAsync(expression);
-    }
-
-    public async Task<List<T>> ListAsync()
-    {
-        return await DbContext.Set<T>().ToListAsync();
+        return await DbSet.AnyAsync(expression);
     }
 
     public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
     {
-        return await DbContext.Set<T>().Where(expression).ToListAsync();
+        return await DbSet.Where(expression).ToListAsync();
     }
 }
