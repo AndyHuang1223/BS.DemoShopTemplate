@@ -73,7 +73,23 @@ namespace DemoShop.Infrastructure.Data
                 new Specification{Id = 19, ProductDetailId = 11, Seq=0, SpecificationReferenceId = 4,SpecificationValue="巧克力",  CreateAt = new DateTime(2023,08,29)},
             };
         }
-
+        
+        public static List<TodoItem> ProduceTodoItem()
+        {
+            return new List<TodoItem>
+            {
+                new TodoItem { Id = 1, Description = "TodoItem 1", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 2, Description = "TodoItem 2", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 3, Description = "TodoItem 3", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 4, Description = "TodoItem 4", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 5, Description = "TodoItem 5", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 6, Description = "TodoItem 6", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 7, Description = "TodoItem 7", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 8, Description = "TodoItem 8", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 9, Description = "TodoItem 9", IsDone = false, CreateAt = DateTime.UtcNow},
+                new TodoItem { Id = 10, Description = "TodoItem 10", IsDone = false, CreateAt = DateTime.UtcNow},
+            };
+        }
 
     }
 }

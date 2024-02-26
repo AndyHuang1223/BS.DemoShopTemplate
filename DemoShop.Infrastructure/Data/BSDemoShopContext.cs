@@ -17,6 +17,7 @@ public partial class BSDemoShopContext : DbContext
     public DbSet<ProductDetail> ProductSpecifications { get; set; }
     public DbSet<Specification> Specifications { get; set; }
     public DbSet<SpecificationReference> SpecificationReferences { get; set; }
+    public DbSet<TodoItem> TodoItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +61,10 @@ public partial class BSDemoShopContext : DbContext
         
         modelBuilder.Entity<SpecificationReference>()
             .ToTable("SpecificationReferences");
+
+        modelBuilder.Entity<TodoItem>()
+            .ToTable("TodoItems");
+            
 
        
         OnModelCreatingPartial(modelBuilder);
