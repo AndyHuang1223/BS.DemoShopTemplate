@@ -1,25 +1,25 @@
 # BS.DemoShop
-## Àô¹Ò³]©w
-1. SDK : .NET 7.0(©Î¥H¤W)¡C
-2. ³s½u¦r¦ê³]©w : ­×§ï`appsettings.json`©ÎªÌ`¨Ï¥Î¨Ï¥ÎªÌ±K½X(sectets.json)`(°Ñ¦Ò¸ê®Æ:[¦b ASP.NET Core ¤¤¶}µo¤¤¦w¥şÀx¦sÀ³¥Îµ{¦¡±K½X](https://learn.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows))¡C
-3. ¾E²¾(§ó·s)¸ê®Æ®w : 
-	- ¨Ï¥Î.Net Core CLI : `dotnet ef database update --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/`¡C
-	- ¨Ï¥ÎVisual Studio PMC(¹w³]±M®×¬°DemoShop.Infrastructure) : `Update-Database`¡C
+## ç’°å¢ƒè¨­å®š
+1. SDK : .NET 7.0(æˆ–ä»¥ä¸Š)ã€‚
+2. é€£ç·šå­—ä¸²è¨­å®š : ä¿®æ”¹`appsettings.json`æˆ–è€…`ä½¿ç”¨ä½¿ç”¨è€…å¯†ç¢¼(sectets.json)`(åƒè€ƒè³‡æ–™:[åœ¨ ASP.NET Core ä¸­é–‹ç™¼ä¸­å®‰å…¨å„²å­˜æ‡‰ç”¨ç¨‹å¼å¯†ç¢¼](https://learn.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows))ã€‚
+3. é·ç§»(æ›´æ–°)è³‡æ–™åº« : 
+	- ä½¿ç”¨.Net Core CLI : `dotnet ef database update --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/`ã€‚
+	- ä½¿ç”¨Visual Studio PMC(é è¨­å°ˆæ¡ˆç‚ºDemoShop.Infrastructure) : `Update-Database`ã€‚
 
-## ¸ê®Æ®w²§°Ê¬yµ{(¨Ï¥Î.Net Core CLI)
-¥H¤U¨âºØ¤è¦¡«ØÄ³²Ä¤@¦¸«Ø¥ßEntity¤ÎDbContext®É¥i¥H¨Ï¥ÎScaffold¤è¦¡ÁÙ­ì¡F¾E²¾¸ê®Æ®w®É¦A¨Ï¥ÎMigrationªº¤è¦¡§ó·s¨ì¨ä¥LÀô¹Òªº¸ê®Æ®w¡C
+## è³‡æ–™åº«ç•°å‹•æµç¨‹(ä½¿ç”¨.Net Core CLI)
+ä»¥ä¸‹å…©ç¨®æ–¹å¼å»ºè­°ç¬¬ä¸€æ¬¡å»ºç«‹EntityåŠDbContextæ™‚å¯ä»¥ä½¿ç”¨Scaffoldæ–¹å¼é‚„åŸï¼›é·ç§»è³‡æ–™åº«æ™‚å†ä½¿ç”¨Migrationçš„æ–¹å¼æ›´æ–°åˆ°å…¶ä»–ç’°å¢ƒçš„è³‡æ–™åº«ã€‚
 
 ### Code First
-1. ­×§ïEntity Model¡C
-2. ·s¼WMigration²§°Ê¬ö¿ı : «ü¥O `dotnet ef migrations add <Migration name> --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/ --output-dir ./Data/Migrations`¡C
-3. ¾E²¾(§ó·s)¸ê®Æ®w : `dotnet ef database update --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/`¡C
+1. ä¿®æ”¹Entity Modelã€‚
+2. æ–°å¢Migrationç•°å‹•ç´€éŒ„ : æŒ‡ä»¤ `dotnet ef migrations add <Migration name> --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/ --output-dir ./Data/Migrations`ã€‚
+3. é·ç§»(æ›´æ–°)è³‡æ–™åº« : `dotnet ef database update --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/`ã€‚
 
 ### Code First From DB(Scaffolding)
-1. ­×§ï¸ê®Æ®wSchema¡C
-2. Scaffolding¸ê®Æ®w : `dotnet ef dbcontext scaffold "Name=ConnectionStrings:BSDemoShopConnection" Microsoft.EntityFrameworkCore.SqlServer --output-dir ../DemoShop.ApplicationCore/Entities --context-dir ../DemoShop.Infrastructure/Data --namespace DemoShop.ApplicationCore.Entities --context BSDemoShopContext --context-namespace DemoShop.Infrastructure.Data --startup-project ./DemoShop.Web --data-annotations --force`¡C
-3. ­×§ï`IRepository<T>`¤Î`EfRepository<T>`ªºªx«¬¬ù§ô : ±N`BaseEntity`­×§ï¬°`class`(¨S­×§ïªº¸Ü·|µLªk«Ø¸m)¡C
+1. ä¿®æ”¹è³‡æ–™åº«Schemaã€‚
+2. Scaffoldingè³‡æ–™åº« : `dotnet ef dbcontext scaffold "Name=ConnectionStrings:BSDemoShopConnection" Microsoft.EntityFrameworkCore.SqlServer --output-dir ../DemoShop.ApplicationCore/Entities --context-dir ../DemoShop.Infrastructure/Data --namespace DemoShop.ApplicationCore.Entities --context BSDemoShopContext --context-namespace DemoShop.Infrastructure.Data --startup-project ./DemoShop.Web --data-annotations --force`ã€‚
+3. ä¿®æ”¹`IRepository<T>`åŠ`EfRepository<T>`çš„æ³›å‹ç´„æŸ : å°‡`BaseEntity`ä¿®æ”¹ç‚º`class`(æ²’ä¿®æ”¹çš„è©±æœƒç„¡æ³•å»ºç½®)ã€‚
 
 
-## ¨ä¥L
-- [Entity Framework Core ¤u¨ã°Ñ¦Ò - .NET Core CLI](https://learn.microsoft.com/zh-tw/ef/core/cli/dotnet)¡C
-- [Scaffolding (¤Ï¦V¤uµ{)](https://learn.microsoft.com/zh-tw/ef/core/managing-schemas/scaffolding/?tabs=dotnet-core-cli)¡C
+## å…¶ä»–
+- [Entity Framework Core å·¥å…·åƒè€ƒ - .NET Core CLI](https://learn.microsoft.com/zh-tw/ef/core/cli/dotnet)ã€‚
+- [Scaffolding (åå‘å·¥ç¨‹)](https://learn.microsoft.com/zh-tw/ef/core/managing-schemas/scaffolding/?tabs=dotnet-core-cli)ã€‚

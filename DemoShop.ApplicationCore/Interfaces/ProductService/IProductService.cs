@@ -10,6 +10,6 @@ public interface IProductService
     Task<List<Product>> GetHotSellProductListAsync(int count);
     Task ShelveProductAsync(int productId);
     Task OffShelveProductAsync(int productId);
-    //TODO ·s¼W¤@­Ó¨ú±o°Ó«~¸ê°TªºProduct
+    //TODO æ–°å¢ä¸€å€‹å–å¾—å•†å“è³‡è¨Šçš„Product
     Task<GetProductInfoOutput> GetProductInfoAsync(int productId);
 }
