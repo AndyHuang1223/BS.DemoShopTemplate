@@ -1,4 +1,4 @@
-﻿namespace DemoShop.Web.ViewModels.Partial
+﻿namespace DemoShop.Web.Models.ViewModels.Partial
 {
     public class WidgetPartialViewModel
     {

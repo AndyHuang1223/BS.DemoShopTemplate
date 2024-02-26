@@ -1,4 +1,4 @@
-﻿using DemoShop.Web.ViewModels.Cms;
+﻿using DemoShop.Web.Models.ViewModels.Home;
 
 namespace DemoShop.Web.Services.CmsService
 {

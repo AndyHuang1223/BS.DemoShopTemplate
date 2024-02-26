@@ -1,6 +1,4 @@
-﻿using DemoShop.ApplicationCore.Interfaces.ProductService.Dto;
-
-namespace DemoShop.Web.ViewModels.Product
+﻿namespace DemoShop.Web.Models.ViewModels.Product
 {
     public class ProductInfoViewModel
     {

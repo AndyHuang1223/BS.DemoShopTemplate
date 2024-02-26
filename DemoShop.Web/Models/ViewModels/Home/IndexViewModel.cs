@@ -1,6 +1,6 @@
-﻿using DemoShop.Web.ViewModels.Partial;
+﻿using DemoShop.Web.Models.ViewModels.Partial;
 
-namespace DemoShop.Web.ViewModels.Cms
+namespace DemoShop.Web.Models.ViewModels.Home
 {
     public class IndexViewModel
     {

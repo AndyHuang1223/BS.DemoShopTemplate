@@ -1,7 +1,6 @@
 ﻿using DemoShop.ApplicationCore.Interfaces.ProductService;
 using DemoShop.ApplicationCore.Interfaces.ProductService.Dto;
 using DemoShop.Web.Services.ProductService;
-using DemoShop.Web.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoShop.Web.Controllers

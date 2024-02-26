@@ -1,5 +1,5 @@
 ﻿using DemoShop.ApplicationCore.Interfaces.ProductService;
-using DemoShop.Web.ViewModels.Product;
+using DemoShop.Web.Models.ViewModels.Product;
 
 namespace DemoShop.Web.Services.ProductService
 {

@@ -1,8 +1,8 @@
 ﻿using DemoShop.ApplicationCore.Entities;
 using DemoShop.ApplicationCore.Interfaces;
 using DemoShop.ApplicationCore.Interfaces.ProductService;
-using DemoShop.Web.ViewModels.Cms;
-using DemoShop.Web.ViewModels.Partial;
+using DemoShop.Web.Models.ViewModels.Home;
+using DemoShop.Web.Models.ViewModels.Partial;
 
 namespace DemoShop.Web.Services.CmsService
 {
