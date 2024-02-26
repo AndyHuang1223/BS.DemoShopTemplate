@@ -18,12 +18,12 @@ namespace DemoShop.ApplicationCore.Services
         private readonly IRepository<SpecificationReference> _specRefRepo;
 
         public ProductService(
-            IRepository<Product> porductRepository,
+            IRepository<Product> productRepository,
             IRepository<Specification> specRepo,
             IRepository<ProductDetail> prodSpecRepo,
             IRepository<SpecificationReference> specRefRepo)
         {
-            _productRepository = porductRepository;
+            _productRepository = productRepository;
             _specRepo = specRepo;
             _prodDetailRepo = prodSpecRepo;
             _specRefRepo = specRefRepo;
@@ -41,9 +41,9 @@ namespace DemoShop.ApplicationCore.Services
         public async Task<List<Product>> GetHotSellProductListAsync(int count)
         {
             //你不應該直接全部拉出來, 這是範例而已。
-            var porductList = await _productRepository.ListAsync();
+            var productList = await _productRepository.ListAsync(x => true);
 
-            return GetHotSellProductList(porductList, count);
+            return GetHotSellProductList(productList, count);
         }
 
         public async Task<GetProductInfoOutput> GetProductInfoAsync(int productId)

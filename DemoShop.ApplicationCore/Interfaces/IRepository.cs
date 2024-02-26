@@ -25,6 +25,5 @@ public interface IRepository<T> where T : BaseEntity
     Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression);
     bool Any(Expression<Func<T, bool>> expression);
     Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
-    Task<List<T>> ListAsync();
     Task<List<T>> ListAsync(Expression<Func<T, bool>> expression);
 }
