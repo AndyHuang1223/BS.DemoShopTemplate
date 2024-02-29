@@ -9,4 +9,6 @@ public class UpdateTodoInput
     [Required]
     [MaxLength(30)]
     public string Description { get; set; }
+    [Required]
+    public bool IsDone { get; set; }
 }

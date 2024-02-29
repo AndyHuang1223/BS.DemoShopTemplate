@@ -84,7 +84,7 @@ public class TodosController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var todo = await _todoService.UpdateTodoAsync(input.Id, input.Description);
+        var todo = await _todoService.UpdateTodoAsync(input.Id, input.Description, input.IsDone);
         if (todo is null)
         {
             return NotFound();
