@@ -1,8 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Quasar";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="q-app">
+    <q-layout view="lHh Lpr lFf">
+        <q-header elevated class="bg-indigo text-white" height-hint="98">
+            <q-toolbar>
+                <q-btn
+                    flat
+                    dense
+                    round
+                    icon="menu"
+                    aria-label="Menu">
+                </q-btn>
+                <q-toolbar-title>
+                    Quasar Admin Panel
+                </q-toolbar-title>
+                <q-space></q-space>
+                <div class="q-gutter-sm row items-center no-wrap">
+                    <q-btn round dense flat color="white"
+                           :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+                           v-on:click="$q.fullscreen.toggle()"
+                           v-if="$q.screen.gt.sm">
+                    </q-btn>
+                    <q-btn round flat>
+                        <q-avatar size="26px">
+                            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        </q-avatar>
+                    </q-btn>
+                    <q-select
+                        v-model="locale"
+                        :options="localeOptions"
+                        :label="$t('button.changeLocale')"
+                        dense
+                        borderless
+                        emit-value
+                        map-options
+                        style="min-width: 150px"
+                        v-on:update:model-value="changeLocale">
+                    </q-select>
+                </div>
+            </q-toolbar>
+        </q-header>
+        <q-page-container>
+            <q-page padding>
+                <div class="q-ma-md">
+                    <q-table
+                        title="Quasar Platform Properties"
+                        :rows="userQuasarPlatformRows"
+                        :columns="userQuasarPlatformColumns"
+                        row-key="name">
+                    </q-table>
+                </div>
+            </q-page>
+        </q-page-container>
+    </q-layout>
 </div>
+
+@section EndJS
+{
+    <!-- Vue CDN For Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+
+    <!-- Quasar CDN For Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.umd.js"></script>
+
+    <!-- Quasar Language Pack CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/zh-TW.umd.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/en-us.umd.prod.js"></script>
+
+    <!-- Quasar Icon Set CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@v2/dist/icon-set/fontawesome-v6.umd.prod.js"></script>
+
+    <!-- Vue i18n CDN for Dev -->
+    <script src="https://unpkg.com/vue-i18n@9.9.1/dist/vue-i18n.global.js"></script>
+
+    <!-- Axios CDN for Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/js/home.js"></script>
+}
