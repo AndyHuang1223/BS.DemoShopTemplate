@@ -25,7 +25,7 @@ public class TodosController : ControllerBase
             return NotFound();
         }
 
-        var output = todos.Select(todo => new GetTodoOutput
+        var result = todos.Select(todo => new GetTodoOutput
         {
             Id = todo.Id,
             Description = todo.Description,
@@ -33,7 +33,7 @@ public class TodosController : ControllerBase
             CreatedAt = todo.CreateAt,
             UpdatedAt = todo.UpdateAt
         });
-        return Ok(output);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
@@ -45,7 +45,15 @@ public class TodosController : ControllerBase
             return NotFound(id);
         }
 
-        return Ok(todo);
+        var result = new GetTodoOutput
+        {
+            Id = todo.Id,
+            Description = todo.Description,
+            IsDone = todo.IsDone,
+            CreatedAt = todo.CreateAt,
+            UpdatedAt = todo.UpdateAt
+        };
+        return Ok(result);
     }
 
     [HttpPost]
@@ -57,7 +65,15 @@ public class TodosController : ControllerBase
         }
 
         var todo = await _todoService.CreateTodoAsync(input.Description);
-        return CreatedAtAction(nameof(GetTodoById), new { id = todo.Id }, todo);
+        var result = new GetTodoOutput
+        {
+            Id = todo.Id,
+            Description = todo.Description,
+            IsDone = todo.IsDone,
+            CreatedAt = todo.CreateAt,
+            UpdatedAt = todo.UpdateAt
+        };
+        return CreatedAtAction(nameof(GetTodoById), new { id = todo.Id }, result);
     }
 
     [HttpPut("{id}")]
@@ -74,7 +90,16 @@ public class TodosController : ControllerBase
             return NotFound();
         }
 
-        return Ok(todo);
+        var result = new GetTodoOutput
+        {
+            Id = todo.Id,
+            Description = todo.Description,
+            IsDone = todo.IsDone,
+            CreatedAt = todo.CreateAt,
+            UpdatedAt = todo.UpdateAt
+        };
+
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
