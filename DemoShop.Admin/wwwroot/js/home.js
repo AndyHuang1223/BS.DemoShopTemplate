@@ -1,4 +1,4 @@
-const domainName = "";
+const domainName = ""; // api domain name
 const locale = Quasar.lang.getLocale();
 const {createI18n} = VueI18n;
 
@@ -150,9 +150,9 @@ const app = Vue.createApp({
                         actions: "actions",
                     };
                 });
-                this.$q.loading.hide();
                 this.$q.notify("Get todo items successfully.");
                 this.todoItemsIsLoading = false;
+                return data;
             } catch (err) {
                 this.$q.notify("Failed to get todo items.");
             }
@@ -174,7 +174,7 @@ const app = Vue.createApp({
                 this.newTodoItem = "";
                 this.$q.notify("Create todo item successfully.");
                 this.loadingState = false;
-                this.getTodoItems();
+                await this.getTodoItems();
                 this.todoItemsIsLoading = false;
             } catch (err) {
                 this.$q.notify("Failed to create todo item.");
@@ -190,7 +190,7 @@ const app = Vue.createApp({
                     id: id,
                 });
                 this.$q.notify("Update todo item successfully.");
-                this.getTodoItems();
+                await this.getTodoItems();
                 this.todoItemsIsLoading = false;
             } catch (err) {
                 this.$q.notify("Failed to update todo item.");
@@ -217,7 +217,7 @@ const app = Vue.createApp({
                     id: id,
                 });
                 this.$q.notify("Update todo status successfully.");
-                this.getTodoItems();
+                await this.getTodoItems();
                 this.todoItemsIsLoading = false;
             } catch (err) {
                 this.$q.notify("Failed to update todo status.");
@@ -229,7 +229,9 @@ const app = Vue.createApp({
         this.$q.loading.show({
             message: "Loading...",
         });
-        this.getTodoItems();
+        this.getTodoItems().then((data) => {
+            this.$q.loading.hide();
+        });
     },
 });
 
