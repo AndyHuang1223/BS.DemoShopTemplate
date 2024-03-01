@@ -16,7 +16,7 @@ namespace DemoShop.Infrastructure.Data
                 .HasData(SeedData.ProduceSpecificationReference());
 
             modelBuilder.Entity<Specification>()
-               .HasData(SeedData.ProduceSpecification());
+                .HasData(SeedData.ProduceSpecification());
 
             modelBuilder.Entity<Product>()
                 .HasData(SeedData.ProduceProduct());
@@ -24,6 +24,8 @@ namespace DemoShop.Infrastructure.Data
             modelBuilder.Entity<ProductDetail>()
                 .HasData(SeedData.ProduceProductDetail());
 
+            modelBuilder.Entity<TodoItem>()
+                .HasData(SeedData.ProduceTodoItem());
         }
     }
 }

@@ -1,8 +1,134 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Quasar";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="q-app">
+    <q-layout view="lHh Lpr lFf">
+        <q-header elevated class="bg-primary text-white" height-hint="98">
+            <q-toolbar>
+                <q-btn
+                    flat
+                    dense
+                    round
+                    icon="menu"
+                    aria-label="Menu">
+                </q-btn>
+                <q-toolbar-title>
+                    Quasar Admin Panel
+                </q-toolbar-title>
+                <q-space></q-space>
+                <div class="q-gutter-sm row items-center no-wrap">
+                    <q-btn round dense flat color="white"
+                           :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+                           v-on:click="$q.fullscreen.toggle()"
+                           v-if="$q.screen.gt.sm">
+                    </q-btn>
+                    <q-btn round flat>
+                        <q-avatar size="26px">
+                            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                        </q-avatar>
+                    </q-btn>
+                    <q-select
+                        v-model="locale"
+                        :options="localeOptions"
+                        :label="$t('button.changeLocale')"
+                        dense
+                        borderless
+                        emit-value
+                        map-options
+                        style="min-width: 150px"
+                        v-on:update:model-value="changeLocale">
+                    </q-select>
+                </div>
+            </q-toolbar>
+        </q-header>
+        <q-page-container>
+            <div class="q-pa-md">
+                <q-table
+                    title="Todo Items"
+                    :rows="todoItemsRows"
+                    :columns="todoItemsColumns"
+                    row-key="id"
+                    :pagination.sync="todoItemsPagination"
+                    :filter="searchTodoItem"
+                    :loading="todoItemsIsLoading"
+                    :filter-method="filterMethod"
+                    no-data-label="No todo items found!">
+                    <template v-slot:body="props">
+                        <q-tr :props="props">
+                            <q-td key="id" :props="props">
+                                {{ props.row.id }}
+                            </q-td>
+                            <q-td key="status" :props="props">
+                                <q-checkbox v-model="props.row.isDone" v-on:click="updateTodoStatus(props.row.id, props.row.isDone)"></q-checkbox>
+                            </q-td>
+                            <q-td key="description" :props="props">
+                                {{ props.row.description }}
+                                <q-popup-edit v-model="props.row.description"
+                                              :value="props.row.description"
+                                              v-on:save="(val, init) => updateTodoDescription(val, init, props.row.id)"
+                                              v-slot="scope" title="Edit the Description" buttons label-set="儲存" label-cancel="取消">
+                                    <q-input v-model="scope.value" dense autofocus counter v-on:keyup.enter="scope.set"></q-input>
+                                </q-popup-edit>
+                            </q-td>
+                            <q-td key="createdAt" :props="props">
+                                {{ props.row.createdAt }}
+                            </q-td>
+                            <q-td key="updatedAt" :props="props">
+                                {{ props.row.updatedAt }}
+                            </q-td>
+                            <q-td key="actions" :props="props">
+                                <q-btn flat round dense icon="delete" v-on:click="deleteTodoItem(props.row.id)"></q-btn>
+                            </q-td>
+                        </q-tr>
+                    </template>
+                    <template v-slot:top-right>
+                        <div class="q-gutter-y-md column" style="max-width: 300px">
+                            <q-input
+                                :loading="loadingState"
+                                filled
+                                v-model="newTodoItem"
+                                label="New Todo"
+                                v-on:keyup.enter="createTodoItem">
+                                <template v-slot:append>
+                                    <q-btn round flat icon="add" v-if="!loadingState" v-on:click="createTodoItem"></q-btn>
+                                </template>
+                            </q-input>
+                        </div>
+                        <q-input border dense debounce="300" v-model="searchTodoItem" placeholder="Search" class="q-pa-lg">
+                            <template v-slot:append>
+                                <q-icon name="search"></q-icon>
+                            </template>
+                        </q-input>
+                    </template>
+                </q-table>
+            </div>
+
+        </q-page-container>
+    </q-layout>
 </div>
+
+@section EndJS
+{
+    <!-- Vue CDN For Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+
+    <!-- Quasar CDN For Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.umd.js"></script>
+
+    <!-- Quasar Language Pack CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/zh-TW.umd.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/en-us.umd.prod.js"></script>
+
+    <!-- Quasar Icon Set CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@v2/dist/icon-set/fontawesome-v6.umd.prod.js"></script>
+
+    <!-- Vue i18n CDN for Dev -->
+    <script src="https://unpkg.com/vue-i18n@9.9.1/dist/vue-i18n.global.js"></script>
+
+    <!-- Axios CDN for Dev -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="~/js/home.js"></script>
+}
