@@ -4,7 +4,7 @@
 
 <div id="q-app">
     <q-layout view="lHh Lpr lFf">
-        <q-header elevated class="bg-indigo text-white" height-hint="98">
+        <q-header elevated class="bg-primary text-white" height-hint="98">
             <q-toolbar>
                 <q-btn
                     flat
@@ -43,16 +43,67 @@
             </q-toolbar>
         </q-header>
         <q-page-container>
-            <q-page padding>
-                <div class="q-ma-md">
-                    <q-table
-                        title="Quasar Platform Properties"
-                        :rows="userQuasarPlatformRows"
-                        :columns="userQuasarPlatformColumns"
-                        row-key="name">
-                    </q-table>
-                </div>
-            </q-page>
+            <div class="q-pa-md">
+                <q-table
+                    title="Todo Items"
+                    :rows="todoItemsRows"
+                    :columns="todoItemsColumns"
+                    row-key="id"
+                    :pagination.sync="todoItemsPagination"
+                    :filter="searchTodoItem"
+                    :loading="todoItemsIsLoading"
+                    :filter-method="filterMethod"
+                    no-data-label="No todo items found!">
+                    <template v-slot:body="props">
+                        <q-tr :props="props">
+                            <q-td key="id" :props="props">
+                                {{ props.row.id }}
+                            </q-td>
+                            <q-td key="status" :props="props">
+                                <q-checkbox v-model="props.row.isDone" v-on:click="updateTodoStatus(props.row.id, props.row.isDone)"></q-checkbox>
+                            </q-td>
+                            <q-td key="description" :props="props">
+                                {{ props.row.description }}
+                                <q-popup-edit v-model="props.row.description"
+                                              :value="props.row.description"
+                                              v-on:save="(val, init) => updateTodoDescription(val, init, props.row.id)"
+                                              v-slot="scope" title="Edit the Description" buttons label-set="儲存" label-cancel="取消">
+                                    <q-input v-model="scope.value" dense autofocus counter v-on:keyup.enter="scope.set"></q-input>
+                                </q-popup-edit>
+                            </q-td>
+                            <q-td key="createdAt" :props="props">
+                                {{ props.row.createdAt }}
+                            </q-td>
+                            <q-td key="updatedAt" :props="props">
+                                {{ props.row.updatedAt }}
+                            </q-td>
+                            <q-td key="actions" :props="props">
+                                <q-btn flat round dense icon="delete" v-on:click="deleteTodoItem(props.row.id)"></q-btn>
+                            </q-td>
+                        </q-tr>
+                    </template>
+                    <template v-slot:top-right>
+                        <div class="q-gutter-y-md column" style="max-width: 300px">
+                            <q-input
+                                :loading="loadingState"
+                                filled
+                                v-model="newTodoItem"
+                                label="New Todo"
+                                v-on:keyup.enter="createTodoItem">
+                                <template v-slot:append>
+                                    <q-btn round flat icon="add" v-if="!loadingState" v-on:click="createTodoItem"></q-btn>
+                                </template>
+                            </q-input>
+                        </div>
+                        <q-input border dense debounce="300" v-model="searchTodoItem" placeholder="Search" class="q-pa-lg">
+                            <template v-slot:append>
+                                <q-icon name="search"></q-icon>
+                            </template>
+                        </q-input>
+                    </template>
+                </q-table>
+            </div>
+
         </q-page-container>
     </q-layout>
 </div>

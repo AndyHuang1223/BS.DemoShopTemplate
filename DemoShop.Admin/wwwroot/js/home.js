@@ -1,3 +1,4 @@
+const domainName = "";
 const locale = Quasar.lang.getLocale();
 const {createI18n} = VueI18n;
 
@@ -32,43 +33,75 @@ const app = Vue.createApp({
     data() {
         return {
             $q: null,
-            userQuasarPlatformColumns: [
-                {
-                    name: "Id",
-                    align: "left",
-                    label: "Custom Id",
-                    field: row => row.id,
-                    sortable: true,
-                },
-                {
-                    name: "name",
-                    required: true,
-                    label: "Display Name",
-                    align: "left",
-                    field: row => row.name,
-                    format: value => `${value}`,
-                    sortable: true,
-                },
-                {
-                    name: "value",
-                    align: "left",
-                    label: "Display Value",
-                    field: row => row.value,
-                    sortable: true,
-                },
-            ],
-            userQuasarPlatformRows: [],
             locale: locale,
             localeOptions: [
                 {value: "en", label: "English", quasarLang: Quasar.lang.enUS},
                 {value: "zh-TW", label: "繁體中文", quasarLang: Quasar.lang.zhTW},
             ],
+            todoItemsIsLoading: false,
+            todoItemStatus: "all",
+            todoItemsRows: [],
+            todoItemsColumns: [
+                {
+                    name: "id",
+                    required: true,
+                    label: "Id",
+                    align: "left",
+                    field: row => row.id,
+                    sortable: true,
+                },
+                {
+                    name: "status",
+                    required: true,
+                    label: "Status",
+                    align: "left",
+                    field: row => row.isDone,
+                    sortable: true,
+                },
+                {
+                    name: "description",
+                    required: true,
+                    label: "Description",
+                    align: "left",
+                    field: row => row.description,
+                    sortable: false,
+                },
+                {
+                    name: "createdAt",
+                    required: true,
+                    label: "CreatedAt",
+                    align: "left",
+                    field: row => row.createdAt,
+                    sortable: true,
+                },
+                {
+                    name: "updatedAt",
+                    required: false,
+                    label: "UpdatedAt",
+                    align: "left",
+                    field: row => row.updatedAt,
+                    sortable: true,
+                },
+                {
+                    name: "actions",
+                    required: false,
+                    label: "Actions",
+                    align: "left",
+                    sortable: false,
+                },
+            ],
+            todoItemsPagination: {
+                sortBy: "id",
+                descending: false,
+                page: 1,
+                rowsPerPage: 10,
+            },
+            searchTodoItem: "",
+            newTodoItem: "",
+            loadingState: false,
         };
     },
     methods: {
-        setTheme() {
-            this.$q.dark.set(true);
-        },
         changeLocale(newLocale) {
             this.locale = newLocale;
             this.changeI18n(newLocale);
@@ -86,6 +119,117 @@ const app = Vue.createApp({
                 Quasar.lang.set(targetLang.quasarLang);
             }
         },
+        dateToLocaleString(date) {
+            if (!date) {
+                return "null";
+            }
+            const dateObj = new Date(date);
+            return dateObj.toLocaleString();
+        },
+        filterMethod(rows, terms) {
+            this.todoItemsIsLoading = true;
+            const result = rows.filter(row =>
+                Object.values(row).some(val =>
+                    String(val).toLowerCase().indexOf(terms.toLowerCase()) > -1,
+                ));
+            this.todoItemsIsLoading = false;
+            return result;
+        },
+        async getTodoItems() {
+            this.todoItemsIsLoading = true;
+            try {
+                const response = await axios.get(`${domainName}/api/todos`);
+                const data = response.data;
+                this.todoItemsRows = data.map(x => {
+                    return {
+                        id: x.id,
+                        isDone: x.isDone,
+                        description: x.description,
+                        createdAt: this.dateToLocaleString(x.createdAt),
+                        updatedAt: this.dateToLocaleString(x.updatedAt),
+                        actions: "actions",
+                    };
+                });
+                this.$q.loading.hide();
+                this.$q.notify("Get todo items successfully.");
+                this.todoItemsIsLoading = false;
+            } catch (err) {
+                this.$q.notify("Failed to get todo items.");
+            }
+        },
+        async createTodoItem() {
+            this.loadingState = true;
+            this.todoItemsIsLoading = true;
+            if (/^\s*$/.test(this.newTodoItem)) {
+                this.$q.notify("Please input todo item.");
+                this.newTodoItem = "";
+                this.loadingState = false;
+                this.todoItemsIsLoading = false;
+                return;
+            }
+            try {
+                const response = await axios.post(`${domainName}/api/todos`, {
+                    description: this.newTodoItem,
+                });
+                this.newTodoItem = "";
+                this.$q.notify("Create todo item successfully.");
+                this.loadingState = false;
+                this.getTodoItems();
+                this.todoItemsIsLoading = false;
+            } catch (err) {
+                this.$q.notify("Failed to create todo item.");
+            }
+        },
+        async updateTodoDescription(val, init, id) {
+            this.todoItemsIsLoading = true;
+            try {
+                const targetTodo = this.todoItemsRows.find(x => x.id === id);
+                const response = await axios.put(`${domainName}/api/todos/${id}`, {
+                    description: val,
+                    isDone: targetTodo.isDone,
+                    id: id,
+                });
+                this.$q.notify("Update todo item successfully.");
+                this.getTodoItems();
+                this.todoItemsIsLoading = false;
+            } catch (err) {
+                this.$q.notify("Failed to update todo item.");
+            }
+        },
+        async deleteTodoItem(id) {
+            this.todoItemsIsLoading = true;
+            try {
+                const response = await axios.delete(`${domainName}/api/todos/${id}`);
+                this.$q.notify(`Delete todo item successfully.${id}`);
+                this.getTodoItems();
+                this.todoItemsIsLoading = false;
+            } catch (err) {
+                this.$q.notify("Failed to delete todo item.");
+            }
+        },
+        async updateTodoStatus(id, isDone) {
+            this.todoItemsIsLoading = true;
+            try {
+                const targetTodo = this.todoItemsRows.find(x => x.id === id);
+                const response = await axios.put(`${domainName}/api/todos/${id}`, {
+                    description: targetTodo.description,
+                    isDone: isDone,
+                    id: id,
+                });
+                this.$q.notify("Update todo status successfully.");
+                this.getTodoItems();
+                this.todoItemsIsLoading = false;
+            } catch (err) {
+                this.$q.notify("Failed to update todo status.");
+            }
+        },
+    },
+    mounted() {
+        this.$q = this.$q || window.Quasar;
+        this.$q.loading.show({
+            message: "Loading...",
+        });
+        this.getTodoItems();
     },
 });
 
@@ -94,3 +238,5 @@ Quasar.lang.set(Quasar.lang.zhTW);
 Quasar.iconSet.set(Quasar.iconSet.fontawesomeV6);
 app.use(i18n);
 app.mount("#q-app");
+
+// console.log(app.config.globalProperties.$q);
