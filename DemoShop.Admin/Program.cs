@@ -17,16 +17,6 @@ namespace DemoShop.Admin
             Dependencies.ConfigureServices(builder.Configuration, builder.Services);
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddScoped<ITodoService, TodoService>();
-            builder.Services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    corsPolicyBuilder =>
-                    {
-                        corsPolicyBuilder.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -41,7 +31,6 @@ namespace DemoShop.Admin
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors();
             app.UseAuthorization();
 
             app.MapControllerRoute(
