@@ -1,134 +1,95 @@
 ﻿@{
-    ViewData["Title"] = "Quasar";
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div id="q-app">
-    <q-layout view="lHh Lpr lFf">
-        <q-header elevated class="bg-primary text-white" height-hint="98">
-            <q-toolbar>
-                <q-btn
-                    flat
-                    dense
-                    round
-                    icon="menu"
-                    aria-label="Menu">
-                </q-btn>
-                <q-toolbar-title>
-                    Quasar Admin Panel
-                </q-toolbar-title>
-                <q-space></q-space>
-                <div class="q-gutter-sm row items-center no-wrap">
-                    <q-btn round dense flat color="white"
-                           :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-                           v-on:click="$q.fullscreen.toggle()"
-                           v-if="$q.screen.gt.sm">
-                    </q-btn>
-                    <q-btn round flat>
-                        <q-avatar size="26px">
-                            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-                        </q-avatar>
-                    </q-btn>
-                    <q-select
-                        v-model="locale"
-                        :options="localeOptions"
-                        :label="$t('button.changeLocale')"
-                        dense
-                        borderless
-                        emit-value
-                        map-options
-                        style="min-width: 150px"
-                        v-on:update:model-value="changeLocale">
-                    </q-select>
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Primary Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
-            </q-toolbar>
-        </q-header>
-        <q-page-container>
-            <div class="q-pa-md">
-                <q-table
-                    title="Todo Items"
-                    :rows="todoItemsRows"
-                    :columns="todoItemsColumns"
-                    row-key="id"
-                    :pagination.sync="todoItemsPagination"
-                    :filter="searchTodoItem"
-                    :loading="todoItemsIsLoading"
-                    :filter-method="filterMethod"
-                    no-data-label="No todo items found!">
-                    <template v-slot:body="props">
-                        <q-tr :props="props">
-                            <q-td key="id" :props="props">
-                                {{ props.row.id }}
-                            </q-td>
-                            <q-td key="status" :props="props">
-                                <q-checkbox v-model="props.row.isDone" v-on:click="updateTodoStatus(props.row.id, props.row.isDone)"></q-checkbox>
-                            </q-td>
-                            <q-td key="description" :props="props">
-                                {{ props.row.description }}
-                                <q-popup-edit v-model="props.row.description"
-                                              :value="props.row.description"
-                                              v-on:save="(val, init) => updateTodoDescription(val, init, props.row.id)"
-                                              v-slot="scope" title="Edit the Description" buttons label-set="儲存" label-cancel="取消">
-                                    <q-input v-model="scope.value" dense autofocus counter v-on:keyup.enter="scope.set"></q-input>
-                                </q-popup-edit>
-                            </q-td>
-                            <q-td key="createdAt" :props="props">
-                                {{ props.row.createdAt }}
-                            </q-td>
-                            <q-td key="updatedAt" :props="props">
-                                {{ props.row.updatedAt }}
-                            </q-td>
-                            <q-td key="actions" :props="props">
-                                <q-btn flat round dense icon="delete" v-on:click="deleteTodoItem(props.row.id)"></q-btn>
-                            </q-td>
-                        </q-tr>
-                    </template>
-                    <template v-slot:top-right>
-                        <div class="q-gutter-y-md column" style="max-width: 300px">
-                            <q-input
-                                :loading="loadingState"
-                                filled
-                                v-model="newTodoItem"
-                                label="New Todo"
-                                v-on:keyup.enter="createTodoItem">
-                                <template v-slot:append>
-                                    <q-btn round flat icon="add" v-if="!loadingState" v-on:click="createTodoItem"></q-btn>
-                                </template>
-                            </q-input>
-                        </div>
-                        <q-input border dense debounce="300" v-model="searchTodoItem" placeholder="Search" class="q-pa-lg">
-                            <template v-slot:append>
-                                <q-icon name="search"></q-icon>
-                            </template>
-                        </q-input>
-                    </template>
-                </q-table>
             </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">Warning Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">Success Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">Danger Card</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Area Chart Example
+                </div>
+                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Bar Chart Example
+                </div>
+                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Example
+        </div>
+        <div class="card-body">
 
-        </q-page-container>
-    </q-layout>
+            <div id="app">
+                <easy-data-table @* v-model:server-options="serverOptions" *@ @* v-model:items-selected="itemsSelected" *@ show-index
+                                 buttons-pagination @* :server-items-length="serverItemsLength" *@ alternating :headers="headers"
+                                 :items="items" :loading="loading">
+                 
+                </easy-data-table>    
+            </div>
+        </div>
+    </div>
 </div>
 
-@section EndJS
-{
-    <!-- Vue CDN For Dev -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
 
-    <!-- Quasar CDN For Dev -->
-    <script src="https://cdn.jsdelivr.net/npm/quasar@2/dist/quasar.umd.js"></script>
-
-    <!-- Quasar Language Pack CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/zh-TW.umd.prod.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quasar@2.14.5/dist/lang/en-us.umd.prod.js"></script>
-
-    <!-- Quasar Icon Set CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/quasar@v2/dist/icon-set/fontawesome-v6.umd.prod.js"></script>
-
-    <!-- Vue i18n CDN for Dev -->
-    <script src="https://unpkg.com/vue-i18n@9.9.1/dist/vue-i18n.global.js"></script>
-
-    <!-- Axios CDN for Dev -->
-    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="~/js/home.js"></script>
+@section Scripts{
+    <!--chart.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="~/assets/demo/chart-area-demo.js"></script>
+    <script src="~/assets/demo/chart-bar-demo.js"></script>
+    <!--取得github資料並透過 easy table渲染-->
+    <script src="~/js/dashboard-table.js" asp-append-version="true"></script>
 }
