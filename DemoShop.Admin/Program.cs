@@ -1,3 +1,9 @@
+using DemoShop.ApplicationCore.Interfaces;
+using DemoShop.ApplicationCore.Interfaces.TodoService;
+using DemoShop.ApplicationCore.Services;
+using DemoShop.Infrastructure;
+using DemoShop.Infrastructure.Data;
+
 namespace DemoShop.Admin
 {
     public class Program
@@ -8,7 +14,9 @@ namespace DemoShop.Admin
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            builder.Services.AddScoped<ITodoService, TodoService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -23,7 +31,6 @@ namespace DemoShop.Admin
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(

@@ -1,0 +1,44 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "ECharts";
+}
+
+@section CSS{
+    <!-- 引入 ECharts 样式 -->
+    <link href="~/css/echarts.css" rel="stylesheet" />
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">ECharts</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Dashboard/Index">Dashboard</a></li>
+        <li class="breadcrumb-item active">ECharts</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            EChart.js -
+            <a target="_blank" href="https://vue-echarts.dev/">EChart.js documentation</a>
+            .
+        </div>
+    </div>
+
+
+    <div id="bar" style="height: 500px"></div>
+
+    <div id="circle" style="height: 500px"></div>
+
+    <div id="line" style="height: 500px"></div>
+
+    <div id="smooth-line" style="height: 500px"></div>
+
+    <div id="scatter" style="height: 500px"></div>
+
+    <div id="radar" style="height: 500px"></div>
+
+</div>
+
+@section Scripts{
+    <!-- 引入 ECharts 的 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+    <!-- Echarts 圖表設定-->
+    <script src="~/js/echarts.js"></script>
+}

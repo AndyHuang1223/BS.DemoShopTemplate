@@ -1,0 +1,208 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "EasyTable";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Tables</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/Dashboard/Index">Dashboard</a></li>
+        <li class="breadcrumb-item active">Tables</li>
+    </ol>
+
+    <div class="container">
+        <div id="app" class="">
+            <div class="col-12 d-flex ">
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#create-modal">
+                    新增
+                    <i class="fa-solid fa-circle-plus"></i>
+                </button>
+            </div>
+
+            <easy-data-table @* v-model:server-options="serverOptions" *@ @* v-model:items-selected="itemsSelected" *@ show-index
+                             buttons-pagination @* :server-items-length="serverItemsLength" *@ alternating :headers="headers"
+                             :items="items" @* :loading="loading" *@>
+                <!-- 使用 slot render 選項自訂 "operation" 欄位的內容 -->
+                <template #item-operation="item">
+                    <div class="operation-wrapper">
+                        <button v-on:click="handleEdit(item)" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#edit-modal">
+                            Edit
+                        </button>
+
+                        <button v-on:click="handleDelete(item)" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </div>
+                </template>
+            </easy-data-table>
+
+
+            <!-- 新增 Modal-->
+            <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Name</label>
+                                    <input v-model="createData.Name" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Position</label>
+                                    <input v-model="createData.Position" class="form-control"
+                                           type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Office</label>
+                                    <input v-model="createData.Office" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Age</label>
+                                    <input v-model="createData.Age" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Start date</label>
+                                    <input v-model="createData.Startdate" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Salary</label>
+                                    <input v-model="createData.Salary" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="createMethod">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--編輯 Modal -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Name</label>
+                                    <input v-model="currentData.Name" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Position</label>
+                                    <input v-model="currentData.Position" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Office</label>
+                                    <input v-model="currentData.Office" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Age</label>
+                                    <input v-model="currentData.Age" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Start date</label>
+                                    <input v-model="currentData.Startdate" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Salary</label>
+                                    <input v-model="currentData.Salary" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="updateMethod">更新</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    const App = Vue.createApp({
+        components: {
+            EasyDataTable: window['vue3-easy-data-table'],
+        },
+        data() {
+            return {
+                createData: {
+                    Name: '',
+                    Position: '',
+                    Office: '',
+                    Age: '',
+                    Startdate: '',
+                    Salary: 0
+                },
+                currentData: {
+                    Name: '',
+                    Position: '',
+                    Office: '',
+                    Age: '',
+                    Startdate: '',
+                    Salary: 0
+                },
+                headers: [
+                    { text: "Name", value: "Name" },
+                    { text: "Position", value: "Position" },
+                    { text: "Office", value: "Office" },
+                    { text: "Age", value: "Age", sortable: true },
+                    { text: "Startdate", value: "Startdate" },
+                    { text: "Salary", value: "Salary" },
+                    { text: "Actions", value: "operation" }
+                ],
+                items: [],
+    
+            }
+        },
+        created() {
+            this.getAll();
+        },
+        methods: {
+            handleEdit(row) {
+                //this.currentData.Name = row.Name
+                this.currentData = { ...row };
+                // 在這裡執行編輯操作，你可以訪問 row 中的資料
+                console.log('編輯操作，資料為：', this.currentData);
+            },
+            handleDelete(row) {
+                // 在這裡執行刪除操作，你可以訪問 row 中的資料
+                console.log('刪除操作，資料為：', row);
+            },
+            createMethod() {
+                // todo: 執行新增操作
+            },
+            updateMethod() {
+                // todo: 執行更新操作
+            },
+            getAll() {
+    
+                axios.get('https://raw.githubusercontent.com/flyingtrista/FileStorage/main/datatableData.json')
+                    .then(res => {
+                        if (res.status == 200) {
+                            const result = res.data.data
+                            this.items = res.data.data;
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+    
+            }
+        }
+    }).mount('#app');
+    </script>
+}
