@@ -22,6 +22,16 @@ namespace DemoShop.Admin.Controllers
         {
             return View();
         }
+        
+        public IActionResult Charts()
+        {
+            return View();
+        }
+
+        public IActionResult Echarts()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
