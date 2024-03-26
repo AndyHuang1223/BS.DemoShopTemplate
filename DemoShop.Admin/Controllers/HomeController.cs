@@ -32,6 +32,11 @@ namespace DemoShop.Admin.Controllers
         {
             return View();
         }
+        
+        public IActionResult Table()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
