@@ -19,7 +19,7 @@
                 :items="todoItemsRows">
                 <template #item-operation="item">
                     <div class="p-2">
-                        <button v-on:click="editTodoModal(item.id)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal" v-on:click="editTodoModal(item.id)">
+                        <button v-on:click="editTodoModal(item.id)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal">
                             Edit
                         </button>
                         <button class="btn btn-danger" V-on:click="deleteTodoItem(item.id)">
