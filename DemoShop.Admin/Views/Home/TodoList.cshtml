@@ -1,0 +1,208 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "EasyTable";
+}
+
+<div class="container" id="app">
+    <h1 class="py-3">Todos</h1>
+    <div class="row mt-3 gap-3">
+        <div class="col-12">
+            <div class="input-group">
+                <button v-on:click="createTodoModal" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+        <div class="col-12">
+            <easy-data-table
+                buttons-pagination
+                alternating
+                :headers="headers"
+                :items="todoItemsRows">
+                <template #item-operation="item">
+                    <div class="p-2">
+                        <button v-on:click="editTodoModal(item.id)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal" v-on:click="editTodoModal(item.id)">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger" V-on:click="deleteTodoItem(item.id)">
+                            Delete
+                        </button>
+                    </div>
+                </template>
+            </easy-data-table>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true" ref="todoEditModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Edit Todo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" v-model="editTodo.isDone" aria-label="Checkbox for following text input">
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with checkbox" v-model="editTodo.description">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="updateTodoDescription">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true" ref="todoCreateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Create Todo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" aria-label="new Todo" v-model="newTodoItem">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="createTodoItem">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script>
+    const domainName = ""; // api domain name
+    
+    const app = Vue.createApp({
+       components: {
+            EasyDataTable: window['vue3-easy-data-table'],
+        },
+        data() {
+            return {
+                todoItemsRows: [
+                    { id: 1, status: "Done", description: "Buy milk", createdAt: "2021-10-01", updatedAt: "2021-10-02" },
+                    { id: 2, status: "Done", description: "Buy eggs", createdAt: "2021-10-01", updatedAt: "2021-10-02" },
+                    { id: 3, status: "Done", description: "Buy bread", createdAt: "2021-10-01", updatedAt: "2021-10-02" },
+                    { id: 4, status: "Done", description: "Buy butter", createdAt: "2021-10-01", updatedAt: "2021-10-02" },
+                    { id: 5, status: "Done", description: "Buy cheese", createdAt: "2021-10-01", updatedAt: "2021-10-02" },
+                ],
+                headers: [
+                    { text: "Id", value: "id", sortable: true },
+                    { text: "Status", value: "isDone" },
+                    { text: "Description", value: "description" },
+                    { text: "CreatedAt", value: "createdAt" },
+                    { text: "UpdatedAt", value: "updatedAt" },
+                    { text: "Actions", value: "operation" },
+                ],
+                newTodoItem: "",
+                editTodo: {},
+                todoEdit: null,
+                todoCreate: null,
+            };
+        },
+        methods: {
+           createTodoModal() {
+               this.newTodoItem = "";
+               this.todoCreate.show();
+           },
+           editTodoModal(id) {
+               this.editTodo = JSON.parse(JSON.stringify(this.todoItemsRows.find(x => x.id === id)));
+            },
+            dateToLocaleString(date) {
+                if (!date) {
+                    return "null";
+                }
+                const dateObj = new Date(date);
+                return dateObj.toLocaleString();
+            },
+            async getTodoItems() {
+                try {
+                    const response = await axios.get(`${domainName}/api/todos`);
+                    const data = response.data;
+                    this.todoItemsRows = data.map(x => {
+                        return {
+                            id: x.id,
+                            isDone: x.isDone,
+                            description: x.description,
+                            createdAt: this.dateToLocaleString(x.createdAt),
+                            updatedAt: this.dateToLocaleString(x.updatedAt),
+                            actions: "actions",
+                        };
+                    });
+                    return data;
+                } catch (err) {
+                    console.log(err)
+                }
+            },
+            async createTodoItem() {
+                if (/^\s*$/.test(this.newTodoItem)) {
+                    this.newTodoItem = "";
+                    return;
+                }
+                try {
+                    await axios.post(`${domainName}/api/todos`, {
+                        description: this.newTodoItem,
+                    });
+                    this.newTodoItem = "";
+                    this.todoCreate.hide();
+                    await this.getTodoItems();
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+            async updateTodoDescription() {
+                try {
+                    const editTodo = this.editTodo
+                    await axios.put(`${domainName}/api/todos/${editTodo.id}`, {
+                        description: editTodo.description,
+                        isDone: editTodo.isDone,
+                        id: editTodo.id,
+                    });
+                    this.todoEdit.hide();
+                    await this.getTodoItems();
+                } catch (err) {
+                    console.log(err)
+                }
+            },
+            async deleteTodoItem(id) {
+                try {
+                    await axios.delete(`${domainName}/api/todos/${id}`);
+                    await this.getTodoItems();
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        },
+        async mounted() {
+            await this.getTodoItems();
+            this.todoEdit = new bootstrap.Modal(this.$refs.todoEditModal, {
+                keyboard: false
+            })
+            this.todoCreate = new bootstrap.Modal(this.$refs.todoCreateModal, {
+                keyboard: false
+            })
+        },
+    });
+    
+    app.mount("#app");
+
+    </script>
+}
