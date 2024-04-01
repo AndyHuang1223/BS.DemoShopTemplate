@@ -23,7 +23,7 @@ namespace DemoShop.Admin
             
             builder.Services
                 .AddApplicationCoreServices()
-                .AddAuthServices(builder.Configuration)
+                .AddAuthServices()
                 .AddSwaggerService()
                 .AddWebServices();
               

@@ -10,7 +10,7 @@ namespace DemoShop.Admin.Configurations;
 
 public static class ConfigureAuthServices
 {
-    public static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddAuthServices(this IServiceCollection services)
     {
         services.AddSingleton<JwtHelper>()
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
