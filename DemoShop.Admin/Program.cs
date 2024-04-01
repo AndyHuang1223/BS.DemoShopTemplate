@@ -1,3 +1,4 @@
+using DemoShop.Admin.Configurations;
 using DemoShop.ApplicationCore.Interfaces;
 using DemoShop.ApplicationCore.Interfaces.TodoService;
 using DemoShop.ApplicationCore.Services;
@@ -13,10 +14,19 @@ namespace DemoShop.Admin
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
             Dependencies.ConfigureServices(builder.Configuration, builder.Services);
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            builder.Services.AddScoped<ITodoService, TodoService>();
+            builder.Services
+                .AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddWebSettings(builder.Configuration);
+            
+            builder.Services
+                .AddApplicationCoreServices()
+                .AddAuthServices(builder.Configuration)
+                .AddSwaggerService()
+                .AddWebServices();
+              
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,6 +36,8 @@ namespace DemoShop.Admin
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
