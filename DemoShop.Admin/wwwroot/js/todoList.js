@@ -22,7 +22,9 @@ const app = Vue.createApp({
                     {text: "Actions", value: "operation"},
                 ],
                 newTodoItem: "",
+                newTodoItemErrorMsg: "",
                 editTodo: {},
+                editTodoItemErrorMsg: "",
                 todoEdit: null,
                 todoCreate: null,
                 loading: true,
@@ -30,6 +32,13 @@ const app = Vue.createApp({
             };
         },
         methods: {
+            validateDescriptionLength(value, errorMsgProperty) {
+                if (!/^.{1,30}$/.test(value)) {
+                    this[errorMsgProperty] = "描述長度必須應在 1 至 30 個字元之間。";
+                } else {
+                    this[errorMsgProperty] = "";
+                }
+            },
             createTodoModal() {
                 this.newTodoItem = "";
                 this.todoCreate.show();
@@ -68,12 +77,11 @@ const app = Vue.createApp({
                     });
             },
             createTodoItem() {
-                this.loading = true;
-                if (/^\s*$/.test(this.newTodoItem)) {
-                    this.newTodoItem = "";
-                    this.loading = false;
+                this.validateDescriptionLength(this.newTodoItem, 'newTodoItemErrorMsg');
+                if (this.newTodoItemErrorMsg) {
                     return;
                 }
+                this.loading = true;
                 axios.post(`${domainName}/api/todos`, {
                     description: this.newTodoItem,
                 })
@@ -90,8 +98,12 @@ const app = Vue.createApp({
                     });
             },
             updateTodoDescription() {
-                this.loading = true;
                 const editTodo = this.editTodo;
+                this.validateDescriptionLength(editTodo.description, 'editTodoItemErrorMsg');
+                if (this.editTodoItemErrorMsg) {
+                    return;
+                }
+                this.loading = true;
                 axios.put(`${domainName}/api/todos/${editTodo.id}`, {
                     description: editTodo.description,
                     isDone: editTodo.isDone,
@@ -119,7 +131,7 @@ const app = Vue.createApp({
                         this.loading = false;
                         this.getTodoItems();
                     });
-            }
+            },
         },
         mounted() {
             this.getTodoItems();
@@ -129,12 +141,25 @@ const app = Vue.createApp({
             this.todoCreate = new bootstrap.Modal(this.$refs.todoCreateModal, {
                 keyboard: false
             })
-        }
-        ,
+        },
         computed: {
             filteredTodos() {
                 let filter = new RegExp(this.filterText, 'i')
                 return this.todoItemsRows.filter(el => el.description.match(filter))
+            }
+        },
+        watch: {
+            'newTodoItem': {
+                handler(newVal, prevVal) {
+                    this.validateDescriptionLength(newVal, 'newTodoItemErrorMsg');
+                },
+                immediate: false
+            },
+            'editTodo.description': {
+                handler(newVal, prevVal) {
+                    this.validateDescriptionLength(newVal, 'editTodoItemErrorMsg');
+                },
+                immediate: false
             }
         }
     })
