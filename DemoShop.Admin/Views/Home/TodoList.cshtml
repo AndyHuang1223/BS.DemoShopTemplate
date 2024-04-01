@@ -1,0 +1,105 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "EasyTable";
+}
+
+<div class="container" id="app">
+    <h1 class="py-3">Todos</h1>
+    <div class="row mt-3">
+        <div class="col-6">
+            <div class="input-group">
+                <button v-on:click="createTodoModal" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" v-model="filterText">
+                <span class="input-group-text">Search</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <easy-data-table
+                buttons-pagination
+                alternating
+                :headers="headers"
+                :items="filteredTodos"
+                :loading="loading">
+                <template #item-operation="item">
+                    <div class="p-2">
+                        <button v-on:click="editTodoModal(item.id)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal">
+                            Edit
+                        </button>
+                        <button class="btn btn-danger" V-on:click="deleteTodoItem(item.id)">
+                            Delete
+                        </button>
+                    </div>
+                </template>
+            </easy-data-table>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true" ref="todoEditModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Edit Todo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group has-validation mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" v-model="editTodo.isDone" aria-label="Checkbox for following text input">
+                                </div>
+                                <input type="text" class="form-control" aria-label="Text input with checkbox" v-model="editTodo.description"  :class="{'is-invalid': !editItemValidateState}">
+                                <div class="invalid-feedback">
+                                    {{editTodoItemErrorMsg}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="updateTodoDescription" :disabled="!editItemValidateState">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true" ref="todoCreateModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Create Todo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group has-validation mb-3">
+                                <input type="text" class="form-control" aria-label="new Todo" v-model="newTodoItem" :class="{'is-invalid': !newItemValidateState}">
+                                <div class="invalid-feedback">
+                                    {{newTodoItemErrorMsg}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="createTodoItem" :disabled="!newItemValidateState">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <script src="/js/todoList.js"></script>
+}
