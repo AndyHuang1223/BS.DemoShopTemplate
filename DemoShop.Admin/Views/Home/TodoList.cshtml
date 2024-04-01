@@ -24,6 +24,10 @@
                 :headers="headers"
                 :items="filteredTodos"
                 :loading="loading">
+                <template #item-isDone="{isDone}">
+                    <span class="badge text-bg-success" v-if="isDone">完成</span>
+                    <span class="badge text-bg-danger" v-else>未完成</span>
+                </template>
                 <template #item-operation="item">
                     <div class="p-2">
                         <button v-on:click="editTodoModal(item.id)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal">
@@ -101,5 +105,5 @@
 
 @section Scripts
 {
-    <script src="/js/todoList.js"></script>
+    <script src="~/js/todoList.js" asp-append-version="true"></script>
 }
