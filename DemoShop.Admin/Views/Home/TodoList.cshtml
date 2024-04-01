@@ -63,7 +63,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" v-on:click="updateTodoDescription">更新</button>
+                    <button type="button" class="btn btn-primary" v-on:click="updateTodoDescription" :disabled="!editItemValidateState">更新</button>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" v-on:click="createTodoItem">新增</button>
+                    <button type="button" class="btn btn-primary" v-on:click="createTodoItem" :disabled="!newItemValidateState">新增</button>
                 </div>
             </div>
         </div>

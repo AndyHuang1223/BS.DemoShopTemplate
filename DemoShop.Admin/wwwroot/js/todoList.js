@@ -23,8 +23,10 @@ const app = Vue.createApp({
                 ],
                 newTodoItem: "",
                 newTodoItemErrorMsg: "",
+                newItemValidateState: false,
                 editTodo: {},
                 editTodoItemErrorMsg: "",
+                editItemValidateState: false,
                 todoEdit: null,
                 todoCreate: null,
                 loading: true,
@@ -35,8 +37,10 @@ const app = Vue.createApp({
             validateDescriptionLength(value, errorMsgProperty) {
                 if (!/^.{1,30}$/.test(value)) {
                     this[errorMsgProperty] = "描述長度必須應在 1 至 30 個字元之間。";
+                    return false;
                 } else {
                     this[errorMsgProperty] = "";
+                    return true;
                 }
             },
             createTodoModal() {
@@ -77,10 +81,6 @@ const app = Vue.createApp({
                     });
             },
             createTodoItem() {
-                this.validateDescriptionLength(this.newTodoItem, 'newTodoItemErrorMsg');
-                if (this.newTodoItemErrorMsg) {
-                    return;
-                }
                 this.loading = true;
                 axios.post(`${domainName}/api/todos`, {
                     description: this.newTodoItem,
@@ -99,10 +99,6 @@ const app = Vue.createApp({
             },
             updateTodoDescription() {
                 const editTodo = this.editTodo;
-                this.validateDescriptionLength(editTodo.description, 'editTodoItemErrorMsg');
-                if (this.editTodoItemErrorMsg) {
-                    return;
-                }
                 this.loading = true;
                 axios.put(`${domainName}/api/todos/${editTodo.id}`, {
                     description: editTodo.description,
@@ -151,13 +147,13 @@ const app = Vue.createApp({
         watch: {
             'newTodoItem': {
                 handler(newVal, prevVal) {
-                    this.validateDescriptionLength(newVal, 'newTodoItemErrorMsg');
+                    this.newItemValidateState = this.validateDescriptionLength(newVal, 'newTodoItemErrorMsg');
                 },
                 immediate: false
             },
             'editTodo.description': {
                 handler(newVal, prevVal) {
-                    this.validateDescriptionLength(newVal, 'editTodoItemErrorMsg');
+                    this.editItemValidateState = this.validateDescriptionLength(newVal, 'editTodoItemErrorMsg');
                 },
                 immediate: false
             }
