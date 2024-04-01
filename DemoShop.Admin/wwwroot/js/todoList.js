@@ -1,5 +1,3 @@
-const domainName = ""; // api domain name
-
 const app = Vue.createApp({
         components: {
             EasyDataTable: window['vue3-easy-data-table'],
@@ -35,7 +33,7 @@ const app = Vue.createApp({
         },
         methods: {
             validateDescriptionLength(value) {
-                return /^.{1,30}$/.test(value);
+                return /^.{1,30}$/.test(value.trim());
             },
             createTodoModal() {
                 this.newTodoItem = "";
@@ -53,10 +51,9 @@ const app = Vue.createApp({
             },
             getTodoItems() {
                 this.loading = true;
-                axios.get(`${domainName}/api/todos`)
+                httpGet(`/api/todos`)
                     .then(response => {
-                        const data = response.data;
-                        this.todoItemsRows = data.map(x => {
+                        this.todoItemsRows = response.map(x => {
                             return {
                                 id: x.id,
                                 isDone: x.isDone,
@@ -68,7 +65,7 @@ const app = Vue.createApp({
                         });
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.error(err);
                     })
                     .finally(() => {
                         this.loading = false;
@@ -76,7 +73,7 @@ const app = Vue.createApp({
             },
             createTodoItem() {
                 this.loading = true;
-                axios.post(`${domainName}/api/todos`, {
+                httpPost('/api/todos', {
                     description: this.newTodoItem,
                 })
                     .then(() => {
@@ -84,7 +81,7 @@ const app = Vue.createApp({
                         this.todoCreate.hide();
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.error(err);
                     })
                     .finally(() => {
                         this.loading = false;
@@ -94,7 +91,7 @@ const app = Vue.createApp({
             updateTodoDescription() {
                 const editTodo = this.editTodo;
                 this.loading = true;
-                axios.put(`${domainName}/api/todos/${editTodo.id}`, {
+                httpPut(`/api/todos/${editTodo.id}`, {
                     description: editTodo.description,
                     isDone: editTodo.isDone,
                     id: editTodo.id,
@@ -104,7 +101,7 @@ const app = Vue.createApp({
                         this.loading = false;
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.error(err);
                     })
                     .finally(() => {
                         this.loading = false;
@@ -113,9 +110,9 @@ const app = Vue.createApp({
             },
             deleteTodoItem(id) {
                 this.loading = true;
-                axios.delete(`${domainName}/api/todos/${id}`)
+                httpDelete(`/api/todos/${id}`)
                     .catch(err => {
-                        console.log(err);
+                        console.error(err);
                     })
                     .finally(() => {
                         this.loading = false;

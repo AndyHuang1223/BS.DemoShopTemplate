@@ -174,7 +174,9 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 
 <!--sb scripts-->
-<script src="~/js/script.js"></script>
+<script src="~/js/script.js" asp-append-version="true"></script>
+
+<script src="~/js/request.js" asp-append-version="true"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>
