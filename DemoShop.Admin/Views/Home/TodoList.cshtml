@@ -53,7 +53,7 @@
                                 <div class="input-group-text">
                                     <input class="form-check-input mt-0" type="checkbox" v-model="editTodo.isDone" aria-label="Checkbox for following text input">
                                 </div>
-                                <input type="text" class="form-control" aria-label="Text input with checkbox" v-model="editTodo.description"  :class="{'is-invalid': editTodoItemErrorMsg}">
+                                <input type="text" class="form-control" aria-label="Text input with checkbox" v-model="editTodo.description"  :class="{'is-invalid': !editItemValidateState}">
                                 <div class="invalid-feedback">
                                     {{editTodoItemErrorMsg}}
                                 </div>
@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="input-group has-validation mb-3">
-                                <input type="text" class="form-control" aria-label="new Todo" v-model="newTodoItem" :class="{'is-invalid': newTodoItemErrorMsg}">
+                                <input type="text" class="form-control" aria-label="new Todo" v-model="newTodoItem" :class="{'is-invalid': !newItemValidateState}">
                                 <div class="invalid-feedback">
                                     {{newTodoItemErrorMsg}}
                                 </div>
