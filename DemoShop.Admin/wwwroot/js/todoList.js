@@ -34,14 +34,8 @@ const app = Vue.createApp({
             };
         },
         methods: {
-            validateDescriptionLength(value, errorMsgProperty) {
-                if (!/^.{1,30}$/.test(value)) {
-                    this[errorMsgProperty] = "描述長度必須應在 1 至 30 個字元之間。";
-                    return false;
-                } else {
-                    this[errorMsgProperty] = "";
-                    return true;
-                }
+            validateDescriptionLength(value) {
+                return /^.{1,30}$/.test(value);
             },
             createTodoModal() {
                 this.newTodoItem = "";
@@ -147,13 +141,25 @@ const app = Vue.createApp({
         watch: {
             'newTodoItem': {
                 handler(newVal, prevVal) {
-                    this.newItemValidateState = this.validateDescriptionLength(newVal, 'newTodoItemErrorMsg');
+                    // 透過 newVal, prevVal 取得監聽前後變數的值
+                    if (newVal === prevVal) return;
+                    this.newItemValidateState = this.validateDescriptionLength(newVal);
+                    if (this.newItemValidateState) {
+                        this.newTodoItemErrorMsg = "";
+                    } else {
+                        this.newTodoItemErrorMsg = "Description length should be 1-30 characters.";
+                    }
                 },
                 immediate: false
             },
             'editTodo.description': {
-                handler(newVal, prevVal) {
-                    this.editItemValidateState = this.validateDescriptionLength(newVal, 'editTodoItemErrorMsg');
+                handler(val) {
+                    this.editItemValidateState = this.validateDescriptionLength(val);
+                    if (this.editItemValidateState) {
+                        this.editTodoItemErrorMsg = "";
+                    } else {
+                        this.editTodoItemErrorMsg = "Description length should be 1-30 characters.";
+                    }
                 },
                 immediate: false
             }
