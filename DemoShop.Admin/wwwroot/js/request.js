@@ -12,7 +12,7 @@ const useRequest = function () {
         // 發 request 前處理
 
         // 如果有 JWT Token 就帶
-        const token = Cookies.get('token')
+        const token = localStorage.getItem('token')
         token && (config.headers['Authorization'] = `Bearer ${token}`)
 
         return config
