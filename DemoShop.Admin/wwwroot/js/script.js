@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     }
 
-    document.getElementById('logout-btn').addEventListener('click', function (event){
+    document.getElementById('logout-btn')?.addEventListener('click', function (event){
         event.preventDefault();
         localStorage.removeItem('token');
         window.location.href = '/Auth/Login';
