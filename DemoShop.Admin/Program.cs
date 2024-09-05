@@ -14,7 +14,7 @@ namespace DemoShop.Admin
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+            Dependencies.ConfigureServices(builder.Services, builder.Configuration);
             builder.Services
                 .AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();

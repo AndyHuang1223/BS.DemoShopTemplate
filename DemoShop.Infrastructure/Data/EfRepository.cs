@@ -9,6 +9,7 @@ public class EfRepository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly BSDemoShopContext DbContext;
     protected readonly DbSet<T> DbSet;
+
     public EfRepository(BSDemoShopContext dbContext)
     {
         DbContext = dbContext;
@@ -95,7 +96,7 @@ public class EfRepository<T> : IRepository<T> where T : BaseEntity
         DbSet.RemoveRange(entities);
         await DbContext.SaveChangesAsync();
     }
-    
+
 
     public T GetById<TId>(TId id)
     {
@@ -122,6 +123,16 @@ public class EfRepository<T> : IRepository<T> where T : BaseEntity
         return DbSet.SingleOrDefault(expression);
     }
 
+    public List<T> List(Expression<Func<T, bool>> expression)
+    {
+        return DbSet.Where(expression).ToList();
+    }
+
+    public List<T> List()
+    {
+        return DbSet.ToList();
+    }
+
     public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> expression)
     {
         return await DbSet.SingleOrDefaultAsync(expression);
@@ -140,5 +151,10 @@ public class EfRepository<T> : IRepository<T> where T : BaseEntity
     public async Task<List<T>> ListAsync(Expression<Func<T, bool>> expression)
     {
         return await DbSet.Where(expression).ToListAsync();
+    }
+
+    public async Task<List<T>> ListAsync()
+    {
+        return await DbSet.ToListAsync();
     }
 }

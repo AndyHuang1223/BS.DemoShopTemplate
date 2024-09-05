@@ -10,11 +10,8 @@ namespace DemoShop.Web.Configurations
     {
         public static IServiceCollection AddApplicationCoreServices(this IServiceCollection services)
         {
-            //TODO 抽換成Configurations(為服務群組註冊擴充方法)
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
-
 
             return services;
         }

@@ -4,7 +4,7 @@ using DemoShop.Web.Configurations;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Services, builder.Configuration);
 
 builder.Services
     .AddApplicationCoreServices()
