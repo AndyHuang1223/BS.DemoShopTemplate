@@ -8,7 +8,7 @@ DemoShop.Infrastructure.Dependencies.ConfigureServices(builder.Services, builder
 
 builder.Services
     .AddApplicationCoreServices()
-    .AddWebServices();
+    .AddWebServices(builder.Configuration);
 
 builder.Services.AddMemoryCache();
 
