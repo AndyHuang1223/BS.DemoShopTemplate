@@ -26,6 +26,9 @@ namespace DemoShop.Infrastructure.Data
 
             modelBuilder.Entity<TodoItem>()
                 .HasData(SeedData.ProduceTodoItem());
+
+            modelBuilder.Entity<Catalog>()
+                .HasData(SeedData.ProduceCatalogs());
         }
     }
 }
