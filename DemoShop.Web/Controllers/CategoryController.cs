@@ -5,9 +5,9 @@ namespace DemoShop.Web.Controllers;
 
 public class CategoryController : Controller
 {
-    private readonly CategoryViewModelService _categoryViewModelService;
+    private readonly ICategoryViewModelService _categoryViewModelService;
 
-    public CategoryController(CategoryViewModelService categoryViewModelService)
+    public CategoryController(ICategoryViewModelService categoryViewModelService)
     {
         _categoryViewModelService = categoryViewModelService;
     }
