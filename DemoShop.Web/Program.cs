@@ -10,6 +10,7 @@ builder.Services
     .AddApplicationCoreServices()
     .AddWebServices();
 
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllersWithViews();
 
