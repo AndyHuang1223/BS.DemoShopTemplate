@@ -10,7 +10,7 @@ namespace DemoShop.Web.Configurations
             services.AddScoped<ICmsViewModelService, CmsService>();
 
             services.AddScoped<ProductViewModelService>();
-            services.AddScoped<CategoryViewModelService>();
+            services.AddScoped<ICategoryViewModelService, CategoryViewModelService>();
 
             return services;
         }

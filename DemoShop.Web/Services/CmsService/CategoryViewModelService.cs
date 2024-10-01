@@ -4,7 +4,7 @@ using DemoShop.Web.Models.ViewModels.Home;
 
 namespace DemoShop.Web.Services.CmsService;
 
-public class CategoryViewModelService
+public class CategoryViewModelService : ICategoryViewModelService
 {
     private readonly ICatalogService _catalogService;
 
