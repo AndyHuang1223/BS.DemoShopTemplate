@@ -91,5 +91,17 @@ namespace DemoShop.Infrastructure.Data
             };
         }
 
+        public static List<Catalog> ProduceCatalogs()
+        {
+            return new List<Catalog>()
+            {
+                new Catalog { Id = 1, Name = "Catalog 1", ParentCatalogId = null, CreateAt = DateTime.UtcNow },
+                new Catalog { Id = 2, Name = "Catalog 2", ParentCatalogId = null, CreateAt = DateTime.UtcNow },
+                new Catalog { Id = 3, Name = "Catalog 3", ParentCatalogId = null, CreateAt = DateTime.UtcNow },
+                new Catalog { Id = 4, Name = "Catalog 1-1", ParentCatalogId = 1, CreateAt = DateTime.UtcNow },
+                new Catalog { Id = 5, Name = "Catalog 1-1-1", ParentCatalogId = 4, CreateAt = DateTime.UtcNow },
+            };
+        }
+
     }
 }
