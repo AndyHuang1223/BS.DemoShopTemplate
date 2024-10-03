@@ -20,15 +20,15 @@ public class MemoryCacheCategoryService : ICategoryViewModelService
         // 原本資料是這樣傳出去(有去請求資料庫)
         // return await _categoryViewModelService.GetCategoryViewModelAsync();
 
-        var cacheKey = "Category-ViewModel-Key";
-        
+        const string cacheKey = "Category-ViewModel-Key";
+
         return await _memoryCache.GetOrCreateAsync(cacheKey, async entry =>
         {
             // 設定快取過期時間 5 分鐘(絕對到期時間)
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
             
             // 設定快取過期時間 1 分鐘(滑動到期時間, 1 分鐘內沒有存取就會過期)
-            entry.SlidingExpiration = TimeSpan.FromMinutes(5);
+            entry.SlidingExpiration = TimeSpan.FromMinutes(1);
             return await _categoryViewModelService.GetCategoryViewModelAsync();
         });
     }
