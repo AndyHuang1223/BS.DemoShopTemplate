@@ -18,12 +18,21 @@ public class CatalogService : ICatalogService
 
         return GetCategories(catalogsEntities, null);
     }
-    
+
+    public async Task<CatalogItem> GetCatalogItemByIdAsync(int id)
+    {
+        var catalogEntity = await _catalogRepository.GetByIdAsync(id);
+        if (catalogEntity is null)
+            return default;
+
+        return GetCategories(new List<Catalog>() { catalogEntity }, null)?.FirstOrDefault();
+    }
+
     private static List<CatalogItem> GetCategories(List<Catalog> catalogs, int? parentCatalogId)
     {
         if (catalogs == null || catalogs.Count < 1) return null;
         var catalogItems = new List<CatalogItem>();
-        var categories = 
+        var categories =
             catalogs.OrderBy(c => c.Seq)
                 .Where(c => c.ParentCatalogId == parentCatalogId)
                 .ToList();
@@ -38,7 +47,7 @@ public class CatalogService : ICatalogService
             };
             catalogItems.Add(catalogItem);
         }
+
         return catalogItems;
     }
-    
 }
