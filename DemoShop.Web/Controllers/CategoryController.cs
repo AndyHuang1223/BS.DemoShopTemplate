@@ -17,4 +17,10 @@ public class CategoryController : Controller
         var vm = await _categoryViewModelService.GetCategoryViewModelAsync();
         return Json(vm);
     }
+    
+    public async Task<IActionResult> Item(int id)
+    {
+        var vm = await _categoryViewModelService.GetCategoryByIdAsync(id);
+        return Json(vm);
+    }
 }

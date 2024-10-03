@@ -23,7 +23,16 @@ public class CategoryViewModelService : ICategoryViewModelService
         };
     }
 
-    private List<CategoryItem> GetCategories(List<CatalogItem> catalogItems, int? parentCatalogId)
+    public async Task<CategoryItem> GetCategoryByIdAsync(int categoryId)
+    {
+        var catalogItem = await _catalogService.GetCatalogItemByIdAsync(categoryId);
+        if (catalogItem is null)
+            return default;
+
+        return GetCategories(new List<CatalogItem>() { catalogItem }, null)?.FirstOrDefault();
+    }
+
+    private static List<CategoryItem> GetCategories(List<CatalogItem> catalogItems, int? parentCatalogId)
     {
         if (catalogItems == null || catalogItems.Count < 1) return null;
         var categoryItems = new List<CategoryItem>();
