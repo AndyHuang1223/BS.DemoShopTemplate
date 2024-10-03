@@ -19,7 +19,7 @@ public class RedisCacheCategoryViewModelService : ICategoryViewModelService
 
     public async Task<CategoryViewModel> GetCategoryViewModelAsync()
     {
-        var cacheKey = "CategoryViewModel-Redis";
+        const string cacheKey = "CategoryViewModel-Redis";
         var cacheValue = await _distributedCache.GetAsync(cacheKey);
         var cachedCategoryViewModel = ByteArrayToObj<CategoryViewModel>(cacheValue);
 
@@ -35,6 +35,26 @@ public class RedisCacheCategoryViewModelService : ICategoryViewModelService
         });
 
         return realCategoryViewModel;
+    }
+
+    public async Task<CategoryItem> GetCategoryByIdAsync(int categoryId)
+    {
+        var cacheKey = $"CategoryItem-Redis-{categoryId}";
+        var cacheValue = await _distributedCache.GetAsync(cacheKey);
+        var cachedCategoryItem = ByteArrayToObj<CategoryItem>(cacheValue);
+        
+        if (cachedCategoryItem != null)
+            return cachedCategoryItem;
+        
+        var realCategoryItem = await _categoryViewModelService.GetCategoryByIdAsync(categoryId);
+        var byteResult = ObjectToByteArray(realCategoryItem);
+        await _distributedCache.SetAsync(cacheKey, byteResult, new DistributedCacheEntryOptions()
+        {
+            SlidingExpiration = TimeSpan.FromSeconds(10),
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+        });
+        
+        return realCategoryItem;
     }
 
     /// <summary>
