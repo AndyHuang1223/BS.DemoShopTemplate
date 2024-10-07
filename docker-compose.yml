@@ -1,0 +1,76 @@
+﻿services:
+  demoshop.web:
+    image: demoshop.web
+    build:
+      context: .
+      dockerfile: DemoShop.Web/Dockerfile
+    ports:
+      - "8800:80"
+    environment:
+      # ASP.NET Core URL
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
+    depends_on:
+      - sql-server-db
+    networks:
+      - demoshop-network
+  demoshop.admin:
+    image: demoshop.admin
+    build:
+      context: .
+      dockerfile: DemoShop.Admin/Dockerfile
+    ports:
+      - "8801:80"
+    environment:
+      # ASP.NET Core URL
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
+    depends_on:
+      - sql-server-db
+    networks:
+      - demoshop-network
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+#    當SQL Server需要對外開放port時，可將下面的註解拿掉，否則就是用Docker內部網路的方式
+#    ports:
+#      - "1434:1433"
+    restart: always
+    environment:
+      ACCEPT_EULA: 1
+      MSSQL_SA_PASSWORD: "MyPass@word"
+      MSSQL_PID: "Developer"
+      MSSQL_USER: "SA"
+    volumes:
+      - ./db:/usr/config
+      - demoshop-db:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P MyPass@word -No -Q 'SELECT 1'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - demoshop-network
+
+#  # 初始化資料庫
+#  db-init:
+#    image: mcr.microsoft.com/mssql-tools
+#    platform: linux/amd64
+#    depends_on:
+#      sql-server-db:
+#        condition: service_healthy
+#    volumes:
+#      - ./db:/usr/config
+#    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U SA -P MyPass@word -i /usr/config/initDb.sql"
+#    networks:
+#      - demoshop-network
+
+volumes:
+  # MSSQL Database volume
+  demoshop-db:
+
+networks:
+  # Network for the DemoShop
+  demoshop-network:
