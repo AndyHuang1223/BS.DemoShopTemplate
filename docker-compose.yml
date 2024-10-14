@@ -54,18 +54,18 @@
     networks:
       - demoshop-network
 
-#  # 初始化資料庫
-#  db-init:
-#    image: mcr.microsoft.com/mssql-tools
-#    platform: linux/amd64
-#    depends_on:
-#      sql-server-db:
-#        condition: service_healthy
-#    volumes:
-#      - ./db:/usr/config
-#    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U SA -P MyPass@word -i /usr/config/initDb.sql"
-#    networks:
-#      - demoshop-network
+  # 初始化資料庫
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    platform: linux/amd64
+    depends_on:
+      sql-server-db:
+        condition: service_healthy
+    volumes:
+      - ./db:/usr/config
+    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U SA -P MyPass@word -i /usr/config/initDb.sql"
+    networks:
+      - demoshop-network
 
 volumes:
   # MSSQL Database volume
