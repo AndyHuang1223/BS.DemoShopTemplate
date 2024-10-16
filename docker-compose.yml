@@ -11,7 +11,7 @@
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
-      - ConnectionStrings__Redis=demoshop.redis
+      - ConnectionStrings__Redis=demoshop-redis
     depends_on:
       sql-server-db:
           condition: service_healthy
