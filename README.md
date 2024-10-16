@@ -1,6 +1,6 @@
 # BS.DemoShop
 ## 環境設定
-1. SDK : .NET 7.0(或以上)。
+1. SDK : .NET 8.0(或以上)。
 2. 連線字串設定 : 修改`appsettings.json`或者`使用使用者密碼(sectets.json)`(參考資料:[在 ASP.NET Core 中開發中安全儲存應用程式密碼](https://learn.microsoft.com/zh-tw/aspnet/core/security/app-secrets?view=aspnetcore-7.0&tabs=windows))。
 3. 遷移(更新)資料庫 : 
 	- 使用.Net Core CLI : `dotnet ef database update --project ./DemoShop.Infrastructure/ --startup-project ./DemoShop.Web/`。
@@ -19,6 +19,10 @@
 2. Scaffolding資料庫 : `dotnet ef dbcontext scaffold "Name=ConnectionStrings:BSDemoShopConnection" Microsoft.EntityFrameworkCore.SqlServer --output-dir ../DemoShop.ApplicationCore/Entities --context-dir ../DemoShop.Infrastructure/Data --namespace DemoShop.ApplicationCore.Entities --context BSDemoShopContext --context-namespace DemoShop.Infrastructure.Data --startup-project ./DemoShop.Web --data-annotations --force`。
 3. 修改`IRepository<T>`及`EfRepository<T>`的泛型約束 : 將`BaseEntity`修改為`class`(沒修改的話會無法建置)。
 
+---
+## 使用 Docker 部署
+1. 使用 `docker compose up -d` 啟動服務。
+2. 使用 `docker compose run --rm db-init` 初始化資料庫，完成後會刪除容器。
 
 ## 其他
 - [Entity Framework Core 工具參考 - .NET Core CLI](https://learn.microsoft.com/zh-tw/ef/core/cli/dotnet)。

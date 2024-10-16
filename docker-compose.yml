@@ -11,10 +11,15 @@
       - ASPNETCORE_URLS=http://+:80
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
+      - ConnectionStrings__Redis=demoshop.redis
     depends_on:
-      - sql-server-db
+      sql-server-db:
+          condition: service_healthy
+      demoshop-redis:
+          condition: service_healthy
     networks:
       - demoshop-network
+  
   demoshop.admin:
     image: demoshop.admin
     build:
@@ -28,15 +33,19 @@
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
     depends_on:
-      - sql-server-db
+      sql-server-db:
+        condition: service_healthy
+      demoshop-redis:
+        condition: service_healthy
     networks:
       - demoshop-network
+  
   sql-server-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     platform: linux/amd64
-#    當SQL Server需要對外開放port時，可將下面的註解拿掉，否則就是用Docker內部網路的方式
-#    ports:
-#      - "1434:1433"
+    #    當SQL Server需要對外開放port時，可將下面的註解拿掉，否則就是用Docker內部網路的方式
+    #    ports:
+    #      - "1434:1433"
     restart: always
     environment:
       ACCEPT_EULA: 1
@@ -64,6 +73,23 @@
     volumes:
       - ./db:/usr/config
     command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U SA -P MyPass@word -i /usr/config/initDb.sql"
+    networks:
+      - demoshop-network
+    profiles:
+      - optional
+    init: true
+  
+  # Redis
+  demoshop-redis:
+    image: redis:latest
+#    ports:
+#      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s         # 每 30 秒檢查一次
+      timeout: 10s          # 最多等待 10 秒
+      retries: 5            # 失敗 5 次後認為不健康
+      start_period: 30s     # 等待 30 秒再開始第一次健康檢查
     networks:
       - demoshop-network
 
