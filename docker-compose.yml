@@ -6,20 +6,19 @@
       dockerfile: DemoShop.Web/Dockerfile
     ports:
       - "8800:80"
-    environment:
-      # ASP.NET Core URL
-      - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
-      - ConnectionStrings__Redis=demoshop-redis
+    environment: &app_env
+      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__BSDemoShopConnection: Server=sql-server-db;User Id=sa;Password=${SA_PASSWORD};Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
+      ConnectionStrings__Redis: redis:6379
     depends_on:
       sql-server-db:
-          condition: service_healthy
-      demoshop-redis:
-          condition: service_healthy
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     networks:
       - demoshop-network
-  
+
   demoshop.admin:
     image: demoshop.admin
     build:
@@ -27,19 +26,15 @@
       dockerfile: DemoShop.Admin/Dockerfile
     ports:
       - "8801:80"
-    environment:
-      # ASP.NET Core URL
-      - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__BSDemoShopConnection=Server=sql-server-db;user=sa;password=MyPass@word;Database=BSDemoShopCatalog;Trusted_Connection=False;TrustServerCertificate=True;
+    environment: *app_env
     depends_on:
       sql-server-db:
         condition: service_healthy
-      demoshop-redis:
+      redis:
         condition: service_healthy
     networks:
       - demoshop-network
-  
+
   sql-server-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     platform: linux/amd64
@@ -48,55 +43,58 @@
     #      - "1434:1433"
     restart: always
     environment:
-      ACCEPT_EULA: 1
-      MSSQL_SA_PASSWORD: "MyPass@word"
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
       MSSQL_PID: "Developer"
-      MSSQL_USER: "SA"
     volumes:
-      - ./db:/usr/config
       - demoshop-db:/var/opt/mssql
+      - ./db:/usr/config
     healthcheck:
-      test: [ "CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P MyPass@word -No -Q 'SELECT 1'" ]
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${SA_PASSWORD}' -Q 'SELECT 1' -C || exit 1",
+        ]
       interval: 10s
       timeout: 5s
-      retries: 3
+      retries: 10
     networks:
       - demoshop-network
 
-  # 初始化資料庫
+  # 初始化資料庫（建議只跑一次）
   db-init:
     image: mcr.microsoft.com/mssql-tools
     platform: linux/amd64
     depends_on:
       sql-server-db:
         condition: service_healthy
+    restart: "no"
     volumes:
       - ./db:/usr/config
-    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U SA -P MyPass@word -i /usr/config/initDb.sql"
+    command: /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S sql-server-db -U sa -P '${SA_PASSWORD}' -i /usr/config/initDb.sql -C"
     networks:
       - demoshop-network
-    profiles:
-      - optional
-    init: true
-  
-  # Redis
-  demoshop-redis:
-    image: redis:latest
-#    ports:
-#      - "6379:6379"
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - demoshop-redis:/data
+    command: ["redis-server", "--appendonly", "yes"]
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 30s         # 每 30 秒檢查一次
-      timeout: 10s          # 最多等待 10 秒
-      retries: 5            # 失敗 5 次後認為不健康
-      start_period: 30s     # 等待 30 秒再開始第一次健康檢查
+      test: ["CMD-SHELL", "redis-cli ping | grep -q PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     networks:
       - demoshop-network
 
 volumes:
-  # MSSQL Database volume
   demoshop-db:
+  demoshop-redis:
 
 networks:
-  # Network for the DemoShop
   demoshop-network:
